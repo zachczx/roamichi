@@ -1,7 +1,10 @@
-import { pgTable, uuid, timestamp, text, boolean, date, decimal } from 'drizzle-orm/pg-core';
+import { pgTable, timestamp, varchar, text, boolean, date, decimal } from 'drizzle-orm/pg-core';
+import { nanoid } from 'nanoid';
 
 export const trip = pgTable('trip', {
-	id: uuid('id').primaryKey().defaultRandom(),
+	id: varchar('id', { length: 30 })
+		.primaryKey()
+		.$defaultFn(() => nanoid(10)),
 	userId: text('user_id')
 		.notNull()
 		.references(() => user.id, { onDelete: 'cascade' }),
@@ -11,28 +14,34 @@ export const trip = pgTable('trip', {
 });
 
 export const flight = pgTable('flight', {
-	id: uuid('id').primaryKey().defaultRandom(),
+	id: varchar('id', { length: 30 })
+		.primaryKey()
+		.$defaultFn(() => nanoid(10)),
 	userId: text('user_id')
 		.notNull()
 		.references(() => user.id, { onDelete: 'cascade' }),
-	tripId: uuid('trip_id')
+	tripId: varchar('trip_id')
 		.notNull()
 		.references(() => trip.id, { onDelete: 'cascade' }),
 	airline: text('airline').notNull(),
+	flightNumber: text('flight_number').notNull(),
 	fromCity: text('from_city').notNull(),
 	fromCountry: text('from_country').notNull(),
 	toCity: text('to_city').notNull(),
 	toCountry: text('to_country').notNull(),
+	airport: text('airport').notNull(),
 	createdAt: timestamp('created_at').defaultNow().notNull(),
 	updatedAt: timestamp('updated_at')
 });
 
 export const stay = pgTable('stay', {
-	id: uuid('id').primaryKey().defaultRandom(),
+	id: varchar('id', { length: 30 })
+		.primaryKey()
+		.$defaultFn(() => nanoid(10)),
 	userId: text('user_id')
 		.notNull()
 		.references(() => user.id, { onDelete: 'cascade' }),
-	tripId: uuid('trip_id')
+	tripId: varchar('trip_id')
 		.notNull()
 		.references(() => trip.id, { onDelete: 'cascade' }),
 	type: text('type').notNull(),
@@ -48,11 +57,13 @@ export const stay = pgTable('stay', {
 });
 
 export const pack = pgTable('pack', {
-	id: uuid('id').primaryKey().defaultRandom(),
+	id: varchar('id', { length: 30 })
+		.primaryKey()
+		.$defaultFn(() => nanoid(10)),
 	userId: text('user_id')
 		.notNull()
 		.references(() => user.id, { onDelete: 'cascade' }),
-	tripId: uuid('trip_id')
+	tripId: varchar('trip_id')
 		.notNull()
 		.references(() => trip.id, { onDelete: 'cascade' }),
 	item: text('item').notNull(),

@@ -64,6 +64,7 @@
 		"dotenv": "^16.5.0",
 		"drizzle-orm": "^0.44.2",
 		"drizzle-zod": "^0.8.2",
+		"nanoid": "^5.1.5",
 		"pocketbase": "^0.26.1",
 		"postgres": "^3.4.7"
 	}

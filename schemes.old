@@ -1,0 +1,86 @@
+Looking at your travel planning schema, I'd recommend a RESTful API structure that follows the natural hierarchy of your data relationships. Here's how I'd structure it:
+
+## Core API Structure
+
+### Trip Management (Top-level resource)
+```
+GET    /api/trips                    # List user's trips
+POST   /api/trips                    # Create new trip
+GET    /api/trips/:tripId            # Get trip details
+PUT    /api/trips/:tripId            # Update trip
+DELETE /api/trips/:tripId            # Delete trip
+```
+
+### Nested Resources (Trip-specific)
+```
+# Flights
+GET    /api/trips/:tripId/flights        # List flights for trip
+POST   /api/trips/:tripId/flights        # Add flight to trip
+GET    /api/trips/:tripId/flights/:id    # Get specific flight
+PUT    /api/trips/:tripId/flights/:id    # Update flight
+DELETE /api/trips/:tripId/flights/:id    # Delete flight
+
+# Stays
+GET    /api/trips/:tripId/stays          # List stays for trip
+POST   /api/trips/:tripId/stays          # Add stay to trip
+GET    /api/trips/:tripId/stays/:id      # Get specific stay
+PUT    /api/trips/:tripId/stays/:id      # Update stay
+DELETE /api/trips/:tripId/stays/:id      # Delete stay
+
+# Packing Lists
+GET    /api/trips/:tripId/pack           # List pack items for trip
+POST   /api/trips/:tripId/pack           # Add pack item
+GET    /api/trips/:tripId/pack/:id       # Get specific pack item
+PUT    /api/trips/:tripId/pack/:id       # Update pack item (mark done, etc.)
+DELETE /api/trips/:tripId/pack/:id       # Delete pack item
+```
+
+## Key Design Principles
+
+**1. User Authorization Middleware**
+Since all resources are user-scoped, implement middleware that:
+- Validates the authenticated user owns the trip
+- Automatically filters queries by `userId`
+
+**2. Bulk Operations** (for better UX)
+```
+PATCH  /api/trips/:tripId/pack/bulk     # Bulk update pack items (mark multiple done)
+POST   /api/trips/:tripId/pack/template # Create items from packing template
+```
+
+**3. Aggregated Endpoints** (for dashboard views)
+```
+GET    /api/trips/:tripId/summary       # Trip overview with counts/totals
+GET    /api/trips/upcoming              # User's upcoming trips
+```
+
+**4. Search & Filtering**
+```
+GET    /api/trips?search=paris          # Search trips by name
+GET    /api/trips/:tripId/pack?done=false # Filter incomplete pack items
+```
+
+## Example API Implementation Pattern
+
+```typescript
+// Middleware to ensure trip ownership
+async function validateTripOwnership(req, res, next) {
+  const { tripId } = req.params;
+  const { userId } = req.user;
+  
+  const trip = await db.select().from(trip)
+    .where(and(eq(trip.id, tripId), eq(trip.userId, userId)));
+  
+  if (!trip.length) return res.status(404).json({ error: 'Trip not found' });
+  next();
+}
+
+// Example route handler
+app.get('/api/trips/:tripId/flights', validateTripOwnership, async (req, res) => {
+  const flights = await db.select().from(flight)
+    .where(eq(flight.tripId, req.params.tripId));
+  res.json(flights);
+});
+```
+
+This structure provides clear ownership boundaries, intuitive URLs that match your data relationships, and good separation of concerns for each travel planning component.

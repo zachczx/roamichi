@@ -1,6 +1,6 @@
 {
-  "id": "1a1df19b-e845-4e52-b7c0-ad935ef31731",
-  "prevId": "5b617b2d-7a5b-494d-8333-d4c5f7707b20",
+  "id": "f04b5e25-3b4f-44fe-bb33-e222cac76d6a",
+  "prevId": "1a1df19b-e845-4e52-b7c0-ad935ef31731",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -133,6 +133,12 @@
         },
         "airline": {
           "name": "airline",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "flight_number": {
+          "name": "flight_number",
           "type": "text",
           "primaryKey": false,
           "notNull": true

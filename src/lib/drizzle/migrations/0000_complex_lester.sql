@@ -15,9 +15,9 @@ CREATE TABLE "account" (
 );
 --> statement-breakpoint
 CREATE TABLE "flight" (
-	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+	"id" varchar(30) PRIMARY KEY NOT NULL,
 	"user_id" text NOT NULL,
-	"trip_id" uuid NOT NULL,
+	"trip_id" varchar NOT NULL,
 	"airline" text NOT NULL,
 	"from_city" text NOT NULL,
 	"from_country" text NOT NULL,
@@ -28,9 +28,9 @@ CREATE TABLE "flight" (
 );
 --> statement-breakpoint
 CREATE TABLE "pack" (
-	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+	"id" varchar(30) PRIMARY KEY NOT NULL,
 	"user_id" text NOT NULL,
-	"trip_id" uuid NOT NULL,
+	"trip_id" varchar NOT NULL,
 	"item" text NOT NULL,
 	"done" boolean DEFAULT false NOT NULL,
 	"remark" text,
@@ -51,9 +51,9 @@ CREATE TABLE "session" (
 );
 --> statement-breakpoint
 CREATE TABLE "stay" (
-	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+	"id" varchar(30) PRIMARY KEY NOT NULL,
 	"user_id" text NOT NULL,
-	"trip_id" uuid NOT NULL,
+	"trip_id" varchar NOT NULL,
 	"type" text NOT NULL,
 	"stay_name" text NOT NULL,
 	"address" text,
@@ -67,7 +67,8 @@ CREATE TABLE "stay" (
 );
 --> statement-breakpoint
 CREATE TABLE "trip" (
-	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+	"id" varchar(30) PRIMARY KEY NOT NULL,
+	"user_id" text NOT NULL,
 	"trip_name" text NOT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp
@@ -101,4 +102,5 @@ ALTER TABLE "pack" ADD CONSTRAINT "pack_user_id_user_id_fk" FOREIGN KEY ("user_i
 ALTER TABLE "pack" ADD CONSTRAINT "pack_trip_id_trip_id_fk" FOREIGN KEY ("trip_id") REFERENCES "public"."trip"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "session" ADD CONSTRAINT "session_user_id_user_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."user"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "stay" ADD CONSTRAINT "stay_user_id_user_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."user"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE "stay" ADD CONSTRAINT "stay_trip_id_trip_id_fk" FOREIGN KEY ("trip_id") REFERENCES "public"."trip"("id") ON DELETE cascade ON UPDATE no action;
+ALTER TABLE "stay" ADD CONSTRAINT "stay_trip_id_trip_id_fk" FOREIGN KEY ("trip_id") REFERENCES "public"."trip"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "trip" ADD CONSTRAINT "trip_user_id_user_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."user"("id") ON DELETE cascade ON UPDATE no action;

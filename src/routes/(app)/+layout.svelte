@@ -8,10 +8,10 @@
 			<a href="/" class="flex items-center gap-4">Roamiko</a>
 		</div>
 		<ul class="">
-			<li
-				class="hover:bg-primary hover:text-primary-content w-full cursor-pointer rounded-lg px-2 py-4 text-lg"
-			>
-				<a href="/" class="flex items-center gap-4"
+			<li class="">
+				<a
+					href="/"
+					class="hover:bg-primary hover:text-primary-content flex w-full cursor-pointer items-center gap-4 rounded-lg px-2 py-4 text-lg"
 					><svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="1.3em"
@@ -25,10 +25,10 @@
 					>Dashboard</a
 				>
 			</li>
-			<li
-				class="hover:bg-primary hover:text-primary-content w-full cursor-pointer rounded-lg px-2 py-4 text-lg"
-			>
-				<a href="/" class="flex items-center gap-4"
+			<li class="">
+				<a
+					href="/trip"
+					class="hover:bg-primary hover:text-primary-content flex w-full cursor-pointer items-center gap-4 rounded-lg px-2 py-4 text-lg"
 					><svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="1.3em"
@@ -42,10 +42,10 @@
 					>Trip</a
 				>
 			</li>
-			<li
-				class="hover:bg-primary hover:text-primary-content w-full cursor-pointer rounded-lg px-2 py-4 text-lg"
-			>
-				<a href="/" class="flex items-center gap-4"
+			<li class="">
+				<a
+					href="/"
+					class="hover:bg-primary hover:text-primary-content flex w-full cursor-pointer items-center gap-4 rounded-lg px-2 py-4 text-lg"
 					><svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="1.3em"
@@ -59,10 +59,10 @@
 					>Flight</a
 				>
 			</li>
-			<li
-				class="hover:bg-primary hover:text-primary-content w-full cursor-pointer rounded-lg px-2 py-4 text-lg"
-			>
-				<a href="/" class="flex items-center gap-4"
+			<li class="">
+				<a
+					href="/"
+					class="hover:bg-primary hover:text-primary-content flex w-full cursor-pointer items-center gap-4 rounded-lg px-2 py-4 text-lg"
 					><svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="1.3em"
@@ -76,10 +76,10 @@
 					>Stay</a
 				>
 			</li>
-			<li
-				class="hover:bg-primary hover:text-primary-content w-full cursor-pointer rounded-lg px-2 py-4 text-lg"
-			>
-				<a href="/" class="flex items-center gap-4"
+			<li class="">
+				<a
+					href="/"
+					class="hover:bg-primary hover:text-primary-content flex w-full cursor-pointer items-center gap-4 rounded-lg px-2 py-4 text-lg"
 					><svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="1.3em"
@@ -94,10 +94,11 @@
 				>
 			</li>
 			<li class="bg-base-content/15 my-4 h-0.5 w-full"></li>
-			<li
-				class="hover:bg-primary hover:text-primary-content w-full cursor-pointer rounded-lg px-2 py-4 text-lg"
-			>
-				<a href="/" class="flex items-center gap-4">
+			<li class="">
+				<a
+					href="/trip/new"
+					class="hover:bg-primary hover:text-primary-content flex w-full cursor-pointer items-center gap-4 rounded-lg px-2 py-4 text-lg"
+				>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="1.3em"
@@ -110,10 +111,11 @@
 			</li>
 		</ul>
 		<ul>
-			<li
-				class="hover:bg-primary hover:text-primary-content w-full cursor-pointer rounded-lg px-2 py-4 text-lg"
-			>
-				<a href="/" class="flex items-center gap-4">
+			<li class="">
+				<a
+					href="/"
+					class="hover:bg-primary hover:text-primary-content flex w-full cursor-pointer items-center gap-4 rounded-lg px-2 py-4 text-lg"
+				>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="1.3em"
@@ -131,9 +133,11 @@
 	</nav>
 	<main class="bg-base-200 grid content-center justify-items-center gap-8 p-4">
 		<section
-			class="bg-base-100 main-container-height border-base-content/10 grid w-full content-center justify-items-center gap-8 rounded-2xl border-2 p-4"
+			class="bg-base-100 main-container-height border-base-content/10 grid w-full content-center justify-items-center rounded-2xl border-2 p-4"
 		>
-			{@render children()}
+			<div class="grid w-full max-w-6xl gap-8">
+				{@render children()}
+			</div>
 		</section>
 	</main>
 </div>
