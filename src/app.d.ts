@@ -25,6 +25,14 @@ declare global {
 		// interface PageData {}
 		// interface PageState {}
 		// interface Platform {}
+
+		namespace Superforms {
+			type Message = {
+				status: 'error' | 'success';
+				text: string;
+				insertedId?: string;
+			};
+		}
 	}
 }
 

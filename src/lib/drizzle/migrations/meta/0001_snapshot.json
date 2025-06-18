@@ -1,6 +1,6 @@
 {
-  "id": "1a1df19b-e845-4e52-b7c0-ad935ef31731",
-  "prevId": "5b617b2d-7a5b-494d-8333-d4c5f7707b20",
+  "id": "a6149710-0c5a-455d-a393-117ffcc6a38e",
+  "prevId": "bf86f850-ef82-495f-b08c-fe951b59846b",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -137,6 +137,12 @@
           "primaryKey": false,
           "notNull": true
         },
+        "flight_number": {
+          "name": "flight_number",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
         "from_city": {
           "name": "from_city",
           "type": "text",
@@ -166,6 +172,12 @@
           "type": "text",
           "primaryKey": false,
           "notNull": true
+        },
+        "cost": {
+          "name": "cost",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
         },
         "created_at": {
           "name": "created_at",
@@ -415,7 +427,8 @@
           "name": "type",
           "type": "text",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "default": "'hotel'"
         },
         "stay_name": {
           "name": "stay_name",
@@ -455,9 +468,9 @@
         },
         "cost": {
           "name": "cost",
-          "type": "numeric",
+          "type": "real",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "created_at": {
           "name": "created_at",

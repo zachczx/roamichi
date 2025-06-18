@@ -1,6 +1,6 @@
 import { db } from '$lib/drizzle/db';
 import { trip } from '$lib/drizzle/schema';
-import { fail, type Actions } from '@sveltejs/kit';
+import { error, fail, type Actions } from '@sveltejs/kit';
 import { superValidate } from 'sveltekit-superforms';
 import { zod4 } from 'sveltekit-superforms/adapters';
 import { z } from 'zod/v4';
@@ -25,11 +25,22 @@ export const actions = {
 			return fail(400, { form });
 		}
 
-		const insert = await db.insert(trip).values({
-			userId: locals.user?.id,
-			tripName: form.data.tripName
+		const inserted = await db
+			.insert(trip)
+			.values({
+				userId: locals.user?.id,
+				tripName: form.data.tripName
+			})
+			.returning();
+		console.log(inserted);
+		if (inserted.length === 0) {
+			return error(500, 'Server error!');
+		}
+
+		return message(form, {
+			status: 'success',
+			text: 'Form posted successfully!',
+			insertedId: inserted[0].id
 		});
-		console.log(insert);
-		return message(form, 'Form posted successfully!');
 	}
 } satisfies Actions;

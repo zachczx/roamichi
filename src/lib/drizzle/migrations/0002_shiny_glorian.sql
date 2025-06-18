@@ -1,1 +1,0 @@
-ALTER TABLE "flight" ADD COLUMN "flight_number" text NOT NULL;

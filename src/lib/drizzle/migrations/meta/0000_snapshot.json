@@ -1,5 +1,5 @@
 {
-  "id": "5b617b2d-7a5b-494d-8333-d4c5f7707b20",
+  "id": "bf86f850-ef82-495f-b08c-fe951b59846b",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -137,6 +137,12 @@
           "primaryKey": false,
           "notNull": true
         },
+        "flight_number": {
+          "name": "flight_number",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
         "from_city": {
           "name": "from_city",
           "type": "text",
@@ -160,6 +166,18 @@
           "type": "text",
           "primaryKey": false,
           "notNull": true
+        },
+        "airport": {
+          "name": "airport",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "cost": {
+          "name": "cost",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
         },
         "created_at": {
           "name": "created_at",
@@ -449,9 +467,9 @@
         },
         "cost": {
           "name": "cost",
-          "type": "numeric",
+          "type": "real",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "created_at": {
           "name": "created_at",

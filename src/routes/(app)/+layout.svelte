@@ -11,7 +11,7 @@
 			<li class="">
 				<a
 					href="/"
-					class="hover:bg-primary hover:text-primary-content flex w-full cursor-pointer items-center gap-4 rounded-lg px-2 py-4 text-lg"
+					class="hover:bg-primary hover:text-primary-content flex w-full cursor-pointer items-center gap-4 rounded-lg px-2 py-3 text-lg"
 					><svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="1.3em"
@@ -28,7 +28,7 @@
 			<li class="">
 				<a
 					href="/trip"
-					class="hover:bg-primary hover:text-primary-content flex w-full cursor-pointer items-center gap-4 rounded-lg px-2 py-4 text-lg"
+					class="hover:bg-primary hover:text-primary-content flex w-full cursor-pointer items-center gap-4 rounded-lg px-2 py-3 text-lg"
 					><svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="1.3em"
@@ -45,7 +45,7 @@
 			<li class="">
 				<a
 					href="/"
-					class="hover:bg-primary hover:text-primary-content flex w-full cursor-pointer items-center gap-4 rounded-lg px-2 py-4 text-lg"
+					class="hover:bg-primary hover:text-primary-content flex w-full cursor-pointer items-center gap-4 rounded-lg px-2 py-3 text-lg"
 					><svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="1.3em"
@@ -62,7 +62,7 @@
 			<li class="">
 				<a
 					href="/"
-					class="hover:bg-primary hover:text-primary-content flex w-full cursor-pointer items-center gap-4 rounded-lg px-2 py-4 text-lg"
+					class="hover:bg-primary hover:text-primary-content flex w-full cursor-pointer items-center gap-4 rounded-lg px-2 py-3 text-lg"
 					><svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="1.3em"
@@ -79,7 +79,7 @@
 			<li class="">
 				<a
 					href="/"
-					class="hover:bg-primary hover:text-primary-content flex w-full cursor-pointer items-center gap-4 rounded-lg px-2 py-4 text-lg"
+					class="hover:bg-primary hover:text-primary-content flex w-full cursor-pointer items-center gap-4 rounded-lg px-2 py-3 text-lg"
 					><svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="1.3em"
@@ -97,7 +97,7 @@
 			<li class="">
 				<a
 					href="/trip/new"
-					class="hover:bg-primary hover:text-primary-content flex w-full cursor-pointer items-center gap-4 rounded-lg px-2 py-4 text-lg"
+					class="hover:bg-primary hover:text-primary-content flex w-full cursor-pointer items-center gap-4 rounded-lg px-2 py-3 text-lg"
 				>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -114,7 +114,7 @@
 			<li class="">
 				<a
 					href="/"
-					class="hover:bg-primary hover:text-primary-content flex w-full cursor-pointer items-center gap-4 rounded-lg px-2 py-4 text-lg"
+					class="hover:bg-primary hover:text-primary-content flex w-full cursor-pointer items-center gap-4 rounded-lg px-2 py-3 text-lg"
 				>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -133,9 +133,9 @@
 	</nav>
 	<main class="bg-base-200 grid content-center justify-items-center gap-8 p-4">
 		<section
-			class="bg-base-100 main-container-height border-base-content/10 grid w-full content-center justify-items-center rounded-2xl border-2 p-4"
+			class="bg-base-100 main-container-height border-base-content/10 grid w-full content-start justify-items-center rounded-2xl border-2 p-4"
 		>
-			<div class="grid w-full max-w-6xl gap-8">
+			<div class="grid w-full max-w-3xl gap-8">
 				{@render children()}
 			</div>
 		</section>

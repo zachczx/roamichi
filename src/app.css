@@ -5,13 +5,16 @@
 	default: true;
 
 	--color-primary: #52734d;
+	--color-primary-content: rgba(243, 247, 242);
+
 	--color-secondary: #91c788;
 
-	--color-success: #ddffbc;
+	--color-info: #ddffbc;
 
 	--color-neutral: #328e6e;
 
 	--color-accent: #67ae6e;
+	--color-accent-content: rgba(243, 247, 242);
 
 	--color-base-100: #feffde;
 	--color-base-200: #e1eebc;
@@ -101,4 +104,10 @@
 			U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
 			U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 	}
+}
+
+@utility fieldset-legend {
+	padding-top: 0.25rem;
+	padding-bottom: 0.25rem;
+	/* padding: 0 !important; */
 }

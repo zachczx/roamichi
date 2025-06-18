@@ -1,4 +1,5 @@
-import { pgTable, timestamp, varchar, text, boolean, date, decimal } from 'drizzle-orm/pg-core';
+import { sql } from 'drizzle-orm';
+import { pgTable, real, timestamp, varchar, text, boolean, date } from 'drizzle-orm/pg-core';
 import { nanoid } from 'nanoid';
 
 export const trip = pgTable('trip', {
@@ -9,8 +10,10 @@ export const trip = pgTable('trip', {
 		.notNull()
 		.references(() => user.id, { onDelete: 'cascade' }),
 	tripName: text('trip_name').notNull(),
-	createdAt: timestamp('created_at').defaultNow().notNull(),
-	updatedAt: timestamp('updated_at')
+	createdAt: timestamp('created_at', { withTimezone: true, mode: 'string' }).defaultNow().notNull(),
+	updatedAt: timestamp('updated_at', { withTimezone: true, mode: 'string' }).$onUpdate(
+		() => sql`now()`
+	)
 });
 
 export const flight = pgTable('flight', {
@@ -29,9 +32,21 @@ export const flight = pgTable('flight', {
 	fromCountry: text('from_country').notNull(),
 	toCity: text('to_city').notNull(),
 	toCountry: text('to_country').notNull(),
-	airport: text('airport').notNull(),
-	createdAt: timestamp('created_at').defaultNow().notNull(),
-	updatedAt: timestamp('updated_at')
+	departureTimestamp: timestamp('departure_timestamp', {
+		withTimezone: true,
+		mode: 'string'
+	}).notNull(),
+	arrivalTimestamp: timestamp('arrival_timestamp', {
+		withTimezone: true,
+		mode: 'string'
+	}).notNull(),
+	fromAirport: text('from_airport'),
+	toAirport: text('to_airport'),
+	cost: real('cost'),
+	createdAt: timestamp('created_at', { withTimezone: true, mode: 'string' }).defaultNow().notNull(),
+	updatedAt: timestamp('updated_at', { withTimezone: true, mode: 'string' }).$onUpdate(
+		() => sql`now()`
+	)
 });
 
 export const stay = pgTable('stay', {
@@ -44,16 +59,18 @@ export const stay = pgTable('stay', {
 	tripId: varchar('trip_id')
 		.notNull()
 		.references(() => trip.id, { onDelete: 'cascade' }),
-	type: text('type').notNull(),
+	type: text('type').default('hotel').notNull(),
 	stayName: text('stay_name').notNull(),
 	address: text('address'),
 	city: text('city').notNull(),
 	country: text('country').notNull(),
 	checkIn: date('check_in').notNull(),
 	checkOut: date('check_out').notNull(),
-	cost: decimal('cost').notNull(),
-	createdAt: timestamp('created_at').defaultNow().notNull(),
-	updatedAt: timestamp('updated_at')
+	cost: real('cost'),
+	createdAt: timestamp('created_at', { withTimezone: true, mode: 'string' }).defaultNow().notNull(),
+	updatedAt: timestamp('updated_at', { withTimezone: true, mode: 'string' }).$onUpdate(
+		() => sql`now()`
+	)
 });
 
 export const pack = pgTable('pack', {
@@ -69,8 +86,10 @@ export const pack = pgTable('pack', {
 	item: text('item').notNull(),
 	done: boolean('done').notNull().default(false),
 	remark: text('remark'),
-	createdAt: timestamp('created_at').defaultNow().notNull(),
-	updatedAt: timestamp('updated_at')
+	createdAt: timestamp('created_at', { withTimezone: true, mode: 'string' }).defaultNow().notNull(),
+	updatedAt: timestamp('updated_at', { withTimezone: true, mode: 'string' }).$onUpdate(
+		() => sql`now()`
+	)
 });
 
 // Better Auth
@@ -82,7 +101,7 @@ export const user = pgTable('user', {
 	emailVerified: boolean('email_verified').notNull(),
 	image: text('image'),
 	createdAt: timestamp('created_at').notNull(),
-	updatedAt: timestamp('updated_at').notNull(),
+	updatedAt: timestamp('updated_at'),
 	isAnonymous: boolean('is_anonymous').default(false)
 });
 

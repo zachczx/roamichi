@@ -19,10 +19,13 @@ CREATE TABLE "flight" (
 	"user_id" text NOT NULL,
 	"trip_id" varchar NOT NULL,
 	"airline" text NOT NULL,
+	"flight_number" text NOT NULL,
 	"from_city" text NOT NULL,
 	"from_country" text NOT NULL,
 	"to_city" text NOT NULL,
 	"to_country" text NOT NULL,
+	"airport" text NOT NULL,
+	"cost" real,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp
 );
@@ -61,7 +64,7 @@ CREATE TABLE "stay" (
 	"country" text NOT NULL,
 	"check_in" date NOT NULL,
 	"check_out" date NOT NULL,
-	"cost" numeric NOT NULL,
+	"cost" real,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp
 );
