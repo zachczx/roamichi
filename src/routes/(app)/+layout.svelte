@@ -6,7 +6,7 @@
 	<!-- <div
 			class="font-logo text-primary col-span-2 h-full max-h-20 px-2 py-4 text-4xl font-extrabold tracking-tighter"
 		>
-			<a href="/" class="flex items-center justify-center gap-4">Roamiko</a>
+			<a href="/" class="flex items-center justify-center gap-4">Roamichi</a>
 		</div> -->
 	<nav
 		class="bg-base-700 sticky top-0 z-[1] grid h-full max-h-dvh w-full max-w-[200px] content-start border-r border-r-black/5"
