@@ -189,6 +189,6 @@
 
 <style>
 	.content-height {
-		min-height: calc(100vh - 6rem);
+		min-height: calc(100vh - 7rem);
 	}
 </style>

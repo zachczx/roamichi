@@ -86,6 +86,26 @@ export const pack = pgTable('pack', {
 	item: text('item').notNull(),
 	done: boolean('done').notNull().default(false),
 	remark: text('remark'),
+	category: text('category').default('others'),
+	createdAt: timestamp('created_at', { withTimezone: true, mode: 'string' }).defaultNow().notNull(),
+	updatedAt: timestamp('updated_at', { withTimezone: true, mode: 'string' }).$onUpdate(
+		() => sql`now()`
+	)
+});
+
+export const gift = pgTable('gift', {
+	id: varchar('id', { length: 30 })
+		.primaryKey()
+		.$defaultFn(() => nanoid(10)),
+	userId: text('user_id')
+		.notNull()
+		.references(() => user.id, { onDelete: 'cascade' }),
+	tripId: varchar('trip_id')
+		.notNull()
+		.references(() => trip.id, { onDelete: 'cascade' }),
+	item: text('item').notNull(),
+	done: boolean('done').notNull().default(false),
+	remark: text('remark'),
 	createdAt: timestamp('created_at', { withTimezone: true, mode: 'string' }).defaultNow().notNull(),
 	updatedAt: timestamp('updated_at', { withTimezone: true, mode: 'string' }).$onUpdate(
 		() => sql`now()`

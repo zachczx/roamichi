@@ -147,7 +147,7 @@
 				</ul>
 			</div>
 
-			<div class="px-4 xl:px-16">{@render children()}</div>
+			<div class="px-4 pb-4 xl:px-16">{@render children()}</div>
 		</div>
 	</div>
 </div>

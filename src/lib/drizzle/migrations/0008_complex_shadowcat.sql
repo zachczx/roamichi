@@ -1,0 +1,1 @@
+ALTER TABLE "pack" ALTER COLUMN "category" SET DEFAULT 'others';

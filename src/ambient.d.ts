@@ -48,6 +48,7 @@ interface PackDB {
 	item: string;
 	done: boolean;
 	remark: string | null;
+	category: string | null;
 	createdAt: string;
 	updatedAt: string | null;
 }

@@ -50,6 +50,20 @@
       "when": 1750226153590,
       "tag": "0006_careless_scarlet_spider",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1750523067306,
+      "tag": "0007_loud_betty_ross",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1750524990077,
+      "tag": "0008_complex_shadowcat",
+      "breakpoints": true
     }
   ]
 }
