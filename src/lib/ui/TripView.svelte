@@ -2,7 +2,7 @@
 	import type { Snippet } from 'svelte';
 
 	interface TripViewProps {
-		mode: 'trips' | 'trip' | 'flight' | 'pack';
+		mode: 'trips' | 'trip' | 'flight' | 'stay' | 'pack';
 		tripId: string;
 		breadcrumbs: Snippet;
 		children: Snippet;
@@ -15,7 +15,7 @@
 
 	<div class="flex">
 		<nav
-			class="bg-base-200 sticky top-0 h-full max-h-dvh w-full max-w-32 border-r border-r-black/5"
+			class="bg-base-700/30 sticky top-0 hidden h-full w-full max-w-32 content-start border-r border-r-black/5 lg:grid lg:max-h-dvh lg:min-h-dvh"
 		>
 			<!-- <h3 class="flex w-full min-w-56 items-center gap-4 rounded-lg px-4 py-3 text-2xl font-bold">
 				<svg
@@ -27,7 +27,7 @@
 				>
 				New
 			</h3> -->
-			<ul class="grid gap-4">
+			<ul class="grid">
 				{#if mode === 'trips'}
 					<li class="">
 						<a
@@ -48,11 +48,32 @@
 						>
 					</li>
 				{/if}
-				{#if mode === 'trip'}
+				{#if mode !== 'trips'}
+					<li>
+						<a
+							href="/trip/{tripId}"
+							class="{mode === 'trip'
+								? 'bg-primary/60 text-primary-content font-semibold'
+								: 'hover:bg-primary hover:text-primary-content'} grid w-full cursor-pointer content-center justify-items-center gap-2 p-4 text-lg"
+							><svg
+								xmlns="http://www.w3.org/2000/svg"
+								width="1em"
+								height="1em"
+								class="material-symbols:border-all h-7 w-7"
+								viewBox="0 0 24 24"
+								><path
+									fill="currentColor"
+									d="M13 21v-8h8v8zm0-10V3h8v8zM3 11V3h8v8zm0 10v-8h8v8z"
+								/></svg
+							>All</a
+						>
+					</li>
 					<li>
 						<a
 							href="/trip/{tripId}/flight"
-							class="hover:bg-primary hover:text-primary-content grid w-full cursor-pointer content-center justify-items-center gap-2 p-4 text-lg font-semibold"
+							class="{mode === 'flight'
+								? 'bg-primary/60 text-primary-content font-semibold'
+								: 'hover:bg-primary hover:text-primary-content'} grid w-full cursor-pointer content-center justify-items-center gap-2 p-4 text-lg"
 							><svg
 								xmlns="http://www.w3.org/2000/svg"
 								width="1em"
@@ -69,7 +90,9 @@
 					<li>
 						<a
 							href="/trip/{tripId}/stay"
-							class="hover:bg-primary hover:text-primary-content grid w-full cursor-pointer content-center justify-items-center gap-2 p-4 text-lg font-semibold"
+							class="{mode === 'stay'
+								? 'bg-primary/60 text-primary-content font-semibold'
+								: 'hover:bg-primary hover:text-primary-content'} grid w-full cursor-pointer content-center justify-items-center gap-2 p-4 text-lg"
 							><svg
 								xmlns="http://www.w3.org/2000/svg"
 								width="1em"
@@ -85,8 +108,10 @@
 					</li>
 					<li>
 						<a
-							href="/"
-							class="hover:bg-primary hover:text-primary-content grid w-full cursor-pointer content-center justify-items-center gap-2 p-4 text-lg font-semibold"
+							href="/trip/{tripId}/pack"
+							class="{mode === 'pack'
+								? 'bg-primary/60 text-primary-content font-semibold'
+								: 'hover:bg-primary hover:text-primary-content'} grid w-full cursor-pointer content-center justify-items-center gap-2 p-4 text-lg"
 							><svg
 								xmlns="http://www.w3.org/2000/svg"
 								width="1em"

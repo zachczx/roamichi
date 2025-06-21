@@ -9,7 +9,7 @@
 			<a href="/" class="flex items-center justify-center gap-4">Roamichi</a>
 		</div> -->
 	<nav
-		class="bg-base-700 sticky top-0 z-[1] grid h-full max-h-dvh w-full max-w-[200px] content-start border-r border-r-black/5"
+		class="bg-base-700 sticky top-0 z-[1] grid h-full max-h-dvh w-full max-w-[200px] content-start border-r-2 border-r-black/5"
 	>
 		<div
 			class="bg-base-700 border-b-base-300/30 font-header flex h-16 items-center justify-center border-b-0 text-5xl font-bold"
@@ -44,18 +44,19 @@
 					class="{data.paths.includes('trip')
 						? 'bg-primary/60 text-primary-content'
 						: 'hover:bg-primary hover:text-primary-content'} flex min-h-20 w-full min-w-20 cursor-pointer items-center justify-center gap-4 p-4 text-lg"
-					><svg
+				>
+					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="1.3em"
 						height="1.3em"
-						class="material-symbols:your-trips h-8 w-8"
+						class="material-symbols:travel-luggage-and-bags h-8 w-8"
 						viewBox="0 0 24 24"
 						><path
 							fill="currentColor"
-							d="M8 18h8v-2H8zm-1 4q-.825 0-1.412-.587T5 20v-8q0-2.125 1.113-3.8T9 5.7V5q0-1.25.875-2.125T12 2t2.125.875T15 5v.7q1.775.825 2.888 2.5T19 12v8q0 .825-.587 1.413T17 22zm4-16.9q.275-.05.5-.075T12 5t.5.025t.5.075V5q0-.425-.288-.713T12 4t-.712.288T11 5zm-.85 9.4L12 13.1l1.85 1.4l-.7-2.275L15 10.9h-2.275L12 8.5l-.725 2.4H9l1.85 1.325z"
+							d="M11 6h2V4h-2zm1 6q-1.9 0-3.625-.788T5 9.45V8q0-.825.588-1.412T7 6h2V3q0-.425.288-.712T10 2h4q.425 0 .713.288T15 3v3h2q.825 0 1.413.588T19 8v1.45q-1.65.975-3.375 1.763T12 12M7 22v-1q-.825 0-1.412-.587T5 19v-7.3q1.4.85 2.888 1.45t3.112.8V15h2v-1.05q1.625-.2 3.113-.8T19 11.7V19q0 .825-.587 1.413T17 21v1h-2v-1H9v1z"
 						/></svg
-					></a
-				>
+					>
+				</a>
 			</li>
 
 			<!-- <li class="bg-base-content/15 my-4 h-0.5 w-full"></li> -->
@@ -71,7 +72,7 @@
 						xmlns="http://www.w3.org/2000/svg"
 						width="1.3em"
 						height="1.3em"
-						class="material-symbols:luggage h-8 w-8"
+						class="material-symbols:mail h-8 w-8"
 						viewBox="0 0 24 24"
 						><path
 							fill="currentColor"

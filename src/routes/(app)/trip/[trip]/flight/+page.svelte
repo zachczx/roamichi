@@ -6,7 +6,7 @@
 	let { data } = $props();
 </script>
 
-<TripView mode="trip" tripId={data.trip.id}>
+<TripView mode="flight" tripId={data.trip.id}>
 	{#snippet breadcrumbs()}
 		<li><a href="/trip" class="hover:text-primary">Trips</a></li>
 		<li><a href="/trip/{data.trip.id}">{data.trip.tripName}</a></li>

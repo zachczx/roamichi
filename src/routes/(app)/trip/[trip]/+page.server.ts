@@ -3,7 +3,7 @@ import { trip, flight, stay, pack } from '$lib/drizzle/schema';
 import { eq, and } from 'drizzle-orm';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import { error } from '@sveltejs/kit';
+import { error, fail, type Actions } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 
 dayjs.extend(relativeTime);
@@ -37,11 +37,9 @@ export const load: PageServerLoad = async ({ params, locals }) => {
 
 	const flightRecords: FlightProps[] = flightRows.map((flight): FlightProps => {
 		const departureTimestampSemantic = dayjs(flight.departureTimestamp).fromNow();
-		const departureTimestampFormatted = dayjs(flight.departureTimestamp).format(
-			'DD MMM, YYYY, hh:mma'
-		);
+		const departureTimestampFormatted = dayjs(flight.departureTimestamp).format('DD MMM YY, h:mma');
 		const arrivalTimestampSemantic = dayjs(flight.arrivalTimestamp).fromNow();
-		const arrivalTimestampFormatted = dayjs(flight.arrivalTimestamp).format('DD MMM, YYYY, hh:mma');
+		const arrivalTimestampFormatted = dayjs(flight.arrivalTimestamp).format('DD MMM YY, h:mma');
 		return {
 			departureTimestampSemantic,
 			departureTimestampFormatted,
@@ -74,10 +72,36 @@ export const load: PageServerLoad = async ({ params, locals }) => {
 		};
 	});
 
+	/**
+	 * Pack
+	 */
 	const packRows = await db
 		.select()
 		.from(pack)
 		.where(and(eq(pack.tripId, tripId), eq(pack.userId, locals.user?.id)));
 
-	return { trip: tripRecord, flight: flightRecords, stay: stayRecords, pack: packRows };
+	return {
+		trip: tripRecord,
+		flight: flightRecords,
+		stay: stayRecords,
+		pack: packRows
+	};
 };
+
+export const actions = {
+	pack: async ({ locals, request }) => {
+		if (!locals.user) {
+			return fail(403);
+		}
+
+		const formData = await request.formData();
+		console.log('received', formData);
+		const itemId = formData.get('id') as string;
+		const done = formData.get('done') === 'on' ? true : false;
+		console.log('Done:', done);
+
+		await db.update(pack).set({ done: done }).where(eq(pack.id, itemId));
+
+		return { success: true };
+	}
+} satisfies Actions;

@@ -47,7 +47,7 @@ interface PackDB {
 	tripId: string;
 	item: string;
 	done: boolean;
-	remark?: string;
+	remark: string | null;
 	createdAt: string;
 	updatedAt: string | null;
 }
