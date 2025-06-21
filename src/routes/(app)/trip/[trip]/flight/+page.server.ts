@@ -42,11 +42,38 @@ export const load: PageServerLoad = async ({ params, locals }) => {
 		);
 		const arrivalTimestampSemantic = dayjs(flight.arrivalTimestamp).fromNow();
 		const arrivalTimestampFormatted = dayjs(flight.arrivalTimestamp).format('DD MMM, YYYY, hh:mma');
+
+		// Key Timings
+		const timestampOnlineCheckIn = dayjs(flight.departureTimestamp).subtract(48, 'hours');
+		const timestampOnlineCheckInFormatted = timestampOnlineCheckIn.format('DD MMM, YYYY, hh:mma');
+		const timestampOnlineCheckInSemantic = timestampOnlineCheckIn.fromNow();
+
+		const timestampBookTaxi = dayjs(flight.departureTimestamp).subtract(3, 'hours');
+		const timestampBookTaxiFormatted = timestampBookTaxi.format('DD MMM, YYYY, hh:mma');
+		const timestampBookTaxiSemantic = timestampBookTaxi.fromNow();
+
+		const timestampReachAirport = dayjs(flight.departureTimestamp).subtract(2.5, 'hours');
+		const timestampReachAirportFormatted = timestampReachAirport.format('DD MMM, YYYY, hh:mma');
+		const timestampReachAirportSemantic = timestampReachAirport.fromNow();
+
+		const timestampReachGate = dayjs(flight.departureTimestamp).subtract(45, 'minutes');
+		const timestampReachGateFormatted = timestampReachGate.format('DD MMM, YYYY, hh:mma');
+		const timestampReachGateSemantic = timestampReachGate.fromNow();
+
 		return {
 			departureTimestampSemantic,
 			departureTimestampFormatted,
 			arrivalTimestampSemantic,
 			arrivalTimestampFormatted,
+
+			timestampOnlineCheckInFormatted,
+			timestampOnlineCheckInSemantic,
+			timestampBookTaxiFormatted,
+			timestampBookTaxiSemantic,
+			timestampReachAirportFormatted,
+			timestampReachAirportSemantic,
+			timestampReachGateFormatted,
+			timestampReachGateSemantic,
 			...flight
 		};
 	});

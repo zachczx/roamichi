@@ -68,6 +68,15 @@ interface FlightProps extends FlightDB {
 	updatedAtFormatted?: string;
 	createdAtSemantic?: string;
 	updatedAtSemantic?: string;
+
+	timestampOnlineCheckInFormatted: string;
+	timestampOnlineCheckInSemantic: string;
+	timestampBookTaxiFormatted: string;
+	timestampBookTaxiSemantic: string;
+	timestampReachAirportFormatted: string;
+	timestampReachAirportSemantic: string;
+	timestampReachGateFormatted: string;
+	timestampReachGateSemantic: string;
 }
 
 interface StayProps extends StayDB {
