@@ -11,7 +11,8 @@
 
 	--color-info: #ddffbc;
 
-	--color-neutral: #328e6e;
+	--color-neutral: #808080;
+	/* #328e6e; */
 
 	--color-warning-content: #4d0000;
 
@@ -113,15 +114,21 @@
 	}
 
 	/* Change breadcrumb color */
-	.breadcrumbs > ul > li + *::before {
-		/* border-color: green !important; */
-		border-top-width: 3px !important;
-		border-right-width: 3px !important;
-		margin-inline: 1.25rem !important;
-		height: 0.5rem !important;
-		width: 0.5rem !important;
-		opacity: 50% !important;
-		background-color: green;
+	.breadcrumbs > ul {
+		li:last-child {
+			font-weight: 700;
+		}
+
+		li + *::before {
+			/* border-color: green !important; */
+			border-top-width: 3px !important;
+			border-right-width: 3px !important;
+			margin-inline: 1.25rem !important;
+			height: 0.65rem !important;
+			width: 0.65rem !important;
+			opacity: 75% !important;
+			background-color: green;
+		}
 	}
 }
 

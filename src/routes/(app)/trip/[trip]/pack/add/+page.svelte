@@ -36,7 +36,7 @@
 
 <TripView mode="flight" tripId={data.trip.id}>
 	{#snippet breadcrumbs()}
-		<li><a href="/trip" class="hover:text-primary">Trips</a></li>
+		<li><a href="/trip">Trips</a></li>
 		<li><a href="/trip/{data.trip.id}">{data.trip.tripName}</a></li>
 		<li>Add Packing Item</li>
 	{/snippet}

@@ -1,4 +1,6 @@
 <script lang="ts">
+	import Toaster from '$lib/ui/Toaster.svelte';
+
 	let { children, data } = $props();
 </script>
 
@@ -9,20 +11,20 @@
 			<a href="/" class="flex items-center justify-center gap-4">Roamichi</a>
 		</div> -->
 	<nav
-		class="bg-base-700 sticky top-0 z-[1] grid h-full max-h-dvh w-full max-w-[200px] content-start border-r-2 border-r-black/5"
+		class="to-base-700 from-base-700/50 sticky top-0 z-[1] grid h-full max-h-dvh w-full max-w-[200px] content-start border-r border-r-black/30 bg-linear-to-br shadow-md shadow-gray-800/50"
 	>
 		<div
-			class="bg-base-700 border-b-base-300/30 font-header flex h-16 items-center justify-center border-b-0 text-5xl font-bold"
+			class="border-b-base-300/30 font-header flex h-16 items-center justify-center border-b-0 text-6xl font-bold"
 		>
 			R
 		</div>
 		<ul class="mt-4">
-			<li class="">
+			<li>
 				<a
 					aria-label="dashboard"
 					href="/"
 					class="{data.paths.includes('dashboard')
-						? 'bg-primary/60 text-primary-content'
+						? 'to-primary from-primary/50 text-primary-content bg-linear-to-br'
 						: 'hover:bg-primary hover:text-primary-content'} flex min-h-20 w-full min-w-20 cursor-pointer items-center justify-center gap-4 p-4 text-lg"
 					><svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -37,12 +39,12 @@
 					></a
 				>
 			</li>
-			<li class="">
+			<li>
 				<a
 					aria-label="trips"
 					href="/trip"
 					class="{data.paths.includes('trip')
-						? 'bg-primary/60 text-primary-content'
+						? 'to-primary from-primary/50 text-primary-content bg-linear-to-br'
 						: 'hover:bg-primary hover:text-primary-content'} flex min-h-20 w-full min-w-20 cursor-pointer items-center justify-center gap-4 p-4 text-lg"
 				>
 					<svg
@@ -60,12 +62,12 @@
 			</li>
 
 			<!-- <li class="bg-base-content/15 my-4 h-0.5 w-full"></li> -->
-			<li class="">
+			<li>
 				<a
 					aria-label="contact"
 					href="/contact"
 					class="{data.paths.includes('contact')
-						? 'bg-primary/60 text-primary-content'
+						? 'to-primary from-primary/50 text-primary-content bg-linear-to-br'
 						: 'hover:bg-primary hover:text-primary-content'} flex min-h-20 w-full min-w-20 cursor-pointer items-center justify-center gap-4 p-4 text-lg"
 				>
 					<svg

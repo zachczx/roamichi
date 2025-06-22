@@ -64,5 +64,36 @@ export const actions = {
 		await db.update(pack).set({ done: done, category: category }).where(eq(pack.id, itemId));
 
 		return { doneSuccess: true };
+	},
+
+	addCommon: async ({ locals, request }) => {
+		if (!locals.user) {
+			return fail(403);
+		}
+
+		const formData = await request.formData();
+		const addItem = String(formData.get('item'));
+		if (addItem.length === 0) return fail(500);
+
+		const category = formData.get('category') ? String(formData.get('category')) : 'others';
+		const tripId = String(formData.get('tripId'));
+		await db
+			.insert(pack)
+			.values({ tripId: tripId, userId: locals.user.id, item: addItem, category: category });
+
+		return { success: true };
+	},
+
+	delete: async ({ locals, request }) => {
+		if (!locals.user) {
+			return fail(403);
+		}
+
+		const formData = await request.formData();
+		const deleteId = String(formData.get('id'));
+
+		await db.delete(pack).where(and(eq(pack.userId, locals.user.id), eq(pack.id, deleteId)));
+
+		return { success: true };
 	}
 } satisfies Actions;

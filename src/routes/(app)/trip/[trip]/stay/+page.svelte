@@ -8,19 +8,19 @@
 
 <TripView mode="stay" tripId={data.trip.id}>
 	{#snippet breadcrumbs()}
-		<li><a href="/trip" class="hover:text-primary">Trips</a></li>
+		<li><a href="/trip">Trips</a></li>
 		<li><a href="/trip/{data.trip.id}">{data.trip.tripName}</a></li>
 		<li>Stay</li>
 	{/snippet}
 
 	<main class="content-height grid w-full content-start gap-12 justify-self-center">
 		<header>
-			<h1 class="font-header text-7xl font-bold">{data.trip.tripName}</h1>
+			<h1 class="font-header text-4xl font-bold">{data.trip.tripName}</h1>
 			<span class="text-base-content/50 text-sm">Created {data.trip.createdAtSemantic}</span>
 		</header>
 		<section class="grid w-full gap-4 lg:grid-cols-2 xl:grid-cols-3">
 			<div class="grid grid-cols-[1fr_auto] lg:col-span-2 xl:col-span-3">
-				<h2 class="font-header text-4xl font-bold">Stays ({data.stay.length})</h2>
+				<h2 class="font-header text-7xl font-bold">Stays ({data.stay.length})</h2>
 				<a href="/trip/{data.trip.id}/stay/add" class="btn btn-primary flex items-center gap-2"
 					>Add Stay<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -44,7 +44,7 @@
 							{/if}
 							<div>{stay.city}, {stay.country}</div>
 							<div class="mt-2">
-								<span class="btn-neutral btn-outline btn btn-xs rounded-full px-4 py-1"
+								<span class="btn-primary btn-outline btn btn-xs rounded-full px-4 py-1"
 									>{stay.type[0].toUpperCase() + stay.type.slice(1, stay.type.length)}
 								</span>
 							</div>
