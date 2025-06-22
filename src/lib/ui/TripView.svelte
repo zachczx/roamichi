@@ -2,7 +2,7 @@
 	import type { Snippet } from 'svelte';
 
 	interface TripViewProps {
-		mode: 'trips' | 'trip' | 'flight' | 'stay' | 'pack';
+		mode: 'trips' | 'trip' | 'flight' | 'stay' | 'pack' | 'gift';
 		tripId: string;
 		breadcrumbs: Snippet;
 		children: Snippet;
@@ -123,6 +123,25 @@
 									d="M7 21q-.825 0-1.412-.587T5 19V8q0-.825.588-1.412T7 6h2V4q0-.825.588-1.412T11 2h2q.825 0 1.413.588T15 4v2h2q.825 0 1.413.588T19 8v11q0 .825-.587 1.413T17 21q0 .425-.288.713T16 22t-.712-.288T15 21H9q0 .425-.288.713T8 22t-.712-.288T7 21m2-3h2V9H9zm4 0h2V9h-2zM11 6h2V4h-2z"
 								/></svg
 							>Pack</a
+						>
+					</li>
+					<li>
+						<a
+							href="/trip/{tripId}/gift"
+							class="{mode === 'gift'
+								? 'to-primary from-primary/50 text-primary-content bg-linear-to-br'
+								: 'hover:bg-primary hover:text-primary-content'} grid w-full cursor-pointer content-center justify-items-center gap-2 p-4 text-lg"
+							><svg
+								xmlns="http://www.w3.org/2000/svg"
+								width="32"
+								height="32"
+								class="material-symbols:featured-seasonal-and-gifts h-7 w-7"
+								viewBox="0 0 24 24"
+								><path
+									fill="currentColor"
+									d="M4 22V11H2V5h5.2q-.125-.225-.162-.475T7 4q0-1.25.875-2.125T10 1q.575 0 1.075.213T12 1.8q.425-.4.925-.6T14 1q1.25 0 2.125.875T17 4q0 .275-.05.513T16.8 5H22v6h-2v11zM14 3q-.425 0-.712.288T13 4t.288.713T14 5t.713-.288T15 4t-.288-.712T14 3M9 4q0 .425.288.713T10 5t.713-.288T11 4t-.288-.712T10 3t-.712.288T9 4M4 7v2h7V7zm7 13v-9H6v9zm2 0h5v-9h-5zm7-11V7h-7v2z"
+								/></svg
+							>Gift</a
 						>
 					</li>
 				{/if}
