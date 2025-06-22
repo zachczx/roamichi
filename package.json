@@ -45,6 +45,7 @@
 		"tsx": "^4.20.3",
 		"typescript": "^5.8.3",
 		"typescript-eslint": "^8.34.1",
+		"unplugin-icons": "^22.1.0",
 		"vite": "^6.3.5",
 		"zod": "^3.25.67"
 	},
@@ -65,6 +66,7 @@
 		"dotenv": "^16.5.0",
 		"drizzle-orm": "^0.44.2",
 		"drizzle-zod": "^0.8.2",
+		"melt": "^0.35.2",
 		"nanoid": "^5.1.5",
 		"pocketbase": "^0.26.1",
 		"postgres": "^3.4.7"
