@@ -11,6 +11,9 @@ importers:
       '@fontsource-variable/ibm-plex-sans':
         specifier: ^5.2.6
         version: 5.2.6
+      '@fontsource-variable/playfair-display':
+        specifier: ^5.2.6
+        version: 5.2.6
       '@fontsource/baskervville':
         specifier: ^5.2.7
         version: 5.2.7
@@ -522,6 +525,9 @@ packages:
 
   '@fontsource-variable/ibm-plex-sans@5.2.6':
     resolution: {integrity: sha512-hnuya7tsdaEiub463GFrhKDnmViTFKkJb9S+H+Fk6sMnr5dL/5DlAxeCZyXMK8WfjHktDiaEOIWPRZBQVKV0dw==}
+
+  '@fontsource-variable/playfair-display@5.2.6':
+    resolution: {integrity: sha512-Uedpo4WwsWtobi1KMYGm9tlKcZJcD18EiBtPWhbbccT2u58qM7vwkOZGdrmdWVDhcEhjwNrqRUyZijwIFtsCcQ==}
 
   '@fontsource/baskervville@5.2.7':
     resolution: {integrity: sha512-4Sp7auISlI0RdaxEfY0bvjqpOLHgiDMnp+GZWOaSV1Wkyjqqo7+rktQ3ikWFZiD4C6izJUJQYWTcDlcQeMaqLA==}
@@ -2954,6 +2960,8 @@ snapshots:
   '@floating-ui/utils@0.2.9': {}
 
   '@fontsource-variable/ibm-plex-sans@5.2.6': {}
+
+  '@fontsource-variable/playfair-display@5.2.6': {}
 
   '@fontsource/baskervville@5.2.7': {}
 

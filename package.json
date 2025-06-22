@@ -56,6 +56,7 @@
 	},
 	"dependencies": {
 		"@fontsource-variable/ibm-plex-sans": "^5.2.6",
+		"@fontsource-variable/playfair-display": "^5.2.6",
 		"@fontsource/baskervville": "^5.2.7",
 		"@fontsource/ibm-plex-serif": "^5.2.6",
 		"@poppanator/sveltekit-svg": "^5.0.1",
