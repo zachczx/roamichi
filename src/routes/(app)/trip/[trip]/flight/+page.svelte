@@ -7,12 +7,14 @@
 	let { data } = $props();
 
 	let completed = $derived.by(() => {
+		let completed;
 		if (data.flight) {
-			let completed = data.flight.filter((flight) => {
+			completed = data.flight.filter((flight) => {
 				if (checkIfHistory(flight.departureTimestamp)) return flight;
 			});
 			return completed;
 		}
+		return [];
 	});
 
 	let progress = $derived(Math.floor((completed?.length / data.flight?.length) * 100));
@@ -35,7 +37,7 @@
 		<div class="grid w-full grid-cols-1 content-start gap-8">
 			<div class="col-span-1 grid grid-cols-[1fr_auto]">
 				<h2 class="font-header text-7xl font-bold">
-					<a href="/trip/{data.trip.id}/flight">Flights ({data.flight.length})</a>
+					<a href="/trip/{data.trip.id}/flight">Flights</a>
 				</h2>
 				<div class="flex items-end">
 					<a

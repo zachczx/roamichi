@@ -33,7 +33,7 @@
 	class="{type === 'warning'
 		? 'bg-warning/10 border-warning/50'
 		: type === 'aside'
-			? 'bg-base-200/30 border-neutral/20'
+			? 'bg-neutral/3 border-neutral/20'
 			: 'bg-base-200/70 border-base-300/30'} grid h-fit content-start rounded-xl border shadow-md"
 >
 	<div
@@ -81,7 +81,7 @@
 						fill="currentColor"
 						d="m9.55 18l-5.7-5.7l1.425-1.425L9.55 15.15l9.175-9.175L20.15 7.4z"
 					/></svg
-				>{/if}{#if progressDone && progressTotal}{progressDone}/{progressTotal}{/if}
+				>{/if}{progressDone}/{progressTotal}
 		</div>
 	</div>
 	<ul class="grid gap-2 p-4">
