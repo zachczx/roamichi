@@ -17,12 +17,24 @@
 	let packEssentials: PackProps[] = $derived.by(() => {
 		return data.pack.filter((pack) => pack.category === 'essentials');
 	});
+	let packEssentialsDoneCount: number = $derived.by(() => {
+		return packEssentials.filter((pack) => pack.done).length;
+	});
+
 	let packElectronics: PackProps[] = $derived.by(() => {
 		return data.pack.filter((pack) => pack.category === 'electronics');
 	});
+	let packElectronicsDoneCount: number = $derived.by(() => {
+		return packElectronics.filter((pack) => pack.done).length;
+	});
+
 	let packHealth: PackProps[] = $derived.by(() => {
 		return data.pack.filter((pack) => pack.category === 'health');
 	});
+	let packHealthDoneCount: number = $derived.by(() => {
+		return packHealth.filter((pack) => pack.done).length;
+	});
+
 	let packOthers: PackProps[] = $derived.by(() => {
 		let packOthers = data.pack.filter((pack) => {
 			if (!pack.category) return pack;
@@ -31,6 +43,9 @@
 			return !categories.includes(pack.category);
 		});
 		return packOthers;
+	});
+	let packOthersDoneCount: number = $derived.by(() => {
+		return packOthers.filter((pack) => pack.done).length;
 	});
 
 	let progress = $derived(Math.floor((packed?.length / data.pack?.length) * 100));
@@ -66,7 +81,7 @@
 					<progress class="progress progress-success w-full" value={progress} max="100"></progress>
 				</div>
 				<p>
-					{packed.length > 0 ? data.pack.length - packed.length : '0'} of {data.pack.length} items remaining
+					{packed.length > 0 ? packed.length : '0'} of {data.pack.length} packed
 				</p>
 			</div>
 
@@ -121,7 +136,12 @@
 
 			<div class="grid content-start gap-8">
 				{#key data.pack}
-					<PackCard title="Essentials" pack={packEssentials}>
+					<PackCard
+						title="Essentials"
+						pack={packEssentials}
+						progressDone={packEssentialsDoneCount}
+						progressTotal={packEssentials.length}
+					>
 						{#if packEssentials.length > 0}
 							{#each packEssentials as pack}
 								{@render packItem(pack)}
@@ -146,7 +166,12 @@
 							</label>
 						</form>
 					</PackCard>
-					<PackCard title="Electronics" pack={packElectronics}>
+					<PackCard
+						title="Electronics"
+						pack={packElectronics}
+						progressDone={packElectronicsDoneCount}
+						progressTotal={packElectronics.length}
+					>
 						{#if packElectronics.length > 0}
 							{#each packElectronics as pack}
 								{@render packItem(pack)}
@@ -172,7 +197,12 @@
 						</form>
 					</PackCard>
 
-					<PackCard title="Health" pack={packHealth}>
+					<PackCard
+						title="Health"
+						pack={packHealth}
+						progressDone={packHealthDoneCount}
+						progressTotal={packHealth.length}
+					>
 						{#if packHealth.length > 0}
 							{#each packHealth as pack}
 								{@render packItem(pack)}
@@ -198,7 +228,12 @@
 						</form>
 					</PackCard>
 
-					<PackCard title="Others" pack={packOthers}>
+					<PackCard
+						title="Others"
+						pack={packOthers}
+						progressDone={packOthersDoneCount}
+						progressTotal={packOthers.length}
+					>
 						{#if packOthers.length > 0}
 							{#each packOthers as pack}
 								{@render packItem(pack)}
@@ -325,12 +360,10 @@
 					</div>
 				</PackCard>
 
-				<PackCard title="Add Common Items">
+				<PackCard title="Add Common Items" type="aside">
 					<div class="collapse-arrow bg-base-100 border-base-content/20 collapse border">
 						<input type="radio" name="suggestions-accordion" checked />
-						<div
-							class="collapse-title from-base-400/20 to-base-400/40 bg-linear-to-br font-semibold"
-						>
+						<div class="collapse-title from-neutral/10 to-neutral/30 bg-linear-to-br font-semibold">
 							Essentials
 						</div>
 						<div class="collapse-content">
@@ -370,9 +403,7 @@
 
 					<div class="collapse-arrow bg-base-100 border-base-content/20 collapse border">
 						<input type="radio" name="suggestions-accordion" />
-						<div
-							class="collapse-title from-base-400/20 to-base-400/40 bg-linear-to-br font-semibold"
-						>
+						<div class="collapse-title from-neutral/10 to-neutral/30 bg-linear-to-br font-semibold">
 							Electronics
 						</div>
 						<div class="collapse-content">
@@ -404,9 +435,7 @@
 
 					<div class="collapse-arrow bg-base-100 border-base-content/20 collapse border">
 						<input type="radio" name="suggestions-accordion" />
-						<div
-							class="collapse-title from-base-400/20 to-base-400/40 bg-linear-to-br font-semibold"
-						>
+						<div class="collapse-title from-neutral/10 to-neutral/30 bg-linear-to-br font-semibold">
 							Health
 						</div>
 						<div class="collapse-content">
@@ -437,9 +466,7 @@
 
 					<div class="collapse-arrow bg-base-100 border-base-content/20 collapse border">
 						<input type="radio" name="suggestions-accordion" />
-						<div
-							class="collapse-title from-base-400/20 to-base-400/40 bg-linear-to-br font-semibold"
-						>
+						<div class="collapse-title from-neutral/10 to-neutral/30 bg-linear-to-br font-semibold">
 							Others
 						</div>
 						<div class="collapse-content">

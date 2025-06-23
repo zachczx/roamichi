@@ -7,14 +7,15 @@
 	let { data } = $props();
 
 	let completed = $derived.by(() => {
-		return data.flight.filter((flight) => {
-			if (checkIfHistory(flight.departureTimestamp)) return flight;
-		});
+		if (data.flight) {
+			let completed = data.flight.filter((flight) => {
+				if (checkIfHistory(flight.departureTimestamp)) return flight;
+			});
+			return completed;
+		}
 	});
 
 	let progress = $derived(Math.floor((completed?.length / data.flight?.length) * 100));
-
-	$inspect(progress);
 </script>
 
 <TripView mode="flight" tripId={data.trip.id}>

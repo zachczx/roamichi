@@ -11,7 +11,7 @@
 			<a href="/" class="flex items-center justify-center gap-4">Roamichi</a>
 		</div> -->
 	<nav
-		class="to-base-700 from-base-700/50 sticky top-0 z-[1] grid h-full max-h-dvh w-full max-w-[200px] content-start border-r border-r-black/30 bg-linear-to-br shadow-md shadow-gray-800/50"
+		class="to-base-700 from-base-700/50 sticky top-0 z-[1] grid h-full max-h-dvh w-full max-w-[200px] content-start border-r border-r-black/20 bg-linear-to-br"
 	>
 		<div
 			class="border-b-base-300/30 font-header flex h-16 items-center justify-center border-b-0 text-6xl font-bold"

@@ -4,7 +4,7 @@
 </script>
 
 <form method="post" action="?/addCommon" class="flex items-center" use:enhance>
-	<button class="btn btn-primary btn-outline flex items-center gap-2" aria-label="add {item}"
+	<button class="btn btn-neutral btn-outline flex items-center gap-2" aria-label="add {item}"
 		><svg
 			xmlns="http://www.w3.org/2000/svg"
 			width="1.3em"

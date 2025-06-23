@@ -15,7 +15,7 @@
 
 	<div class="flex">
 		<nav
-			class="bg-base-700/30 sticky top-0 hidden h-full w-full max-w-32 content-start border-r border-r-black/5 lg:grid lg:max-h-dvh lg:min-h-dvh"
+			class="bg-base-700/30 sticky top-0 hidden h-full w-full max-w-32 content-start border-r border-r-black/20 lg:grid lg:max-h-dvh lg:min-h-dvh"
 		>
 			<!-- <h3 class="flex w-full min-w-56 items-center gap-4 rounded-lg px-4 py-3 text-2xl font-bold">
 				<svg
