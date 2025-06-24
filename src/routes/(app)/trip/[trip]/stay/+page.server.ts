@@ -41,11 +41,14 @@ export const load: PageServerLoad = async ({ params, locals }) => {
 		const checkInFormatted = dayjs(stay.checkIn).format('DD MMM, YYYY, hh:mma');
 		const checkOutSemantic = dayjs(stay.checkOut).fromNow();
 		const checkOutFormatted = dayjs(stay.checkOut).format('DD MMM, YYYY, hh:mma');
+
+		const stayNightsCount = dayjs(stay.checkOut).diff(stay.checkIn, 'day');
 		return {
 			checkInSemantic,
 			checkInFormatted,
 			checkOutSemantic,
 			checkOutFormatted,
+			stayNightsCount,
 			...stay
 		};
 	});

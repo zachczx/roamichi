@@ -2,12 +2,12 @@
 	import EmptyState from '$lib/assets/svg/EmptyState.svelte';
 	import { stay } from '$lib/drizzle/schema.js';
 	import { checkIfHistory } from '$lib/helpers.js';
-	import TripView from '$lib/ui/TripView.svelte';
+	import TripView from '$lib/view/TripView.svelte';
 
 	let { data } = $props();
 
 	let stayed = $derived.by(() => {
-		return data.stay.filter((stay) => !checkIfHistory(stay.checkOut));
+		return data.stay.filter((stay) => checkIfHistory(stay.checkOut));
 	});
 
 	let progress = $derived(Math.floor((stayed?.length / data.stay?.length) * 100));
@@ -147,7 +147,7 @@
 										{#if stay.address}
 											{stay.address}
 										{:else}
-											Not specified
+											Unspecified
 										{/if}
 									</p>
 								</div>
@@ -165,7 +165,7 @@
 										/></svg
 									>
 									<h4 class="font-bold">Nights</h4>
-									<p>TBC</p>
+									<p>{stay.stayNightsCount}</p>
 								</div>
 
 								<div>
@@ -217,7 +217,7 @@
 										{#if stay.cost}
 											{stay.cost}
 										{:else}
-											Not specified
+											Unspecified
 										{/if}
 									</p>
 								</div>

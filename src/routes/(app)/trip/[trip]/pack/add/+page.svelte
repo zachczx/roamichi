@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { countries } from '$lib/countries.js';
-	import TripView from '$lib/ui/TripView.svelte';
+	import TripView from '$lib/view/TripView.svelte';
 	import { superForm } from 'sveltekit-superforms';
 	let { data } = $props();
 	let timer = $state(5);

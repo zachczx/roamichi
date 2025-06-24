@@ -64,6 +64,13 @@
       "when": 1750524990077,
       "tag": "0008_complex_shadowcat",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1750750092997,
+      "tag": "0009_wealthy_electro",
+      "breakpoints": true
     }
   ]
 }

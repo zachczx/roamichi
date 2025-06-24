@@ -1,5 +1,5 @@
 <script lang="ts">
-	import TripView from '$lib/ui/TripView.svelte';
+	import TripView from '$lib/view/TripView.svelte';
 
 	let { data } = $props();
 
@@ -13,7 +13,7 @@
 	}
 </script>
 
-<TripView mode="trips">
+<TripView mode="trips" tripId="">
 	{#snippet breadcrumbs()}
 		<li>Trips</li>
 	{/snippet}

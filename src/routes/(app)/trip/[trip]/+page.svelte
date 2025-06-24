@@ -2,7 +2,7 @@
 	import { enhance } from '$app/forms';
 	import EmptyState from '$lib/assets/svg/EmptyState.svelte';
 	import { stay } from '$lib/drizzle/schema.js';
-	import TripView from '$lib/ui/TripView.svelte';
+	import TripView from '$lib/view/TripView.svelte';
 	import { checkIfHistory } from '$lib/helpers';
 
 	let { data } = $props();

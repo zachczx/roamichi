@@ -6,6 +6,10 @@ import { zod4 } from 'sveltekit-superforms/adapters';
 import { z } from 'zod/v4';
 import { message } from 'sveltekit-superforms';
 import { and, eq } from 'drizzle-orm';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+
+dayjs.extend(relativeTime);
 
 const stayFormSchema = z
 	.object({
@@ -34,11 +38,37 @@ export const load = async ({ params, locals }) => {
 		.select()
 		.from(trip)
 		.where(and(eq(trip.id, tripId), eq(trip.userId, locals.user.id)));
-	const tripRecord = tripRows[0];
+
+	const allStayRows = await db
+		.select()
+		.from(stay)
+		.where(and(eq(stay.tripId, tripId), eq(stay.userId, locals.user.id)));
+
+	// Timing format is different from main stay page
+	const stayRecords = allStayRows.map((stay) => {
+		const checkInSemantic = dayjs(stay.checkIn).fromNow();
+		const checkInFormatted = dayjs(stay.checkIn).format('DD/MM/YY');
+		const checkOutSemantic = dayjs(stay.checkOut).fromNow();
+		const checkOutFormatted = dayjs(stay.checkOut).format('DD/MM/YY');
+
+		const stayNightsCount = dayjs(stay.checkOut).diff(stay.checkIn, 'day');
+		return {
+			checkInSemantic,
+			checkInFormatted,
+			checkOutSemantic,
+			checkOutFormatted,
+			stayNightsCount,
+			...stay
+		};
+	});
 
 	const form = await superValidate(zod4(stayFormSchema));
-
-	return { form, tripId, trip: tripRecord };
+	const tripRecord: TripProps = {
+		...tripRows[0],
+		createdAtSemantic: dayjs(tripRows[0].createdAt).fromNow(),
+		createdAtFormatted: dayjs(tripRows[0].createdAt).format('DD MMM, YYYY')
+	};
+	return { form, tripId, trip: tripRecord, stay: stayRecords };
 };
 
 export const actions = {

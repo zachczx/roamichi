@@ -2,7 +2,7 @@
 	import { enhance } from '$app/forms';
 	import EmptyState from '$lib/assets/svg/EmptyState.svelte';
 	import Toaster from '$lib/ui/Toaster.svelte';
-	import TripView from '$lib/ui/TripView.svelte';
+	import TripView from '$lib/view/TripView.svelte';
 	import type { PageProps } from '../$types';
 	import PackCard from '$lib/ui/PackCard.svelte';
 	import PackAddCommonItems from '$lib/ui/PackAddCommonItems.svelte';

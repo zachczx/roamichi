@@ -2,6 +2,7 @@
 	import { goto } from '$app/navigation';
 	import { superForm } from 'sveltekit-superforms';
 	import { countries } from '$lib/countries';
+	import AddView from '$lib/view/AddView.svelte';
 	let { data } = $props();
 	let timer = $state(5);
 
@@ -19,113 +20,110 @@
 	});
 </script>
 
-{#if $message?.status === 'success'}
-	<div class="toast toast-top toast-center">
-		<div class="alert alert-success flex items-center gap-2">
-			<svg
-				xmlns="http://www.w3.org/2000/svg"
-				width="2em"
-				height="2em"
-				class="material-symbols:check-circle"
-				viewBox="0 0 24 24"
-				><path
-					fill="currentColor"
-					d="m10.6 16.6l7.05-7.05l-1.4-1.4l-5.65 5.65l-2.85-2.85l-1.4 1.4zM12 22q-2.075 0-3.9-.788t-3.175-2.137T2.788 15.9T2 12t.788-3.9t2.137-3.175T8.1 2.788T12 2t3.9.788t3.175 2.137T21.213 8.1T22 12t-.788 3.9t-2.137 3.175t-3.175 2.138T12 22"
-				/></svg
-			>
-			<span>Flight added! Redirecting you in {timer}s...</span>
-		</div>
-	</div>
-{/if}
-
-<div class="breadcrumbs text-sm">
-	<ul>
-		<li>
-			<a href="/" class="hover:text-primary" aria-label="home"
-				><svg xmlns="http://www.w3.org/2000/svg" width="1.3em" height="1.3em" viewBox="0 0 24 24"
-					><path
-						fill="currentColor"
-						d="M5 20v-9.15L2.2 13L1 11.4L12 3l4 3.05V4h3v4.35l4 3.05l-1.2 1.6l-2.8-2.15V20h-5v-6h-4v6zm5-9.975h4q0-.8-.6-1.313T12 8.2t-1.4.513t-.6 1.312"
-					/></svg
-				></a
-			>
-		</li>
-		<li><a href="/trip" class="hover:text-primary hover:underline">Trips</a></li>
-		<li>
-			<a href="/trip/{data.trip?.id}" class="hover:text-primary hover:underline"
-				>{data.trip?.tripName}</a
-			>
-		</li>
+<AddView mode="flight" tripId={data.trip.id}>
+	{#snippet breadcrumbs()}
+		<li><a href="/trip">Trips</a></li>
+		<li><a href="/trip/{data.trip.id}">{data.trip.tripName}</a></li>
+		<li><a href="/trip/{data.trip.id}/flight">Stay</a></li>
 		<li>Add Flight</li>
-	</ul>
-</div>
+	{/snippet}
 
-<h1 class="font-header text-6xl font-bold">Add Flight</h1>
-<form method="post" class="grid w-full gap-8" use:enhance>
-	<div class="bg-base-300/20 lg: grid gap-4 rounded-xl p-4 lg:p-6">
-		<h3 class="font-header text-2xl">Plane</h3>
-		<fieldset class="fieldset">
-			<legend class="fieldset-legend">Airline</legend>
-			<input
-				type="text"
-				name="airline"
-				class="input w-full"
-				placeholder="Type here"
-				aria-invalid={$errors.airline ? 'true' : undefined}
-				bind:value={$form.airline}
-				{...$constraints.airline}
-			/>
-			{#if $errors.airline}<span class="invalid text-error">{$errors.airline}</span>{/if}
-		</fieldset>
+	<main class="content-height grid w-full content-start gap-12 justify-self-center">
+		<header>
+			<h1 class="font-header text-4xl font-bold">{data.trip.tripName}</h1>
+			<span class="text-base-content/50 text-sm">Created {data.trip.createdAtSemantic}</span>
+		</header>
+		<section class="grid w-full gap-8">
+			<h2 class="font-header text-7xl font-bold">Add Flight</h2>
+		</section>
 
-		<fieldset class="fieldset">
-			<legend class="fieldset-legend">Flight No.</legend>
-			<input
-				type="text"
-				name="flightNumber"
-				class="input w-full"
-				placeholder="Type here"
-				aria-invalid={$errors.flightNumber ? 'true' : undefined}
-				bind:value={$form.flightNumber}
-				{...$constraints.flightNumber}
-			/>
-			{#if $errors.flightNumber}<span class="invalid text-error">{$errors.flightNumber}</span>{/if}
-		</fieldset>
-	</div>
+		<section class="">
+			{#if $message?.status === 'success'}
+				<div class="toast toast-top toast-center">
+					<div class="alert alert-success flex items-center gap-2">
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							width="2em"
+							height="2em"
+							class="material-symbols:check-circle"
+							viewBox="0 0 24 24"
+							><path
+								fill="currentColor"
+								d="m10.6 16.6l7.05-7.05l-1.4-1.4l-5.65 5.65l-2.85-2.85l-1.4 1.4zM12 22q-2.075 0-3.9-.788t-3.175-2.137T2.788 15.9T2 12t.788-3.9t2.137-3.175T8.1 2.788T12 2t3.9.788t3.175 2.137T21.213 8.1T22 12t-.788 3.9t-2.137 3.175t-3.175 2.138T12 22"
+							/></svg
+						>
+						<span>Flight added! Redirecting you in {timer}s...</span>
+					</div>
+				</div>
+			{/if}
 
-	<div class="bg-base-300/20 grid gap-4 rounded-xl p-4 lg:p-6">
-		<h3 class="font-header text-2xl">Locations</h3>
-		<fieldset class="fieldset">
-			<legend class="fieldset-legend">From Country</legend>
-			<select
-				class="select w-full {$errors.fromCountry ? 'select-error text-error' : undefined}"
-				name="fromCountry"
-				bind:value={$form.fromCountry}
-				{...$constraints.fromCountry}
-				aria-invalid={$errors.fromCountry ? 'true' : undefined}
-			>
-				{#each countries as country}
-					<option value={country}>{country}</option>
-				{/each}
-			</select>
-			{#if $errors.fromCountry}<span class="invalid text-error">{$errors.fromCountry}</span>{/if}
-		</fieldset>
+			<form method="post" class="grid w-full max-w-xl gap-8" use:enhance>
+				<div class="bg-base-300/20 lg: grid gap-4 rounded-xl p-4 lg:p-6">
+					<h3 class="font-header text-2xl">Plane</h3>
+					<fieldset class="fieldset">
+						<legend class="fieldset-legend">Airline</legend>
+						<input
+							type="text"
+							name="airline"
+							class="input w-full"
+							placeholder="Type here"
+							aria-invalid={$errors.airline ? 'true' : undefined}
+							bind:value={$form.airline}
+							{...$constraints.airline}
+						/>
+						{#if $errors.airline}<span class="invalid text-error">{$errors.airline}</span>{/if}
+					</fieldset>
 
-		<fieldset class="fieldset">
-			<legend class="fieldset-legend">From City</legend>
-			<input
-				type="text"
-				name="fromCity"
-				class="input w-full"
-				placeholder="Type here"
-				aria-invalid={$errors.fromCity ? 'true' : undefined}
-				bind:value={$form.fromCity}
-				{...$constraints.fromCity}
-			/>
-			{#if $errors.fromCity}<span class="invalid text-error">{$errors.fromCity}</span>{/if}
-		</fieldset>
+					<fieldset class="fieldset">
+						<legend class="fieldset-legend">Flight No.</legend>
+						<input
+							type="text"
+							name="flightNumber"
+							class="input w-full"
+							placeholder="Type here"
+							aria-invalid={$errors.flightNumber ? 'true' : undefined}
+							bind:value={$form.flightNumber}
+							{...$constraints.flightNumber}
+						/>
+						{#if $errors.flightNumber}<span class="invalid text-error">{$errors.flightNumber}</span
+							>{/if}
+					</fieldset>
+				</div>
 
-		<!-- <fieldset class="fieldset">
+				<div class="bg-base-300/20 grid gap-4 rounded-xl p-4 lg:p-6">
+					<h3 class="font-header text-2xl">Locations</h3>
+					<fieldset class="fieldset">
+						<legend class="fieldset-legend">From Country</legend>
+						<select
+							class="select w-full {$errors.fromCountry ? 'select-error text-error' : undefined}"
+							name="fromCountry"
+							bind:value={$form.fromCountry}
+							{...$constraints.fromCountry}
+							aria-invalid={$errors.fromCountry ? 'true' : undefined}
+						>
+							{#each countries as country}
+								<option value={country}>{country}</option>
+							{/each}
+						</select>
+						{#if $errors.fromCountry}<span class="invalid text-error">{$errors.fromCountry}</span
+							>{/if}
+					</fieldset>
+
+					<fieldset class="fieldset">
+						<legend class="fieldset-legend">From City</legend>
+						<input
+							type="text"
+							name="fromCity"
+							class="input w-full"
+							placeholder="Type here"
+							aria-invalid={$errors.fromCity ? 'true' : undefined}
+							bind:value={$form.fromCity}
+							{...$constraints.fromCity}
+						/>
+						{#if $errors.fromCity}<span class="invalid text-error">{$errors.fromCity}</span>{/if}
+					</fieldset>
+
+					<!-- <fieldset class="fieldset">
 			<legend class="fieldset-legend">From Airport</legend>
 			<input
 				type="text"
@@ -139,37 +137,37 @@
 			{#if $errors.fromAirport}<span class="invalid text-error">{$errors.fromAirport}</span>{/if}
 		</fieldset> -->
 
-		<fieldset class="fieldset">
-			<legend class="fieldset-legend">To Country</legend>
-			<select
-				class="select w-full {$errors.toCountry ? 'select-error text-error' : undefined}"
-				name="toCountry"
-				bind:value={$form.toCountry}
-				{...$constraints.toCountry}
-				aria-invalid={$errors.toCountry ? 'true' : undefined}
-			>
-				{#each countries as country}
-					<option value={country}>{country}</option>
-				{/each}
-			</select>
-			{#if $errors.toCountry}<span class="invalid text-error">{$errors.toCountry}</span>{/if}
-		</fieldset>
+					<fieldset class="fieldset">
+						<legend class="fieldset-legend">To Country</legend>
+						<select
+							class="select w-full {$errors.toCountry ? 'select-error text-error' : undefined}"
+							name="toCountry"
+							bind:value={$form.toCountry}
+							{...$constraints.toCountry}
+							aria-invalid={$errors.toCountry ? 'true' : undefined}
+						>
+							{#each countries as country}
+								<option value={country}>{country}</option>
+							{/each}
+						</select>
+						{#if $errors.toCountry}<span class="invalid text-error">{$errors.toCountry}</span>{/if}
+					</fieldset>
 
-		<fieldset class="fieldset">
-			<legend class="fieldset-legend">To City</legend>
-			<input
-				type="text"
-				name="toCity"
-				class="input w-full"
-				placeholder="Type here"
-				aria-invalid={$errors.toCity ? 'true' : undefined}
-				bind:value={$form.toCity}
-				{...$constraints.toCity}
-			/>
-			{#if $errors.toCity}<span class="invalid text-error">{$errors.toCity}</span>{/if}
-		</fieldset>
+					<fieldset class="fieldset">
+						<legend class="fieldset-legend">To City</legend>
+						<input
+							type="text"
+							name="toCity"
+							class="input w-full"
+							placeholder="Type here"
+							aria-invalid={$errors.toCity ? 'true' : undefined}
+							bind:value={$form.toCity}
+							{...$constraints.toCity}
+						/>
+						{#if $errors.toCity}<span class="invalid text-error">{$errors.toCity}</span>{/if}
+					</fieldset>
 
-		<!-- <fieldset class="fieldset">
+					<!-- <fieldset class="fieldset">
 			<legend class="fieldset-legend">To Airport</legend>
 			<input
 				type="text"
@@ -182,69 +180,74 @@
 			/>
 			{#if $errors.toAirport}<span class="invalid text-error">{$errors.toAirport}</span>{/if}
 		</fieldset> -->
-	</div>
+				</div>
 
-	<div class="bg-base-300/20 grid gap-4 rounded-xl p-4 lg:p-6">
-		<h3 class="font-header text-2xl">Departure & Arrival</h3>
-		<fieldset class="fieldset">
-			<legend class="fieldset-legend {$errors.departureTimestamp ? 'text-error' : undefined}"
-				>Departure Date & Time*</legend
-			>
-			<input
-				type="datetime-local"
-				name="departureTimestamp"
-				class="input w-full {$errors.departureTimestamp ? 'input-error text-error' : undefined}"
-				aria-invalid={$errors.departureTimestamp ? 'true' : undefined}
-				bind:value={$form.departureTimestamp}
-				{...$constraints.departureTimestamp}
-			/>
+				<div class="bg-base-300/20 grid gap-4 rounded-xl p-4 lg:p-6">
+					<h3 class="font-header text-2xl">Departure & Arrival</h3>
+					<fieldset class="fieldset">
+						<legend class="fieldset-legend {$errors.departureTimestamp ? 'text-error' : undefined}"
+							>Departure Date & Time*</legend
+						>
+						<input
+							type="datetime-local"
+							name="departureTimestamp"
+							class="input w-full {$errors.departureTimestamp
+								? 'input-error text-error'
+								: undefined}"
+							aria-invalid={$errors.departureTimestamp ? 'true' : undefined}
+							bind:value={$form.departureTimestamp}
+							{...$constraints.departureTimestamp}
+						/>
 
-			{#if $errors.departureTimestamp}<span class="invalid text-error"
-					>{$errors.departureTimestamp}</span
-				>{/if}
-		</fieldset>
+						{#if $errors.departureTimestamp}<span class="invalid text-error"
+								>{$errors.departureTimestamp}</span
+							>{/if}
+					</fieldset>
 
-		<fieldset class="fieldset">
-			<legend class="fieldset-legend {$errors.arrivalTimestamp ? 'text-error' : undefined}"
-				>Arrival Date & Time*</legend
-			>
-			<input
-				type="datetime-local"
-				name="arrivalTimestamp"
-				class="input w-full {$errors.arrivalTimestamp ? 'input-error text-error' : undefined}"
-				aria-invalid={$errors.arrivalTimestamp ? 'true' : undefined}
-				bind:value={$form.arrivalTimestamp}
-				{...$constraints.arrivalTimestamp}
-			/>
-			{#if $errors.arrivalTimestamp}<span class="invalid text-error"
-					>{$errors.arrivalTimestamp}</span
-				>{/if}
-		</fieldset>
-	</div>
+					<fieldset class="fieldset">
+						<legend class="fieldset-legend {$errors.arrivalTimestamp ? 'text-error' : undefined}"
+							>Arrival Date & Time*</legend
+						>
+						<input
+							type="datetime-local"
+							name="arrivalTimestamp"
+							class="input w-full {$errors.arrivalTimestamp ? 'input-error text-error' : undefined}"
+							aria-invalid={$errors.arrivalTimestamp ? 'true' : undefined}
+							bind:value={$form.arrivalTimestamp}
+							{...$constraints.arrivalTimestamp}
+						/>
+						{#if $errors.arrivalTimestamp}<span class="invalid text-error"
+								>{$errors.arrivalTimestamp}</span
+							>{/if}
+					</fieldset>
+				</div>
 
-	<div class="bg-base-300/20 grid gap-4 rounded-xl p-4 lg:p-6">
-		<h3 class="font-header text-2xl">Cost</h3>
-		<fieldset class="fieldset">
-			<legend class="fieldset-legend"
-				>Ticket Price
-				<span class="label text-xs">(optional)</span></legend
-			>
-			<input
-				type="text"
-				name="cost"
-				class="input w-full"
-				placeholder="Type here"
-				aria-invalid={$errors.cost ? 'true' : undefined}
-				bind:value={$form.cost}
-				{...$constraints.cost}
-			/>
+				<div class="bg-base-300/20 grid gap-4 rounded-xl p-4 lg:p-6">
+					<h3 class="font-header text-2xl">Cost</h3>
+					<fieldset class="fieldset">
+						<legend class="fieldset-legend"
+							>Ticket Price
+							<span class="label text-xs">(optional)</span></legend
+						>
+						<input
+							type="text"
+							name="cost"
+							class="input w-full"
+							placeholder="Type here"
+							aria-invalid={$errors.cost ? 'true' : undefined}
+							bind:value={$form.cost}
+							{...$constraints.cost}
+						/>
 
-			{#if $errors.cost}<span class="invalid text-error">{$errors.cost}</span>{/if}
-		</fieldset>
-	</div>
+						{#if $errors.cost}<span class="invalid text-error">{$errors.cost}</span>{/if}
+					</fieldset>
+				</div>
 
-	<input type="hidden" value={data.tripId} name="tripId" />
-	<button class="btn btn-primary"
-		>Add Trip{#if $message}{$message}{/if}</button
-	>
-</form>
+				<input type="hidden" value={data.tripId} name="tripId" />
+				<button class="btn btn-primary"
+					>Add Trip{#if $message}{$message}{/if}</button
+				>
+			</form>
+		</section>
+	</main>
+</AddView>

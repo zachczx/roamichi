@@ -87,6 +87,7 @@ interface StayProps extends StayDB {
 	updatedAtFormatted?: string;
 	createdAtSemantic?: string;
 	updatedAtSemantic?: string;
+	stayNightsCount?: string;
 }
 
 interface PackProps extends PackDB {

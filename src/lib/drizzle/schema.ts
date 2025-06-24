@@ -1,5 +1,5 @@
 import { sql } from 'drizzle-orm';
-import { pgTable, real, timestamp, varchar, text, boolean, date } from 'drizzle-orm/pg-core';
+import { pgTable, real, timestamp, varchar, text, boolean } from 'drizzle-orm/pg-core';
 import { nanoid } from 'nanoid';
 
 export const trip = pgTable('trip', {
@@ -64,8 +64,8 @@ export const stay = pgTable('stay', {
 	address: text('address'),
 	city: text('city').notNull(),
 	country: text('country').notNull(),
-	checkIn: date('check_in').notNull(),
-	checkOut: date('check_out').notNull(),
+	checkIn: timestamp('check_in', { withTimezone: true, mode: 'string' }).notNull(),
+	checkOut: timestamp('check_out', { withTimezone: true, mode: 'string' }).notNull(),
 	cost: real('cost'),
 	createdAt: timestamp('created_at', { withTimezone: true, mode: 'string' }).defaultNow().notNull(),
 	updatedAt: timestamp('updated_at', { withTimezone: true, mode: 'string' }).$onUpdate(

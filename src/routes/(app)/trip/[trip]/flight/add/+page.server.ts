@@ -7,6 +7,10 @@ import { z } from 'zod/v4';
 import { message } from 'sveltekit-superforms';
 import { and, eq } from 'drizzle-orm';
 import { error } from '@sveltejs/kit';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+
+dayjs.extend(relativeTime);
 
 const flightFormSchema = z
 	.object({
@@ -37,7 +41,11 @@ export const load = async ({ params, locals }) => {
 		.select()
 		.from(trip)
 		.where(and(eq(trip.id, tripId), eq(trip.userId, locals.user.id)));
-	const tripRecord = tripRows[0];
+	const tripRecord: TripProps = {
+		createdAtSemantic: dayjs(tripRows[0].createdAt).fromNow(),
+		createdAtFormatted: dayjs(tripRows[0].createdAt).format('DD MMM, YYYY'),
+		...tripRows[0]
+	};
 	const form = await superValidate(zod4(flightFormSchema));
 
 	return { form, tripId, trip: tripRecord };
