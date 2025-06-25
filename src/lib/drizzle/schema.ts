@@ -1,4 +1,4 @@
-import { sql } from 'drizzle-orm';
+import { relations, sql } from 'drizzle-orm';
 import { pgTable, real, timestamp, varchar, text, boolean } from 'drizzle-orm/pg-core';
 import { nanoid } from 'nanoid';
 
@@ -164,3 +164,70 @@ export const verification = pgTable('verification', {
 	createdAt: timestamp('created_at'),
 	updatedAt: timestamp('updated_at')
 });
+
+/**
+ * Drizzle Relations
+ */
+
+export const userRelations = relations(user, ({ many }) => ({
+	trips: many(trip),
+	flights: many(flight),
+	stays: many(stay),
+	packs: many(pack),
+	gifts: many(gift)
+}));
+
+export const tripRelations = relations(trip, ({ one, many }) => ({
+	user: one(user, {
+		fields: [trip.userId],
+		references: [user.id]
+	}),
+	flights: many(flight),
+	stays: many(stay),
+	packs: many(pack),
+	gifts: many(gift)
+}));
+
+export const flightRelations = relations(flight, ({ one }) => ({
+	user: one(user, {
+		fields: [flight.userId],
+		references: [user.id]
+	}),
+	trip: one(trip, {
+		fields: [flight.tripId],
+		references: [trip.id]
+	})
+}));
+
+export const stayRelations = relations(stay, ({ one }) => ({
+	user: one(user, {
+		fields: [stay.userId],
+		references: [user.id]
+	}),
+	trip: one(trip, {
+		fields: [stay.tripId],
+		references: [trip.id]
+	})
+}));
+
+export const packRelations = relations(pack, ({ one }) => ({
+	user: one(user, {
+		fields: [pack.userId],
+		references: [user.id]
+	}),
+	trip: one(trip, {
+		fields: [pack.tripId],
+		references: [trip.id]
+	})
+}));
+
+export const giftRelations = relations(gift, ({ one }) => ({
+	user: one(user, {
+		fields: [gift.userId],
+		references: [user.id]
+	}),
+	trip: one(trip, {
+		fields: [gift.tripId],
+		references: [trip.id]
+	})
+}));

@@ -37,6 +37,9 @@
 	--color-base-500: #c8eebc;
 	--color-base-600: #eee2bc;
 	--color-base-700: #c0dc74;
+
+	/* left sidebar */
+	--color-base-900: #4c582e;
 }
 
 @layer base {

@@ -11,7 +11,7 @@
 		const { data, error } = await authClient.signIn.email({
 			email: email,
 			password: password,
-			callbackURL: '/app'
+			callbackURL: '/'
 		});
 
 		if (error) {

@@ -1,3 +1,6 @@
+import type { InferSelectModel } from 'drizzle-orm';
+import { trip, flight, stay, pack } from '$lib/drizzle/schema';
+
 interface TripDB {
 	id: string;
 	userId: string;
@@ -20,7 +23,7 @@ interface FlightDB {
 	departureTimestamp: string;
 	arrivalTimestamp: string;
 	toAirport: string | null;
-	cost?: number | null;
+	cost: number | null;
 	createdAt: string;
 	updatedAt: string | null;
 }
@@ -31,12 +34,12 @@ interface StayDB {
 	tripId: string;
 	type: string;
 	stayName: string;
-	address?: string;
+	address: string | null;
 	city: string;
 	country: string;
 	checkIn: Date;
 	checkOut: Date;
-	cost?: number;
+	cost: number | null;
 	createdAt: string;
 	updatedAt: string | null;
 }
@@ -95,4 +98,36 @@ interface PackProps extends PackDB {
 	updatedAtFormatted?: string;
 	createdAtSemantic?: string;
 	updatedAtSemantic?: string;
+}
+
+interface TripDBCounts extends TripDB {
+	flightCount: number;
+	stayCount: number;
+	packCount: number;
+}
+
+type TripDB = InferSelectModel<typeof trip>;
+type FlightDB = InferSelectModel<typeof flight>;
+type StayDB = InferSelectModel<typeof stay>;
+type PackDB = InferSelectModel<typeof pack>;
+
+interface TripRelationsDB extends TripDB {
+	flights?: FlightDB[];
+	stays?: StayDB[];
+	packs?: PackDB[];
+	// flightCount: number;
+	// stayCount: number;
+	// packCount: number;
+}
+
+interface TripRelationsProps extends TripProps {
+	flights: FlightProps[];
+	stays: StayProps[];
+	packs: PackProps[];
+	tripStartFormatted: string;
+	tripEndFormatted: string;
+	tripDuration: number;
+	// flightCount: number;
+	// stayCount: number;
+	// packCount: number;
 }
