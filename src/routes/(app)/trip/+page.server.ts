@@ -48,8 +48,8 @@ export const load: PageServerLoad = async ({ locals }) => {
 			...trip,
 			createdAtSemantic: dayjs(trip.createdAt).fromNow(),
 			createdAtFormatted: dayjs(trip.createdAt).format('DD MMM YY'),
-			tripStartFormatted: sorted[0].format('DD MMM YY'),
-			tripEndFormatted: sorted[1].format('DD MMM YY'),
+			tripStartFormatted: sorted.length > 0 ? sorted[0].format('DD MMM YY') : undefined,
+			tripEndFormatted: sorted.length > 1 ? sorted[1].format('DD MMM YY') : undefined,
 			tripDuration: sorted[1].diff(sorted[0], 'days')
 		};
 	});
@@ -58,6 +58,10 @@ export const load: PageServerLoad = async ({ locals }) => {
 };
 
 function getTripStartAndEndDates(trip: TripRelationsDB) {
+	if (!trip) return [];
+	if (!trip.flights) return [];
+	if (trip.flights.length === 0) return [];
+
 	const dates = [];
 	for (const f of trip.flights) {
 		dates.push(dayjs(f.departureTimestamp));

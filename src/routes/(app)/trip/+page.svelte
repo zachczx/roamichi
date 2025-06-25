@@ -25,29 +25,29 @@
 		{#each data.trips as trip}
 			<a
 				href="/trip/{trip.id}"
-				class="border-base-300/30 bg-base-200/70 grid content-start gap-x-8 rounded-xl border p-4 shadow-md hover:opacity-100"
+				class="border-base-300/30 from-base-500 text-primary-content to-base-600/90 grid content-start gap-x-8 rounded-xl border bg-linear-to-tr to-70% p-4 shadow-md hover:opacity-100"
 			>
 				<div class="grid content-start gap-2 p-4">
 					<h2 class="text-6xl font-semibold">{trip.tripName}</h2>
 					<div class="flex flex-wrap gap-4">
-						<span>{trip.tripStartFormatted} - {trip.tripEndFormatted}</span>
+						<span>{trip.tripStartFormatted}&nbsp;&nbsp;–&nbsp;&nbsp;{trip.tripEndFormatted}</span>
 						<span>•</span><span>{trip.tripDuration} days</span>
 					</div>
 					<div class="border-l-base-300/20 grid grid-cols-3 p-4">
 						<div class="h-full">
 							<MaterialSymbolsFlightTakeoff class="h-10 w-10" />
 							<h4 class="font-bold">Flight</h4>
-							<!-- <p class="text-6xl">{#each trip.flights as flight}{flight}{/each}</p> -->
+							<p class="">{trip.flights.length}</p>
 						</div>
 						<div>
 							<MaterialSymbolsHotel class="h-10 w-10" />
 							<h4 class="font-bold">Stay</h4>
-							<!-- <p>{trip.stayCount}</p> -->
+							<p>{trip.stays.length}</p>
 						</div>
 						<div>
 							<MaterialSymbolsLuggage class="h-10 w-10" />
 							<h4 class="font-bold">Pack</h4>
-							<!-- <p>{trip.packCount}</p> -->
+							<p>{trip.packs.length}</p>
 						</div>
 					</div>
 				</div></a
