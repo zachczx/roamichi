@@ -26,65 +26,56 @@
 					href="/"
 					class="{data.paths.includes('dashboard')
 						? 'to-primary from-primary/50 text-primary-content bg-linear-to-br'
-						: 'hover:bg-primary hover:text-primary-content'} flex min-h-20 w-full min-w-20 cursor-pointer items-center justify-center gap-4 p-4 text-lg"
+						: 'hover:bg-primary hover:text-primary-content'} grid aspect-square w-full min-w-32 cursor-pointer content-center justify-items-center gap-1 p-8 text-lg font-semibold"
 					><svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="1.3em"
 						height="1.3em"
-						class="material-symbols:dashboard h-8 w-8"
+						class="material-symbols:dashboard h-10 w-10"
 						viewBox="0 0 24 24"
 						><path
 							fill="currentColor"
 							d="M13 9V3h8v6zM3 13V3h8v10zm10 8V11h8v10zM3 21v-6h8v6z"
 						/></svg
-					></a
+					>Home</a
 				>
 			</li>
+
 			<li>
 				<a
 					aria-label="trips"
 					href="/trip"
 					class="{data.paths.includes('trip')
 						? 'to-primary from-primary/50 text-primary-content bg-linear-to-br'
-						: 'hover:bg-primary hover:text-primary-content'} flex min-h-20 w-full min-w-20 cursor-pointer items-center justify-center gap-4 p-4 text-lg"
+						: 'hover:bg-primary hover:text-primary-content'} grid aspect-square w-full min-w-32 cursor-pointer content-center justify-items-center gap-1 p-8 text-lg font-semibold"
 				>
-					<MaterialSymbolsTravelLuggageAndBags class="h-8 w-8" />
+					<MaterialSymbolsTravelLuggageAndBags class="h-10 w-10" />Trip
 				</a>
 			</li>
 
-			<!-- <li class="bg-base-content/15 my-4 h-0.5 w-full"></li> -->
 			<li>
 				<a
 					aria-label="contact"
 					href="/contact"
 					class="{data.paths.includes('contact')
 						? 'to-primary from-primary/50 text-primary-content bg-linear-to-br'
-						: 'hover:bg-primary hover:text-primary-content'} flex min-h-20 w-full min-w-20 cursor-pointer items-center justify-center gap-4 p-4 text-lg"
+						: 'hover:bg-primary hover:text-primary-content'} grid aspect-square w-full min-w-32 cursor-pointer content-center justify-items-center gap-1 p-8 text-lg font-semibold"
 				>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="1.3em"
 						height="1.3em"
-						class="material-symbols:mail h-8 w-8"
+						class="material-symbols:mail h-10 w-10"
 						viewBox="0 0 24 24"
 						><path
 							fill="currentColor"
 							d="M4 20q-.825 0-1.412-.587T2 18V6q0-.825.588-1.412T4 4h16q.825 0 1.413.588T22 6v12q0 .825-.587 1.413T20 20zm8-7l8-5V6l-8 5l-8-5v2z"
 						/></svg
-					></a
+					>Contact</a
 				>
 			</li>
 		</ul>
 	</nav>
-	<!-- <main class="bg-base-200 grid content-center justify-items-center gap-8 p-4">
-		<section
-			class="bg-base-100 main-container-height border-base-content/10 grid w-full content-start justify-items-center rounded-2xl border-2 p-4"
-		>
-			<div class="grid w-full max-w-3xl gap-8">
-				{@render children()}
-			</div>
-		</section>
-	</main> -->
 	{@render children()}
 </div>
 
