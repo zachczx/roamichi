@@ -3,7 +3,7 @@ import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ locals }) => {
 	if (!locals.user) {
-		redirect(307, '/login');
+		redirect(307, '/auth');
 	}
 
 	redirect(307, '/trip');
