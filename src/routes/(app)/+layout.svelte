@@ -1,4 +1,5 @@
 <script lang="ts">
+	import MaterialSymbolsSettings from '$lib/assets/svg/MaterialSymbolsSettings.svelte';
 	import MaterialSymbolsTravelLuggageAndBags from '$lib/assets/svg/MaterialSymbolsTravelLuggageAndBags.svelte';
 	import Toaster from '$lib/ui/Toaster.svelte';
 
@@ -39,6 +40,17 @@
 							d="M13 9V3h8v6zM3 13V3h8v10zm10 8V11h8v10zM3 21v-6h8v6z"
 						/></svg
 					>Trips</a
+				>
+			</li>
+
+			<li>
+				<a
+					aria-label="contact"
+					href="/settings"
+					class="{data.paths.includes('settings')
+						? 'to-primary from-primary/50 text-primary-content bg-linear-to-br'
+						: 'hover:bg-primary hover:text-primary-content'} grid aspect-square w-full min-w-32 cursor-pointer content-center justify-items-center gap-1 p-8 text-lg font-semibold"
+					><MaterialSymbolsSettings class="h-10 w-10" />Settings</a
 				>
 			</li>
 

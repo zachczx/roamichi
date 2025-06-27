@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import TripView from '$lib/view/TripView.svelte';
 	import { superForm } from 'sveltekit-superforms';
 	let { data } = $props();
 	let timer = $state(5);
@@ -35,37 +36,46 @@
 		</div>
 	</div>
 {/if}
-<h1 class="font-header text-6xl font-bold">Add Trip</h1>
-<form method="post" class="grid w-full gap-4" use:enhance>
-	<fieldset class="fieldset">
-		<legend class="fieldset-legend">Trip Name</legend>
-		<input
-			type="text"
-			name="tripName"
-			class="input w-full"
-			placeholder="Type here"
-			aria-invalid={$errors.tripName ? 'true' : undefined}
-			bind:value={$form.tripName}
-			{...$constraints.tripName}
-		/>
-		<p class="label">Required</p>
-		{#if $errors.tripName}<span class="invalid text-error">{$errors.tripName}</span>{/if}
-	</fieldset>
-	<button class="btn btn-primary flex items-center gap-2">
-		{#if $message?.status === 'success'}
-			<svg
-				xmlns="http://www.w3.org/2000/svg"
-				width="1.3em"
-				height="1.3em"
-				class="material-symbols:check"
-				viewBox="0 0 24 24"
-				><path
-					fill="currentColor"
-					d="m9.55 18l-5.7-5.7l1.425-1.425L9.55 15.15l9.175-9.175L20.15 7.4z"
-				/></svg
-			>Added
-		{:else}
-			Add Trip
-		{/if}
-	</button>
-</form>
+
+<TripView mode="trips" tripId="" tripName="" showSidebar={false}>
+	{#snippet breadcrumbs()}
+		<li>Trips</li>
+	{/snippet}
+	<div class="grid grid-cols-1 gap-8 p-4">
+		<h2 class="font-header text-7xl font-bold">Add Trip</h2>
+
+		<form method="post" class="grid w-full max-w-xl gap-4" use:enhance>
+			<fieldset class="fieldset">
+				<legend class="fieldset-legend">Trip Name</legend>
+				<input
+					type="text"
+					name="tripName"
+					class="input w-full"
+					placeholder="Type here"
+					aria-invalid={$errors.tripName ? 'true' : undefined}
+					bind:value={$form.tripName}
+					{...$constraints.tripName}
+				/>
+				<p class="label">Required</p>
+				{#if $errors.tripName}<span class="invalid text-error">{$errors.tripName}</span>{/if}
+			</fieldset>
+			<button class="btn btn-primary flex items-center gap-2">
+				{#if $message?.status === 'success'}
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="1.3em"
+						height="1.3em"
+						class="material-symbols:check"
+						viewBox="0 0 24 24"
+						><path
+							fill="currentColor"
+							d="m9.55 18l-5.7-5.7l1.425-1.425L9.55 15.15l9.175-9.175L20.15 7.4z"
+						/></svg
+					>Added
+				{:else}
+					Add
+				{/if}
+			</button>
+		</form>
+	</div>
+</TripView>

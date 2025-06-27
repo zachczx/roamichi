@@ -10,7 +10,11 @@
 		return data.stay.filter((stay) => checkIfHistory(stay.checkOut));
 	});
 
-	let progress = $derived(Math.floor((stayed?.length / data.stay?.length) * 100));
+	let progress = $derived.by(() => {
+		if (!data.stay || data.stay.length === 0) return 0;
+
+		return Math.floor((stayed?.length / data.stay?.length) * 100);
+	});
 </script>
 
 <TripView mode="stay" tripId={data.trip.id} tripName={data.trip.tripName}>
@@ -88,7 +92,7 @@
 									>
 									<ul class="menu dropdown-content bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
 										<li>
-											<a>
+											<a href="/trip/{data.trip.id}/stay/{stay.id}/edit">
 												<svg
 													xmlns="http://www.w3.org/2000/svg"
 													width="1.3em"
@@ -103,7 +107,7 @@
 											</a>
 										</li>
 										<li>
-											<a>
+											<a href="/trip/{data.trip.id}/stay/{stay.id}/delete">
 												<svg
 													xmlns="http://www.w3.org/2000/svg"
 													width="1em"

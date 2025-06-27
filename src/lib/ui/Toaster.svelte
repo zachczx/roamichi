@@ -13,7 +13,7 @@
 	});
 </script>
 
-<div class="toast toast-top toast-center z-[1]" bind:this={el}>
+<div class="toast toast-top toast-center z-10" bind:this={el}>
 	<div
 		class="alert flex items-center gap-2 {status === 'success' ? 'alert-success' : 'alert-error'}"
 	>

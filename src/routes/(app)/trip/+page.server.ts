@@ -1,5 +1,5 @@
 import { db } from '$lib/drizzle/db';
-import { flight, pack, stay, trip, tripRelations } from '$lib/drizzle/schema';
+import { flight, pack, stay, trip } from '$lib/drizzle/schema';
 import { and, eq, getTableColumns } from 'drizzle-orm';
 import { redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
@@ -7,7 +7,6 @@ import dayjs from 'dayjs';
 import minMax from 'dayjs/plugin/minMax';
 
 import relativeTime from 'dayjs/plugin/relativeTime';
-import type { FlightDB, TripRelationsDB } from '../../../ambient';
 
 dayjs.extend(relativeTime);
 dayjs.extend(minMax);
@@ -17,32 +16,7 @@ export const load: PageServerLoad = async ({ locals }) => {
 		redirect(307, '/login');
 	}
 
-	/**
-	 * Long term I don't want to use the relational api, because it's more overhead to maintain
-	 */
-
-	// const tripRows = await db.query.trip.findMany({
-	// 	where: eq(trip.userId, locals.user.id),
-	// 	with: {
-	// 		flights: true,
-	// 		stays: true,
-	// 		packs: true
-	// 	}
-	// });
-
-	// const tripRecords = tripRows.map((trip) => {
-	// 	const sorted = getTripStartAndEndDates(trip);
-	// 	return {
-	// 		...trip,
-	// 		createdAtSemantic: dayjs(trip.createdAt).fromNow(),
-	// 		createdAtFormatted: dayjs(trip.createdAt).format('DD MMM YY'),
-	// 		tripStartFormatted: sorted.length > 0 ? sorted[0].format('DD MMM YY') : undefined,
-	// 		tripEndFormatted: sorted.length > 1 ? sorted[1].format('DD MMM YY') : undefined,
-	// 		tripDuration: sorted[1].diff(sorted[0], 'days')
-	// 	};
-	// });
-
-	const tripRows = await db
+	const tripRows: TripDBWithCounts[] = await db
 		.select({
 			...getTableColumns(trip),
 			flightCount: db.$count(flight, eq(flight.tripId, trip.id)),
@@ -53,18 +27,13 @@ export const load: PageServerLoad = async ({ locals }) => {
 		.from(trip)
 		.where(eq(trip.userId, locals.user.id));
 
-	const flights = await db.select().from(flight).where(eq(flight.userId, locals.user.id));
+	const flightsDb = await db.select().from(flight).where(eq(flight.userId, locals.user.id));
 
-	const tripMerged = tripRows.map((trip) => {
-		trip.flights = flights.filter((flight) => flight.tripId === trip.id);
-		return trip;
-	});
+	const tripRecords = tripRows.map((trip): TripPropsExtra => {
+		const flights = flightsDb.filter((flight) => flight.tripId === trip.id);
 
-	const tripRecords = tripMerged.map((trip) => {
-		const [start, end] = getTripStartAndEndDates(trip.flights);
-
+		const [start, end] = getTripStartAndEndDates(flights);
 		let tripStartAndEndFormatted = '';
-
 		if (start && end) {
 			if (dayjs(start).get('year') === dayjs(end).get('year')) {
 				tripStartAndEndFormatted = start.format('DD MMM') + ' – ' + end.format('DD MMM YYYY');
@@ -72,8 +41,10 @@ export const load: PageServerLoad = async ({ locals }) => {
 				tripStartAndEndFormatted = start.format('DD MMM YYYY') + '–' + end.format('DD MMM YYYY');
 			}
 		}
+
 		return {
 			...trip,
+			flights: flights,
 			createdAtSemantic: dayjs(trip.createdAt).fromNow(),
 			createdAtFormatted: dayjs(trip.createdAt).format('DD MMM YYYY'),
 			tripStartFormatted: start ? start.format('DD MMM YYYY') : undefined,
@@ -84,9 +55,30 @@ export const load: PageServerLoad = async ({ locals }) => {
 		};
 	});
 
-	console.log('tripRecords: ', tripRecords);
+	// Filter those that are not in past, then Sort by start date
+	const futureTrips = tripRecords
+		.filter((trip) => !dayjs(trip.tripStartFormatted).isBefore(dayjs()))
+		.sort((a, b) => {
+			const startA = dayjs(a.tripStartFormatted);
+			const startB = dayjs(b.tripStartFormatted);
 
-	return { trips: tripRecords };
+			return startA.diff(startB);
+		});
+
+	// Get the first one that's not past
+	const nextTrip = futureTrips.length > 0 ? futureTrips[0] : undefined;
+
+	// Filter past trips, then Sort by start date
+	const pastTrips = tripRecords
+		.filter((trip) => dayjs(trip.tripStartFormatted).isBefore(dayjs()))
+		.sort((a, b) => {
+			const startA = dayjs(a.tripStartFormatted);
+			const startB = dayjs(b.tripStartFormatted);
+
+			return startA.diff(startB);
+		});
+
+	return { trips: tripRecords, nextTrip, futureTrips, pastTrips };
 };
 
 function getTripStartAndEndDates(flights: FlightDB[]) {

@@ -17,7 +17,11 @@
 		return [];
 	});
 
-	let progress = $derived(Math.floor((completed?.length / data.flight?.length) * 100));
+	let progress = $derived.by(() => {
+		if (!data.flight || data.flight.length === 0) return 0;
+
+		return Math.floor((completed?.length / data.flight?.length) * 100);
+	});
 </script>
 
 <TripView mode="flight" tripId={data.trip.id} tripName={data.trip.tripName}>

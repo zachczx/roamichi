@@ -35,7 +35,7 @@ export const load: PageServerLoad = async ({ params, locals }) => {
 		.from(flight)
 		.where(and(eq(flight.tripId, tripId), eq(flight.userId, locals.user.id)));
 
-	const flightRecords: FlightProps[] = flightRows.map((flight): FlightProps => {
+	const flightRecords: FlightPropsCard[] = flightRows.map((flight): FlightPropsCard => {
 		const departureTimestampSemantic = dayjs(flight.departureTimestamp).fromNow();
 		const departureTimestampFormatted = dayjs(flight.departureTimestamp).format(
 			'DD MMM, YYYY, hh:mma'
