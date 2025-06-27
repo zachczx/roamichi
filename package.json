@@ -72,6 +72,7 @@
 		"melt": "^0.35.3",
 		"nanoid": "^5.1.5",
 		"pocketbase": "^0.26.1",
-		"postgres": "^3.4.7"
+		"postgres": "^3.4.7",
+		"resend": "^4.6.0"
 	}
 }
