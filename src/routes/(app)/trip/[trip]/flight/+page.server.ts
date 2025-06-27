@@ -1,10 +1,10 @@
 import { db } from '$lib/drizzle/db';
 import { trip, flight } from '$lib/drizzle/schema';
 import { eq, and } from 'drizzle-orm';
-import dayjs from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeTime';
 import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
 
 dayjs.extend(relativeTime);
 

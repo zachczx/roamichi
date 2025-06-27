@@ -29,7 +29,7 @@
 	});
 </script>
 
-<section
+<div
 	class="{type === 'warning'
 		? 'bg-warning/10 border-warning/50'
 		: type === 'aside'
@@ -81,10 +81,10 @@
 						fill="currentColor"
 						d="m9.55 18l-5.7-5.7l1.425-1.425L9.55 15.15l9.175-9.175L20.15 7.4z"
 					/></svg
-				>{/if}{progressDone}/{progressTotal}
+				>{/if}{#if type === 'card'}{progressDone}/{progressTotal}{/if}
 		</div>
 	</div>
 	<ul class="grid gap-2 p-4">
 		{@render children()}
 	</ul>
-</section>
+</div>

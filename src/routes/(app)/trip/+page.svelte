@@ -22,7 +22,7 @@
 	}
 </script>
 
-<TripView mode="trips" tripId="">
+<TripView mode="trips" tripId="" tripName="" showSidebar={false}>
 	{#snippet breadcrumbs()}
 		<li>Trips</li>
 	{/snippet}
@@ -55,11 +55,11 @@
 					<div class="grid content-start gap-4 p-4">
 						<span
 							class="btn border-primary-content text-primary-content w-fit max-w-72 rounded-full border-0 bg-white/20 shadow-none"
-							>NEXT TRIP <span>•</span> XX days</span
+							>NEXT TRIP&nbsp;<span>•</span>&nbsp;{trip.tripStartInDays}</span
 						>
 						<h2 class="text-6xl font-bold"><a href="/trip/{trip.id}">{trip.tripName}</a></h2>
 						<div class="flex flex-wrap gap-4">
-							<span>{trip.tripStartFormatted}&nbsp;&nbsp;–&nbsp;&nbsp;{trip.tripEndFormatted}</span>
+							<span>{trip.tripStartAndEndFormatted}</span>
 							<span>•</span><span>{trip.tripDuration} days</span>
 						</div>
 

@@ -7,12 +7,13 @@
 	interface TripNavSectionProps {
 		mode: 'trips' | 'trip' | 'flight' | 'stay' | 'pack' | 'gift';
 		tripId: string;
+		tripName: string;
 	}
-	let { mode, tripId = '' }: TripNavSectionProps = $props();
+	let { mode, tripId = '', tripName }: TripNavSectionProps = $props();
 </script>
 
 <nav
-	class="bg-base-700/30 sticky top-0 hidden h-full w-full max-w-32 content-start border-r border-r-black/10 lg:grid lg:max-h-dvh lg:min-h-dvh"
+	class="bg-base-700/30 sticky top-0 hidden h-full w-72 content-start border-r border-r-black/10 lg:grid lg:max-h-dvh lg:min-h-dvh"
 >
 	<!-- <h3 class="flex w-full min-w-56 items-center gap-4 rounded-lg px-4 py-3 text-2xl font-bold">
 				<svg
@@ -25,13 +26,14 @@
 				New
 			</h3> -->
 	<ul class="grid">
+		<span class="border-b-primary/15 border-b-2 px-4 pt-4 pb-4 text-4xl font-bold">{tripName}</span>
 		{#if mode === 'trips'}
 			<li>
 				<a
 					href="/trip/{tripId}"
 					class="{mode === 'trips'
 						? 'to-primary from-primary/50 text-primary-content bg-linear-to-br'
-						: 'hover:bg-primary hover:text-primary-content'} grid w-full cursor-pointer content-center justify-items-center gap-2 p-4 text-lg"
+						: 'hover:bg-primary hover:text-primary-content'} flex w-full cursor-pointer items-center gap-8 py-4 ps-8 pe-4 text-lg"
 					><svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="1em"
@@ -52,7 +54,7 @@
 					href="/trip/{tripId}"
 					class="{mode === 'trip'
 						? 'to-primary from-primary/50 text-primary-content bg-linear-to-br'
-						: 'hover:bg-primary hover:text-primary-content'} grid w-full cursor-pointer content-center justify-items-center gap-2 p-4 text-lg"
+						: 'hover:bg-primary hover:text-primary-content'} flex w-full cursor-pointer items-center gap-8 py-4 ps-8 pe-4 text-lg"
 					><svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="1em"
@@ -71,7 +73,7 @@
 					href="/trip/{tripId}/flight"
 					class="{mode === 'flight'
 						? 'to-primary from-primary/50 text-primary-content bg-linear-to-br'
-						: 'hover:bg-primary hover:text-primary-content'} grid w-full cursor-pointer content-center justify-items-center gap-2 p-4 text-lg"
+						: 'hover:bg-primary hover:text-primary-content'} flex w-full cursor-pointer items-center gap-8 py-4 ps-8 pe-4 text-lg"
 					><MaterialSymbolsFlightTakeoff class="h-7 w-7" /><span>Flight</span></a
 				>
 			</li>
@@ -80,7 +82,7 @@
 					href="/trip/{tripId}/stay"
 					class="{mode === 'stay'
 						? 'to-primary from-primary/50 text-primary-content bg-linear-to-br'
-						: 'hover:bg-primary hover:text-primary-content'} grid w-full cursor-pointer content-center justify-items-center gap-2 p-4 text-lg"
+						: 'hover:bg-primary hover:text-primary-content'} flex w-full cursor-pointer items-center gap-8 py-4 ps-8 pe-4 text-lg"
 					><MaterialSymbolsHotel class="h-7 w-7" />Stay</a
 				>
 			</li>
@@ -89,7 +91,7 @@
 					href="/trip/{tripId}/pack"
 					class="{mode === 'pack'
 						? 'to-primary from-primary/50 text-primary-content bg-linear-to-br'
-						: 'hover:bg-primary hover:text-primary-content'} grid w-full cursor-pointer content-center justify-items-center gap-2 p-4 text-lg"
+						: 'hover:bg-primary hover:text-primary-content'} flex w-full cursor-pointer items-center gap-8 py-4 ps-8 pe-4 text-lg"
 					><MaterialSymbolsLuggage class="h-7 w-7" />Pack</a
 				>
 			</li>
@@ -98,7 +100,7 @@
 					href="/trip/{tripId}/gift"
 					class="{mode === 'gift'
 						? 'to-primary from-primary/50 text-primary-content bg-linear-to-br'
-						: 'hover:bg-primary hover:text-primary-content'} grid w-full cursor-pointer content-center justify-items-center gap-2 p-4 text-lg"
+						: 'hover:bg-primary hover:text-primary-content'} flex w-full cursor-pointer items-center gap-8 py-4 ps-8 pe-4 text-lg"
 					><MaterialSymbolsFeaturedSeasonalAndGifts class="h-7 w-7" />Gift</a
 				>
 			</li>

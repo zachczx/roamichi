@@ -47,7 +47,7 @@
 	});
 </script>
 
-<AddView mode="stay" tripId={data.trip.id}>
+<AddView mode="stay" tripId={data.trip.id} tripName={data.trip.tripName}>
 	{#snippet breadcrumbs()}
 		<li><a href="/trip">Trips</a></li>
 		<li><a href="/trip/{data.trip.id}">{data.trip.tripName}</a></li>
@@ -85,7 +85,7 @@
 			{/if}
 			<form method="post" class="grid w-full max-w-xl gap-8" use:enhance>
 				<div class="bg-base-300/20 grid gap-4 rounded-xl p-4 lg:p-6">
-					<h3 class="font-header text-2xl">Property</h3>
+					<h3 class="text-2xl">Property</h3>
 					<fieldset class="fieldset">
 						<legend class="fieldset-legend {$errors.type ? 'text-error' : undefined}">Type*</legend>
 						<select
@@ -120,7 +120,7 @@
 				</div>
 
 				<div class="bg-base-300/20 grid gap-4 rounded-xl p-4 lg:p-6">
-					<h3 class="font-header text-2xl">Location</h3>
+					<h3 class="text-2xl">Location</h3>
 					<fieldset class="fieldset">
 						<legend class="fieldset-legend {$errors.country ? 'text-error' : undefined}"
 							>Country*</legend
@@ -171,7 +171,7 @@
 				</div>
 
 				<div class="bg-base-300/20 grid gap-4 rounded-xl p-4 lg:p-6">
-					<h3 class="font-header text-2xl">Check-In & Check-Out</h3>
+					<h3 class="text-2xl">Check-In & Check-Out</h3>
 					<fieldset class="fieldset">
 						<legend
 							class="fieldset-legend {$errors.checkIn || checkInClashes.length > 0
@@ -255,7 +255,7 @@
 				</div>
 
 				<div class="bg-base-300/20 grid gap-4 rounded-xl p-4 lg:p-6">
-					<h3 class="font-header text-2xl">Cost</h3>
+					<h3 class="text-2xl">Cost</h3>
 					<fieldset class="fieldset">
 						<legend class="fieldset-legend {$errors.cost ? 'text-error' : undefined}"
 							>Booking Price<span class="label">(optional)</span></legend
@@ -284,7 +284,7 @@
 
 	{#snippet rightSidebar()}
 		<aside class="grid gap-8 p-4">
-			<h3 class="font-header text-4xl">Existing Stays</h3>
+			<h3 class="text-4xl">Existing Stays</h3>
 			{#each data.stay as stay}
 				<div class="card bg-base-100 card-md w-96 shadow-sm">
 					<div class="card-body gap-4">

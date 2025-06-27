@@ -20,7 +20,7 @@
 	});
 </script>
 
-<AddView mode="flight" tripId={data.trip.id}>
+<AddView mode="flight" tripId={data.trip.id} tripName={data.trip.tripName}>
 	{#snippet breadcrumbs()}
 		<li><a href="/trip">Trips</a></li>
 		<li><a href="/trip/{data.trip.id}">{data.trip.tripName}</a></li>
@@ -28,14 +28,8 @@
 		<li>Add Flight</li>
 	{/snippet}
 
-	<main class="content-height grid w-full content-start gap-12 justify-self-center">
-		<header>
-			<h1 class="font-header text-4xl font-bold">{data.trip.tripName}</h1>
-			<span class="text-base-content/50 text-sm">Created {data.trip.createdAtSemantic}</span>
-		</header>
-		<section class="grid w-full gap-8">
-			<h2 class="font-header text-7xl font-bold">Add Flight</h2>
-		</section>
+	<main class="content-height grid w-full content-start gap-8 justify-self-center">
+		<h2 class="font-header text-7xl font-bold">Add Flight</h2>
 
 		<section class="">
 			{#if $message?.status === 'success'}
@@ -59,7 +53,7 @@
 
 			<form method="post" class="grid w-full max-w-xl gap-8" use:enhance>
 				<div class="bg-base-300/20 lg: grid gap-4 rounded-xl p-4 lg:p-6">
-					<h3 class="font-header text-2xl">Plane</h3>
+					<h3 class="text-2xl">Plane</h3>
 					<fieldset class="fieldset">
 						<legend class="fieldset-legend">Airline</legend>
 						<input
@@ -91,7 +85,7 @@
 				</div>
 
 				<div class="bg-base-300/20 grid gap-4 rounded-xl p-4 lg:p-6">
-					<h3 class="font-header text-2xl">Locations</h3>
+					<h3 class="text-2xl">Locations</h3>
 					<fieldset class="fieldset">
 						<legend class="fieldset-legend">From Country</legend>
 						<select
@@ -183,7 +177,7 @@
 				</div>
 
 				<div class="bg-base-300/20 grid gap-4 rounded-xl p-4 lg:p-6">
-					<h3 class="font-header text-2xl">Departure & Arrival</h3>
+					<h3 class="text-2xl">Departure & Arrival</h3>
 					<fieldset class="fieldset">
 						<legend class="fieldset-legend {$errors.departureTimestamp ? 'text-error' : undefined}"
 							>Departure Date & Time*</legend
@@ -223,7 +217,7 @@
 				</div>
 
 				<div class="bg-base-300/20 grid gap-4 rounded-xl p-4 lg:p-6">
-					<h3 class="font-header text-2xl">Cost</h3>
+					<h3 class="text-2xl">Cost</h3>
 					<fieldset class="fieldset">
 						<legend class="fieldset-legend"
 							>Ticket Price

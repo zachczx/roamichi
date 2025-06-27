@@ -63,13 +63,24 @@ export const load: PageServerLoad = async ({ locals }) => {
 	const tripRecords = tripMerged.map((trip) => {
 		const [start, end] = getTripStartAndEndDates(trip.flights);
 
+		let tripStartAndEndFormatted = '';
+
+		if (start && end) {
+			if (dayjs(start).get('year') === dayjs(end).get('year')) {
+				tripStartAndEndFormatted = start.format('DD MMM') + ' – ' + end.format('DD MMM YYYY');
+			} else {
+				tripStartAndEndFormatted = start.format('DD MMM YYYY') + '–' + end.format('DD MMM YYYY');
+			}
+		}
 		return {
 			...trip,
 			createdAtSemantic: dayjs(trip.createdAt).fromNow(),
-			createdAtFormatted: dayjs(trip.createdAt).format('DD MMM YY'),
-			tripStartFormatted: start ? start.format('DD MMM YY') : undefined,
-			tripEndFormatted: end ? end.format('DD MMM YY') : undefined,
-			tripDuration: start && end ? end.diff(start, 'days') : undefined
+			createdAtFormatted: dayjs(trip.createdAt).format('DD MMM YYYY'),
+			tripStartFormatted: start ? start.format('DD MMM YYYY') : undefined,
+			tripEndFormatted: end ? end.format('DD MMM YYYY') : undefined,
+			tripStartAndEndFormatted: tripStartAndEndFormatted,
+			tripDuration: start && end ? end.diff(start, 'days') : undefined,
+			tripStartInDays: dayjs(start).fromNow()
 		};
 	});
 

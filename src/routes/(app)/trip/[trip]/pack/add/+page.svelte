@@ -34,7 +34,7 @@
 	</div>
 {/if}
 
-<TripView mode="flight" tripId={data.trip.id}>
+<TripView mode="flight" tripId={data.trip.id} tripName={data.trip.tripName}>
 	{#snippet breadcrumbs()}
 		<li><a href="/trip">Trips</a></li>
 		<li><a href="/trip/{data.trip.id}">{data.trip.tripName}</a></li>

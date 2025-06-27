@@ -14,17 +14,18 @@
 	<nav
 		class="to-base-900 from-base-900/100 text-primary-content sticky top-0 z-[1] grid h-full max-h-dvh w-full max-w-[200px] content-start border-r border-r-black/10 bg-linear-to-br"
 	>
-		<div
-			class="border-b-base-300/30 font-header text-primary-content flex h-16 items-center justify-center border-b-0 text-6xl font-bold"
+		<a
+			class="border-b-base-300/30 font-logo text-primary-content flex h-16 items-center justify-center border-b-0 text-6xl font-bold"
+			href="/"
 		>
 			R
-		</div>
+		</a>
 		<ul class="mt-4">
 			<li>
 				<a
 					aria-label="dashboard"
-					href="/"
-					class="{data.paths.includes('dashboard')
+					href="/trip"
+					class="{data.paths.includes('trip')
 						? 'to-primary from-primary/50 text-primary-content bg-linear-to-br'
 						: 'hover:bg-primary hover:text-primary-content'} grid aspect-square w-full min-w-32 cursor-pointer content-center justify-items-center gap-1 p-8 text-lg font-semibold"
 					><svg
@@ -37,20 +38,8 @@
 							fill="currentColor"
 							d="M13 9V3h8v6zM3 13V3h8v10zm10 8V11h8v10zM3 21v-6h8v6z"
 						/></svg
-					>Home</a
+					>Trips</a
 				>
-			</li>
-
-			<li>
-				<a
-					aria-label="trips"
-					href="/trip"
-					class="{data.paths.includes('trip')
-						? 'to-primary from-primary/50 text-primary-content bg-linear-to-br'
-						: 'hover:bg-primary hover:text-primary-content'} grid aspect-square w-full min-w-32 cursor-pointer content-center justify-items-center gap-1 p-8 text-lg font-semibold"
-				>
-					<MaterialSymbolsTravelLuggageAndBags class="h-10 w-10" />Trip
-				</a>
 			</li>
 
 			<li>
