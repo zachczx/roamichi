@@ -7,12 +7,34 @@
 	import MaterialSymbolsHotel from '$lib/assets/svg/MaterialSymbolsHotel.svelte';
 	import MaterialSymbolsLuggage from '$lib/assets/svg/MaterialSymbolsLuggage.svelte';
 	import MaterialSymbolsWarning from '$lib/assets/svg/MaterialSymbolsWarning.svelte';
+	import ReshotIconSunnyBeach from '$lib/assets/svg/ReshotIconSunnyBeach.svelte';
+	import ReshotIconSummerHolidays from '$lib/assets/svg/ReshotIconSummerHolidays.svelte';
 	import { checkIfHistory } from '$lib/helpers.js';
 	import DashboardTripCard from '$lib/ui/DashboardTripCard.svelte';
+	import { countries } from '$lib/countries';
+	import RadialProgress from '$lib/ui/RadialProgress.svelte';
 	import TripView from '$lib/view/TripView.svelte';
 	import dayjs from 'dayjs';
+	import { superForm } from 'sveltekit-superforms';
+	import { goto } from '$app/navigation';
+	import MaterialSymbolsClose from '$lib/assets/svg/MaterialSymbolsClose.svelte';
+	let timer = $state(5);
 	let { data } = $props();
+	const { form, errors, enhance, constraints, message } = superForm(data.form, {
+		onUpdated({ form }) {
+			if (form.message && form.message.status === 'success') {
+				setInterval(() => {
+					timer -= 1;
+					if (timer === 0) {
+						goto(`/trip/${form.message?.insertedId}`);
+					}
+				}, 950);
+			}
+		}
+	});
 
+	let addTripModal = $state() as HTMLDialogElement;
+	let addTripForm = $state() as HTMLFormElement;
 	let inat = $state();
 
 	async function handleCity() {
@@ -21,20 +43,44 @@
 		const item = await resp.json();
 		console.log(item);
 	}
+
+	let nextTripPriority = $derived.by(() => {
+		if (!data.nextTrip?.flightCount || data.nextTrip?.flightCount < 2) {
+			return 'flight';
+		}
+		if (!data.nextTrip?.stayCount || data.nextTrip?.stayCount === 0) {
+			return 'stay';
+		}
+		if (!data.nextTrip?.packCount || data.nextTrip?.packCount === 0) {
+			return 'pack';
+		}
+	});
+
+	let suggestions = $derived.by(() => {
+		let suggestions = [];
+		if ($form.tripName.length === 0) return [];
+		suggestions = countries.filter((country) => {
+			if (country.toLowerCase().includes($form.tripName.toLowerCase())) return country;
+		});
+
+		return suggestions;
+	});
 </script>
 
 <TripView mode="trips" tripId="" tripName="" showSidebar={false}>
 	{#snippet breadcrumbs()}
 		<li>Trips</li>
 	{/snippet}
-	<div class="grid grid-cols-1 gap-12 p-4">
+	<div class="grid grid-cols-1 gap-12">
 		<header class="col-span-1 grid grid-cols-[1fr_auto]">
 			<div>
 				<h2 class="font-header text-7xl font-bold">Your Trips</h2>
 				<p class="text-base-content/60 mt-2">Plan, track, and relive your adventures</p>
 			</div>
 			<div class="flex items-end">
-				<a href="/trip/add" class="btn btn-primary btn-lg flex items-center gap-2"
+				<button
+					onclick={() => addTripModal.showModal()}
+					class="btn btn-primary btn-lg flex items-center gap-2"
 					>Add Trip<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="1.3em"
@@ -42,7 +88,7 @@
 						class="material-symbols:add"
 						viewBox="0 0 24 24"
 						><path fill="currentColor" d="M11 13H5v-2h6V5h2v6h6v2h-6v6h-2z" /></svg
-					></a
+					></button
 				>
 			</div>
 		</header>
@@ -55,7 +101,7 @@
 				<div class="grid content-start gap-4 p-4">
 					<span
 						class="btn border-primary-content text-primary-content w-fit max-w-72 rounded-full border-0 bg-white/20 shadow-none"
-						>NEXT TRIP&nbsp;<span>•</span>&nbsp;{data.nextTrip.tripStartInDays}</span
+						>NEXT TRIP&nbsp;<span>•</span>&nbsp;{data.nextTrip.tripStartInDays?.toUpperCase()}</span
 					>
 					<h2 class="text-6xl font-bold">
 						<a href="/trip/{data.nextTrip.id}">{data.nextTrip.tripName}</a>
@@ -68,7 +114,13 @@
 					<div class="border-l-base-300/20 grid grid-cols-2 gap-4 xl:grid-cols-4">
 						<a
 							href="/trip/{data.nextTrip.id}/flight"
-							class="grid h-full grid-cols-[auto_1fr_auto] items-center gap-4 rounded-lg bg-white/20 p-4"
+							class={[
+								'grid h-full grid-cols-[auto_1fr_auto] items-center gap-4 rounded-lg p-4',
+								data.nextTrip.flightCount > 0 && 'bg-white/20',
+								data.nextTrip.flightCount === 0 && 'hover:bg-alert bg-alert/70',
+								nextTripPriority === 'flight' &&
+									'shadow-primary-content/20 outline-primary-content/40 shadow-lg outline-2'
+							]}
 						>
 							<MaterialSymbolsFlightTakeoff class="h-12 w-12" />
 							<div>
@@ -79,27 +131,18 @@
 									{data.nextTrip.flightCount} flights saved
 								</p>
 							</div>
-							<div
-								class="radial-progress"
-								style="--value:{data.nextTrip.flightCount >= 2
-									? 100
-									: data.nextTrip.flightCount === 1
-										? 50
-										: 0};"
-								aria-valuenow={data.nextTrip.flightCount >= 2
-									? 100
-									: data.nextTrip.flightCount === 1
-										? 50
-										: 0}
-								role="progressbar"
-							>
-								{data.nextTrip.flightCount >= 2 ? 100 : data.nextTrip.flightCount === 1 ? 50 : 0}%
-							</div>
+							<RadialProgress value={data.nextTrip.flightCount} target={2} />
 						</a>
 
 						<a
 							href="/trip/{data.nextTrip.id}/stay"
-							class="grid h-full grid-cols-[auto_1fr_auto] items-center gap-4 rounded-lg bg-white/20 p-4"
+							class={[
+								'grid h-full grid-cols-[auto_1fr_auto] items-center gap-4 rounded-lg p-4',
+								data.nextTrip.stayCount > 0 && 'bg-white/20',
+								data.nextTrip.stayCount === 0 && 'hover:bg-alert/70 bg-alert/60',
+								nextTripPriority === 'stay' &&
+									'shadow-primary-content/20 outline-primary-content/60 shadow-lg outline-2'
+							]}
 						>
 							<MaterialSymbolsHotel class="h-12 w-12" />
 							<div>
@@ -109,57 +152,46 @@
 									{data.nextTrip.stayCount} stays saved
 								</p>
 							</div>
-							<div
-								class="radial-progress"
-								style="--value:{data.nextTrip.stayCount >= 1 ? 100 : 0};"
-								aria-valuenow={data.nextTrip.stayCount >= 1 ? 100 : 0}
-								role="progressbar"
-							>
-								{data.nextTrip.stayCount >= 1 ? 100 : 0}%
-							</div>
+							<!-- <RadialProgress value={data.nextTrip.stayCount} target={1} /> -->
+							<RadialProgress value={data.nextTrip.stayCount} target={1} />
 						</a>
 
+						<!-- Logic for this is to make it shine if stays are settled. Need to consider whether to make this dynamically calculated in some var. -->
 						<a
 							href="/trip/{data.nextTrip.id}/pack"
-							class="grid h-full grid-cols-[auto_1fr_auto] items-center gap-4 rounded-lg bg-white/20 p-4"
+							class={[
+								'grid h-full grid-cols-[auto_1fr_auto] items-center gap-4 rounded-lg p-4',
+								data.nextTrip.packCount > 0 && 'bg-white/20',
+								data.nextTrip.packCount === 0 && 'hover:bg-alert/70 bg-alert/45',
+								nextTripPriority === 'pack' &&
+									'shadow-primary-content/20 outline-primary-content/40 shadow-lg outline-2'
+							]}
 						>
 							<MaterialSymbolsLuggage class="h-12 w-12" />
 							<div>
 								<h4 class="flex items-center gap-2 text-2xl font-bold">Packing</h4>
-
 								<p class="flex items-center gap-2">
 									{data.nextTrip.packedCount} / {data.nextTrip.packCount} items packed
 								</p>
 							</div>
-							<div
-								class="radial-progress"
-								style="--value:{Math.round(
-									(data.nextTrip.packedCount / data.nextTrip.packCount) * 100
-								)};"
-								aria-valuenow={Math.round(
-									(data.nextTrip.packedCount / data.nextTrip.packCount) * 100
-								)}
-								role="progressbar"
-							>
-								{data.nextTrip.packCount >= 1
-									? Math.round((data.nextTrip.packedCount / data.nextTrip.packCount) * 100)
-									: 0}%
-							</div>
+							<RadialProgress value={data.nextTrip.packedCount} target={data.nextTrip.packCount} />
 						</a>
 
 						<a
 							href="/trip/{data.nextTrip.id}/gift"
-							class="grid h-full grid-cols-[auto_1fr_auto] items-center gap-4 rounded-lg bg-white/20 p-4"
+							class={[
+								'grid h-full grid-cols-[auto_1fr_auto] items-center gap-4 rounded-lg p-4',
+								data.nextTrip.stayCount > 0 && 'bg-white/20',
+								data.nextTrip.stayCount === 0 && 'hover:bg-alert/70 bg-alert/45'
+							]}
 						>
 							<MaterialSymbolsFeaturedSeasonalAndGifts class="h-12 w-12" />
 							<div>
 								<h4 class="flex items-center gap-2 text-2xl font-bold">Gifts</h4>
 
-								<p class="flex items-center gap-2">No gifts added</p>
+								<p class="flex items-center gap-2">0 gifts added</p>
 							</div>
-							<div class="radial-progress" style="--value:0;" aria-valuenow="0" role="progressbar">
-								0%
-							</div>
+							<RadialProgress value={0} target={0} />
 						</a>
 					</div>
 				</div>
@@ -169,27 +201,115 @@
 		<section>
 			<h2 class="col-span-3 mb-4 text-4xl">Future Trips</h2>
 			<div class="grid grid-cols-3 gap-8">
-				{#each data.futureTrips as trip, i}
-					{#if i === 0}
-						Nothing here!
-					{/if}
-					{#if i > 0}
-						<!-- Next trip highlight -->
-						<DashboardTripCard {trip} type="past" />
-					{/if}
-				{/each}
+				<!-- Need to do the if in the loop, so that if it's the highlighted/next trip, skip -->
+
+				{#if data.futureTrips.length > 0}
+					{#each data.futureTrips as trip}
+						<DashboardTripCard {trip} type="future" />
+					{/each}
+				{:else}
+					<div class="col-span-3 grid w-fit justify-items-center justify-self-center py-8">
+						<ReshotIconSunnyBeach class="text-primary/70 h-64 w-64" />
+						<div class="mb-8 text-center">
+							<h4 class="text-2xl font-bold">Nothing here yet</h4>
+							<span class="">Start planning your next adventure now!</span>
+						</div>
+						<button
+							onclick={() => addTripModal.showModal()}
+							class="btn btn-primary btn-lg flex items-center gap-2">Add Trip</button
+						>
+					</div>
+				{/if}
 			</div>
 		</section>
 
 		<section>
 			<h2 class="col-span-3 mb-4 text-4xl">Past Trips</h2>
 			<div class="grid grid-cols-3 gap-8">
-				{#each data.pastTrips as trip}
-					<!-- Next trip highlight -->
-					<DashboardTripCard {trip} type="past" />
-				{/each}
+				{#if data.pastTrips.length === 0}
+					<div class="col-span-3 grid w-fit justify-items-center justify-self-center py-8">
+						<ReshotIconSummerHolidays class="text-primary/70 mb-8 h-56 w-56" />
+						<div class="mb-8 text-center">
+							<h4 class="text-2xl font-bold">Nothing here yet</h4>
+							<span class="">Get started with new adventures now!</span>
+						</div>
+						<button
+							onclick={() => addTripModal.showModal()}
+							class="btn btn-primary btn-lg flex items-center gap-2">Add Trip</button
+						>
+					</div>
+				{:else}
+					{#each data.pastTrips as trip, i}
+						<DashboardTripCard {trip} type="past" />
+					{/each}
+				{/if}
 			</div>
 		</section>
 	</div>
+
+	<dialog bind:this={addTripModal} id="my_modal_1" class="modal">
+		<div class="modal-box">
+			<form method="dialog">
+				<button class="float-right cursor-pointer"
+					><MaterialSymbolsClose class="-me-2 -mt-2 h-4 w-4" /></button
+				>
+			</form>
+
+			<h2 class="font-header mt-2 text-4xl font-bold">Add Trip</h2>
+
+			<form
+				bind:this={addTripForm}
+				method="post"
+				action="?/add"
+				class="mt-4 grid w-full max-w-xl gap-4"
+				use:enhance
+			>
+				<fieldset class="fieldset">
+					<input
+						type="text"
+						name="tripName"
+						class="input w-full"
+						placeholder="Name of trip"
+						aria-invalid={$errors.tripName ? 'true' : undefined}
+						bind:value={$form.tripName}
+						{...$constraints.tripName}
+					/>
+					<p class="label">Required</p>
+					{#if $errors.tripName}<span class="invalid text-error">{$errors.tripName}</span>{/if}
+				</fieldset>
+
+				<div class="max-h-48 overflow-y-auto">
+					<h3 class="font-semibold">Suggestions</h3>
+					{#each suggestions as suggestion}
+						<li>
+							<button
+								type="button"
+								onclick={() => {
+									console.log(suggestion);
+								}}>{suggestion}</button
+							>
+						</li>
+					{/each}
+				</div>
+
+				<button class="btn btn-primary flex items-center gap-2 justify-self-end">
+					{#if $message?.status === 'success'}
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							width="1.3em"
+							height="1.3em"
+							class="material-symbols:check"
+							viewBox="0 0 24 24"
+							><path
+								fill="currentColor"
+								d="m9.55 18l-5.7-5.7l1.425-1.425L9.55 15.15l9.175-9.175L20.15 7.4z"
+							/></svg
+						>Added
+					{:else}
+						Add Trip
+					{/if}
+				</button>
+			</form>
+		</div>
+	</dialog>
 </TripView>
-<!-- <input bind:value={inat} type="text" class="input input-lg" onkeyup={handleCity} /> -->

@@ -40,6 +40,11 @@
 
 	/* left sidebar */
 	--color-base-900: #4c582e;
+
+	--color-alert: #ff5733;
+	--color-alert-content: #4d0000;
+
+	--color-pending: #0569ff; /* #bce1ee; */
 }
 
 @layer base {
