@@ -123,6 +123,54 @@
 			background-color: green;
 		}
 	}
+
+	/* Form Progress Steps */
+
+	.stepped-progress {
+		display: grid;
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+		width: 100%;
+		justify-items: center;
+		gap: 0.25rem;
+
+		li {
+			position: relative;
+			display: flex;
+			padding-top: 1rem;
+			width: 100%;
+			justify-content: center;
+			text-align: center;
+			font-weight: 300;
+
+			&.current {
+				font-weight: bold;
+			}
+
+			&.current::before,
+			&:has(+ li.current)::before,
+			&:has(+ li + li.current)::before,
+			&:has(+ li + li + li.current)::before {
+				content: '';
+				border-radius: 2px;
+				position: absolute;
+				height: 0.5rem;
+				width: 100%;
+				top: 0;
+				left: 0;
+				background-color: var(--color-primary);
+			}
+			&:not(.current)::before {
+				content: '';
+				border-radius: 2px;
+				position: absolute;
+				height: 0.5rem;
+				width: 100%;
+				top: 0;
+				left: 0;
+				background-color: var(--color-base-200);
+			}
+		}
+	}
 }
 
 @utility fieldset-legend {

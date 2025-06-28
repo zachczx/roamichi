@@ -38,7 +38,8 @@
 	{#snippet breadcrumbs()}
 		<li><a href="/trip">Trips</a></li>
 		<li><a href="/trip/{data.trip.id}">{data.trip.tripName}</a></li>
-		<li>Add Packing Item</li>
+		<li><a href="/trip/{data.trip.id}/pack">Pack</a></li>
+		<li>Add</li>
 	{/snippet}
 
 	<main class="content-height grid w-full content-start gap-12 justify-self-center">

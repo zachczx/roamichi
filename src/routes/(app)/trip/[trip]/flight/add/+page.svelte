@@ -24,11 +24,18 @@
 	{#snippet breadcrumbs()}
 		<li><a href="/trip">Trips</a></li>
 		<li><a href="/trip/{data.trip.id}">{data.trip.tripName}</a></li>
-		<li><a href="/trip/{data.trip.id}/flight">Stay</a></li>
-		<li>Add Flight</li>
+		<li><a href="/trip/{data.trip.id}/flight">Flight</a></li>
+		<li>Add</li>
 	{/snippet}
 
-	<main class="content-height grid w-full content-start gap-8 justify-self-center">
+	<main class="content-height grid w-full max-w-xl content-start gap-8 justify-self-start">
+		<ul class="stepped-progress">
+			<li>+ Trip</li>
+			<li class={[data.step === 'outbound' && 'current']}>+ Outbound</li>
+			<li class={[data.step === 'return' && 'current']}>+ Return</li>
+			<li>+ Stay</li>
+		</ul>
+
 		<h2 class="font-header text-7xl font-bold">Add Flight</h2>
 
 		<section class="">
@@ -51,7 +58,13 @@
 				</div>
 			{/if}
 
-			<form method="post" class="grid w-full max-w-xl gap-8" use:enhance>
+			<form method="post" class="grid w-full gap-8" use:enhance>
+				{#if data.step === 'outbound'}
+					<h3 class="text-2xl">Let's add your outbound flight...</h3>
+				{/if}
+				{#if data.step === 'return'}
+					<h3 class="text-2xl">Let's add your return flight...</h3>
+				{/if}
 				<div class="bg-base-300/20 lg: grid gap-4 rounded-xl p-4 lg:p-6">
 					<h3 class="text-2xl">Plane</h3>
 					<fieldset class="fieldset">
@@ -238,6 +251,9 @@
 				</div>
 
 				<input type="hidden" value={data.tripId} name="tripId" />
+				{#if data.step}
+					<input type="hidden" value={data.step} name="step" />
+				{/if}
 				<button class="btn btn-primary"
 					>Add Trip{#if $message}{$message}{/if}</button
 				>

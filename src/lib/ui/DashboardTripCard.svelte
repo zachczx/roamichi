@@ -25,13 +25,16 @@
 				>Details Needed</span
 			>
 		{/if}
+
 		<h2 class="text-6xl font-bold"><a href="/trip/{trip.id}">{trip.tripName}</a></h2>
 		<div class="flex flex-wrap items-center gap-4">
 			{#if trip.tripStartAndEndFormatted}
-				<span>
-					{trip.tripStartAndEndFormatted}
-				</span>
-				<span>•</span><span>{trip.tripDuration} days</span>
+				<a href="/trip/{trip.id}"
+					><span>
+						{trip.tripStartAndEndFormatted}
+					</span>
+					&nbsp;&nbsp;<span>•</span>&nbsp;&nbsp;<span>{trip.tripDuration} days</span></a
+				>
 			{:else}
 				<span
 					>No dates yet (<a href="/trip/{trip.id}/flight/add" class="underline"
@@ -43,7 +46,7 @@
 		<div class="grid grid-cols-4 rounded-lg py-1">
 			<a
 				href="/trip/{trip.id}/flight"
-				class="grid h-full grid-cols-[auto_1fr_auto] items-center gap-2 rounded-lg"
+				class="grid h-full grid-cols-[auto_1fr_auto] items-center gap-1 rounded-lg"
 			>
 				<MaterialSymbolsFlightTakeoff class="h-6 w-6" />
 				<div>
@@ -56,7 +59,7 @@
 
 			<a
 				href="/trip/{trip.id}/stay"
-				class="grid h-full grid-cols-[auto_1fr_auto] items-center gap-2 rounded-lg"
+				class="grid h-full grid-cols-[auto_1fr_auto] items-center gap-1 rounded-lg"
 			>
 				<MaterialSymbolsHotel class="h-6 w-6" />
 				<p class="flex items-center gap-2">
@@ -66,7 +69,7 @@
 
 			<a
 				href="/trip/{trip.id}/pack"
-				class="grid h-full grid-cols-[auto_1fr_auto] items-center gap-2 rounded-lg"
+				class="grid h-full grid-cols-[auto_1fr_auto] items-center gap-1 rounded-lg"
 			>
 				<MaterialSymbolsLuggage class="h-6 w-6" />
 				<p class="flex items-center gap-2">
@@ -76,10 +79,10 @@
 
 			<a
 				href="/trip/{trip.id}/gift"
-				class="grid h-full grid-cols-[auto_1fr_auto] items-center gap-2 rounded-lg"
+				class="grid h-full grid-cols-[auto_1fr_auto] items-center gap-1 rounded-lg"
 			>
 				<MaterialSymbolsFeaturedSeasonalAndGifts class="h-6 w-6" />
-				<p class="flex items-center gap-2">0 gifts added</p>
+				<p class="flex items-center gap-2">0 gifts</p>
 			</a>
 		</div>
 	</div>

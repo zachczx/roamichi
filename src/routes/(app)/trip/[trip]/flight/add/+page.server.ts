@@ -1,6 +1,6 @@
 import { db } from '$lib/drizzle/db';
 import { flight, trip } from '$lib/drizzle/schema';
-import { fail, type Actions } from '@sveltejs/kit';
+import { fail, redirect, type Actions } from '@sveltejs/kit';
 import { superValidate } from 'sveltekit-superforms';
 import { zod4 } from 'sveltekit-superforms/adapters';
 import { z } from 'zod/v4';
@@ -25,18 +25,20 @@ const flightFormSchema = z
 		arrivalTimestamp: z.iso.datetime({ local: true }),
 		fromAirport: z.string().optional(),
 		toAirport: z.string().optional(),
-		cost: z.number().positive().optional()
+		cost: z.number().positive().optional(),
+		step: z.string().optional()
 	})
 	.refine((data) => new Date(data.departureTimestamp) <= new Date(data.arrivalTimestamp), {
 		path: ['arrivalTimestamp'],
 		error: 'Arrival date-time must be after departure!'
 	});
 
-export const load = async ({ params, locals }) => {
+export const load = async ({ params, locals, url }) => {
 	if (!locals.user) {
 		error(403, { message: 'Not authenticated!' });
 	}
 	const tripId = params.trip;
+	const step = url.searchParams.get('step');
 	const tripRows = await db
 		.select()
 		.from(trip)
@@ -48,7 +50,7 @@ export const load = async ({ params, locals }) => {
 	};
 	const form = await superValidate(zod4(flightFormSchema));
 
-	return { form, tripId, trip: tripRecord };
+	return { form, tripId, trip: tripRecord, step };
 };
 
 export const actions = {
@@ -77,6 +79,14 @@ export const actions = {
 			cost: form.data.cost
 		});
 		console.log(insert);
+
+		// For form wizard functionality
+		if (form.data.step === 'outbound') {
+			redirect(307, `/trip/${form.data.tripId}/flight/add/step?=return`);
+		}
+		if (form.data.step === 'return') {
+			redirect(307, `/trip/${form.data.tripId}/stay/add/step?=stay`);
+		}
 
 		return message(form, {
 			status: 'success',

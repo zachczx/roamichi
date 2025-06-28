@@ -28,12 +28,13 @@ const stayFormSchema = z
 		error: 'Check-out date must be after check-in date!'
 	});
 
-export const load = async ({ params, locals }) => {
+export const load = async ({ params, locals, url }) => {
 	if (!locals.user) {
 		error(403, { message: 'Not authenticated!' });
 	}
 
 	const tripId = params.trip;
+	const step = url.searchParams.get('step');
 	const tripRows = await db
 		.select()
 		.from(trip)
@@ -68,7 +69,7 @@ export const load = async ({ params, locals }) => {
 		createdAtSemantic: dayjs(tripRows[0].createdAt).fromNow(),
 		createdAtFormatted: dayjs(tripRows[0].createdAt).format('DD MMM, YYYY')
 	};
-	return { form, tripId, trip: tripRecord, stay: stayRecords };
+	return { form, tripId, trip: tripRecord, stay: stayRecords, step };
 };
 
 export const actions = {

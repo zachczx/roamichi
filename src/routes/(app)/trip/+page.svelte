@@ -78,9 +78,7 @@
 				<p class="text-base-content/60 mt-2">Plan, track, and relive your adventures</p>
 			</div>
 			<div class="flex items-end">
-				<button
-					onclick={() => addTripModal.showModal()}
-					class="btn btn-primary btn-lg flex items-center gap-2"
+				<a href="/trip/add?step=trip" class="btn btn-primary btn-lg flex items-center gap-2"
 					>Add Trip<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="1.3em"
@@ -88,7 +86,7 @@
 						class="material-symbols:add"
 						viewBox="0 0 24 24"
 						><path fill="currentColor" d="M11 13H5v-2h6V5h2v6h6v2h-6v6h-2z" /></svg
-					></button
+					></a
 				>
 			</div>
 		</header>
@@ -99,16 +97,19 @@
 				class="border-base-300/30 from-base-500 text-primary-content to-base-600/90 grid content-start gap-x-8 rounded-xl border bg-linear-to-tr to-70% p-4 shadow-md hover:opacity-100"
 			>
 				<div class="grid content-start gap-4 p-4">
-					<span
+					<a
+						href="/trip/{data.nextTrip.id}"
 						class="btn border-primary-content text-primary-content w-fit max-w-72 rounded-full border-0 bg-white/20 shadow-none"
-						>NEXT TRIP&nbsp;<span>•</span>&nbsp;{data.nextTrip.tripStartInDays?.toUpperCase()}</span
+						>NEXT TRIP&nbsp;<span>•</span>&nbsp;{data.nextTrip.tripStartInDays?.toUpperCase()}</a
 					>
-					<h2 class="text-6xl font-bold">
-						<a href="/trip/{data.nextTrip.id}">{data.nextTrip.tripName}</a>
-					</h2>
-					<div class="flex flex-wrap gap-4">
-						<span>{data.nextTrip.tripStartAndEndFormatted}</span>
-						<span>•</span><span>{data.nextTrip.tripDuration} days</span>
+					<div>
+						<h2 class="text-6xl font-bold">
+							<a href="/trip/{data.nextTrip.id}">{data.nextTrip.tripName}</a>
+						</h2>
+						<a href="/trip/{data.nextTrip.id}" class="flex flex-wrap gap-4">
+							<span>{data.nextTrip.tripStartAndEndFormatted}</span>
+							<span>•</span><span>{data.nextTrip.tripDuration} days</span>
+						</a>
 					</div>
 
 					<div class="border-l-base-300/20 grid grid-cols-2 gap-4 xl:grid-cols-4">
@@ -214,9 +215,8 @@
 							<h4 class="text-2xl font-bold">Nothing here yet</h4>
 							<span class="">Start planning your next adventure now!</span>
 						</div>
-						<button
-							onclick={() => addTripModal.showModal()}
-							class="btn btn-primary btn-lg flex items-center gap-2">Add Trip</button
+						<a href="/trip/add?step=trip" class="btn btn-primary btn-lg flex items-center gap-2"
+							>Add Trip</a
 						>
 					</div>
 				{/if}
@@ -233,9 +233,8 @@
 							<h4 class="text-2xl font-bold">Nothing here yet</h4>
 							<span class="">Get started with new adventures now!</span>
 						</div>
-						<button
-							onclick={() => addTripModal.showModal()}
-							class="btn btn-primary btn-lg flex items-center gap-2">Add Trip</button
+						<a href="/trip/add?step=trip" class="btn btn-primary btn-lg flex items-center gap-2"
+							>Add Trip</a
 						>
 					</div>
 				{:else}
@@ -257,7 +256,7 @@
 
 			<h2 class="font-header mt-2 text-4xl font-bold">Add Trip</h2>
 
-			<form
+			<!-- <form
 				bind:this={addTripForm}
 				method="post"
 				action="?/add"
@@ -309,7 +308,7 @@
 						Add Trip
 					{/if}
 				</button>
-			</form>
+			</form> -->
 		</div>
 	</dialog>
 </TripView>
