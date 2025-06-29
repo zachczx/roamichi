@@ -69,7 +69,10 @@
 		<!-- Flights -->
 		<div class="grid grid-cols-3 gap-12">
 			<section
-				class="shadow-base-content/10 border-base-content/10 grid w-full content-start gap-8 rounded-xl border p-8 shadow"
+				class={[
+					'shadow-base-content/10 border-base-content/10 grid w-full content-start gap-8 rounded-xl border p-8 shadow',
+					data.flight.length > 0 && 'from-base-200/20 to-base-200/5 bg-linear-to-tr'
+				]}
 			>
 				<h2 class="text-center text-4xl font-bold">
 					<a href="/trip/{data.trip.id}/flight">Flights</a>
@@ -130,7 +133,10 @@
 
 			<!-- Stays -->
 			<section
-				class="shadow-base-content/10 border-base-content/10 grid w-full content-start gap-8 rounded-xl border p-8 shadow"
+				class={[
+					'shadow-base-content/10 border-base-content/10 grid w-full content-start gap-8 rounded-xl border p-8 shadow',
+					data.stay.length > 0 && 'from-base-200/20 to-base-200/5 bg-linear-to-tr'
+				]}
 			>
 				<h2 class="text-center text-4xl font-bold">
 					<a href="/trip/{data.trip.id}/stay">Stays</a>
@@ -195,7 +201,10 @@
 
 			<!-- Pack -->
 			<section
-				class="shadow-base-content/10 border-base-content/10 grid w-full content-start gap-8 rounded-xl border p-8 shadow"
+				class={[
+					'shadow-base-content/10 border-base-content/10 grid w-full content-start gap-8 rounded-xl border p-8 shadow',
+					data.pack.length > 0 && 'from-base-200/20 to-base-200/5 bg-linear-to-tr'
+				]}
 			>
 				<h2 class="font-header text-center text-4xl font-bold">
 					<a href="/trip/{data.trip.id}/stay">Pack</a>
@@ -329,7 +338,10 @@
 
 			<!-- Activities -->
 			<section
-				class="shadow-base-content/10 border-base-content/10 grid w-full content-start gap-8 rounded-xl border p-8 shadow"
+				class={[
+					'shadow-base-content/10 border-base-content/10 grid w-full content-start gap-8 rounded-xl border p-8 shadow',
+					data.activity.length > 0 && 'from-base-200/20 to-base-200/5 bg-linear-to-tr'
+				]}
 			>
 				<h2 class="text-center text-4xl font-bold">
 					<a href="/trip/{data.trip.id}/activity">Activity</a>
@@ -359,7 +371,10 @@
 
 			<!-- Gifts -->
 			<section
-				class="shadow-base-content/10 border-base-content/10 grid w-full content-start gap-8 rounded-xl border p-8 shadow"
+				class={[
+					'shadow-base-content/10 border-base-content/10 grid w-full content-start gap-8 rounded-xl border p-8 shadow',
+					data.gift.length > 0 && 'from-base-200/20 to-base-200/5 bg-linear-to-tr'
+				]}
 			>
 				<h2 class="text-center text-4xl font-bold">
 					<a href="/trip/{data.trip.id}/gift" class="">Gift</a>
