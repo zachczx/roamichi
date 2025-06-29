@@ -76,13 +76,15 @@
 				</h2>
 				{#if data.flight.length > 0}
 					{#each data.flight as flight}
-						<div
-							class="bg-base-200/20 border-base-300/30 {checkIfHistory(flight.departureTimestamp)
-								? 'opacity-[0.6]'
-								: undefined} grid content-start rounded-xl border shadow-none hover:opacity-100"
+						<a
+							href="/trip/{data.trip.id}/flight"
+							class={[
+								'bg-base-200/20 border-base-300/30 grid content-start rounded-xl border hover:opacity-100',
+								checkIfHistory(flight.departureTimestamp) && 'opacity-[0.6]'
+							]}
 						>
-							<div class="bg-base-400 text-primary-content rounded-t-xl p-2 text-center">
-								<span class="font-bold">Flight {flight.flightNumber}</span>
+							<div class="rounded-t-xl p-2 text-center">
+								<span class="text-primary font-bold uppercase">{flight.flightNumber}</span>
 							</div>
 							<div class="grid grid-cols-[1fr_auto_1fr] content-start gap-2 p-4">
 								<div class="grid content-start justify-items-center">
@@ -108,7 +110,7 @@
 								</div>
 								{flight.cost}
 							</div>
-						</div>
+						</a>
 					{/each}
 				{:else}
 					<div class="grid content-center justify-items-center gap-8 py-12">
