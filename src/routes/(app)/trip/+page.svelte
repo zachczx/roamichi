@@ -108,7 +108,7 @@
 									'grid h-full grid-cols-[auto_1fr_auto] items-center gap-4 rounded-lg p-4',
 									data.nextTrip.flightCount > 0 && 'bg-white/20',
 									data.nextTrip.flightCount === 0 &&
-										'shadow-primary-content/20 outline-primary-content/40 shadow-lg outline-2 hover:bg-white/5'
+										'outline-primary-content/40 outline-2 hover:bg-white/5'
 								]}
 							>
 								{#if data.nextTrip.flightCount < 2}
@@ -136,7 +136,7 @@
 									'grid h-full grid-cols-[auto_1fr_auto] items-center gap-4 rounded-lg p-4',
 									data.nextTrip.stayCount > 0 && 'bg-white/20',
 									data.nextTrip.stayCount === 0 &&
-										'shadow-primary-content/20 outline-primary-content/40 shadow-lg outline-2 hover:bg-white/5'
+										'outline-primary-content/40 outline-2 hover:bg-white/5'
 								]}
 							>
 								{#if data.nextTrip.stayCount === 0}
@@ -172,7 +172,7 @@
 									'grid h-full grid-cols-[auto_1fr_auto] items-center gap-4 rounded-lg p-4',
 									data.nextTrip.packCount > 0 && 'bg-white/20',
 									data.nextTrip.packCount === 0 &&
-										'shadow-primary-content/20 outline-primary-content/40 shadow-lg outline-2 hover:bg-white/5'
+										'outline-primary-content/40 outline-2 hover:bg-white/5'
 								]}
 							>
 								{#if data.nextTrip.packCount === 0}
@@ -201,7 +201,7 @@
 									'grid h-full grid-cols-[auto_1fr_auto] items-center gap-4 rounded-lg p-4',
 									data.nextTrip.stayCount > 0 && 'bg-white/20',
 									data.nextTrip.stayCount === 0 &&
-										'shadow-primary-content/20 outline-primary-content/40 shadow-lg outline-2 hover:bg-white/5'
+										'outline-primary-content/40 outline-2 hover:bg-white/5'
 								]}
 							>
 								{#if data.nextTrip.stayCount === 0}
