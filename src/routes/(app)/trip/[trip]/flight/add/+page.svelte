@@ -256,9 +256,12 @@
 				{#if data.step}
 					<input type="hidden" value={data.step} name="step" />
 				{/if}
-				<button class="btn btn-primary"
-					>Add Trip{#if $message}{$message}{/if}</button
-				>
+
+				<div class="flex items-center justify-end">
+					<button class="btn btn-primary"
+						>Add Flight{#if $message}{$message}{/if}</button
+					>
+				</div>
 			</form>
 		</section>
 	</main>
