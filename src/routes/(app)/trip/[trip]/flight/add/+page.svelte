@@ -258,7 +258,7 @@
 				{/if}
 
 				<div class="flex items-center justify-end">
-					<button class="btn btn-primary"
+					<button class="btn btn-primary min-w-44"
 						>Add Flight{#if $message}{$message}{/if}</button
 					>
 				</div>

@@ -68,19 +68,21 @@
 
 		<!-- Flights -->
 		<div class="grid grid-cols-3 gap-12">
-			<section class="grid w-full content-start gap-8">
-				<h2 class="text-4xl font-bold">
+			<section
+				class="shadow-base-content/10 border-base-content/10 grid w-full content-start gap-8 rounded-xl border p-8 shadow"
+			>
+				<h2 class="text-center text-4xl font-bold">
 					<a href="/trip/{data.trip.id}/flight">Flights</a>
 				</h2>
 				{#if data.flight.length > 0}
 					{#each data.flight as flight}
 						<div
-							class="bg-base-200/70 border-base-300/30 {checkIfHistory(flight.departureTimestamp)
+							class="bg-base-200/20 border-base-300/30 {checkIfHistory(flight.departureTimestamp)
 								? 'opacity-[0.6]'
-								: undefined} grid content-start rounded-xl border shadow-md hover:opacity-100"
+								: undefined} grid content-start rounded-xl border shadow-none hover:opacity-100"
 						>
 							<div class="bg-base-400 text-primary-content rounded-t-xl p-2 text-center">
-								<span class="font-semibold">Flight {flight.flightNumber}</span>
+								<span class="font-bold">Flight {flight.flightNumber}</span>
 							</div>
 							<div class="grid grid-cols-[1fr_auto_1fr] content-start gap-2 p-4">
 								<div class="grid content-start justify-items-center">
@@ -125,8 +127,10 @@
 			</section>
 
 			<!-- Stays -->
-			<section class="grid w-full content-start gap-8">
-				<h2 class="text-4xl font-bold">
+			<section
+				class="shadow-base-content/10 border-base-content/10 grid w-full content-start gap-8 rounded-xl border p-8 shadow"
+			>
+				<h2 class="text-center text-4xl font-bold">
 					<a href="/trip/{data.trip.id}/stay">Stays</a>
 				</h2>
 
@@ -172,7 +176,7 @@
 						</div>
 					{/each}
 				{:else}
-					<div class="col-span-2 grid content-center justify-items-center gap-8 py-12">
+					<div class="grid content-center justify-items-center gap-8 py-12">
 						<span class="text-primary/70"><ReshotIconHotel class="h-48 w-48 scale-[0.7]" /></span>
 
 						<div class="-mt-8 text-center">
@@ -188,8 +192,10 @@
 			</section>
 
 			<!-- Pack -->
-			<section class="grid w-full content-start gap-8">
-				<h2 class="font-header text-4xl font-bold">
+			<section
+				class="shadow-base-content/10 border-base-content/10 grid w-full content-start gap-8 rounded-xl border p-8 shadow"
+			>
+				<h2 class="font-header text-center text-4xl font-bold">
 					<a href="/trip/{data.trip.id}/stay">Pack</a>
 				</h2>
 
@@ -304,7 +310,7 @@
 						</ul>
 					</div>
 				{:else}
-					<div class="col-span-2 grid content-center justify-items-center gap-8 py-12">
+					<div class="grid content-center justify-items-center gap-8 py-12">
 						<span class="text-primary/70"><ReshotIconBaggage class="h-48 w-48" /></span>
 
 						<div class="-mt-8 text-center">
@@ -320,8 +326,10 @@
 			</section>
 
 			<!-- Activities -->
-			<section class="grid w-full content-start gap-8">
-				<h2 class="text-4xl font-bold">
+			<section
+				class="shadow-base-content/10 border-base-content/10 grid w-full content-start gap-8 rounded-xl border p-8 shadow"
+			>
+				<h2 class="text-center text-4xl font-bold">
 					<a href="/trip/{data.trip.id}/activity">Activity</a>
 				</h2>
 
@@ -332,7 +340,7 @@
 						{/each}
 					</ul>
 				{:else}
-					<div class="col-span-2 grid content-center justify-items-center gap-8 py-12">
+					<div class="grid content-center justify-items-center gap-8 py-12">
 						<span class="text-primary/70"><ReshotIconSurfing class="h-48 w-48 scale-[0.8]" /></span>
 
 						<div class="-mt-8 text-center">
@@ -348,9 +356,11 @@
 			</section>
 
 			<!-- Gifts -->
-			<section class="grid w-full content-start gap-8">
-				<h2 class="text-4xl font-bold">
-					<a href="/trip/{data.trip.id}/gift">Gift</a>
+			<section
+				class="shadow-base-content/10 border-base-content/10 grid w-full content-start gap-8 rounded-xl border p-8 shadow"
+			>
+				<h2 class="text-center text-4xl font-bold">
+					<a href="/trip/{data.trip.id}/gift" class="">Gift</a>
 				</h2>
 
 				{#if data.gift.length > 0}
@@ -358,7 +368,7 @@
 						{gift.item} {gift.done}
 					{/each}
 				{:else}
-					<div class="col-span-2 grid content-center justify-items-center gap-8 py-12">
+					<div class="grid content-center justify-items-center gap-8 py-12">
 						<span class="text-primary/70"><ReshotIconGift class="h-48 w-48 scale-[0.85]" /></span>
 
 						<div class="-mt-8 text-center">

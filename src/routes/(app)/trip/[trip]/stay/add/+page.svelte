@@ -282,9 +282,11 @@
 
 				<input type="hidden" value={data.tripId} name="tripId" />
 
-				<button class="btn btn-primary"
-					>Add Stay{#if $message}{$message}{/if}</button
-				>
+				<div class="flex items-center justify-end">
+					<button class="btn btn-primary min-w-44"
+						>Add Stay{#if $message}{$message}{/if}</button
+					>
+				</div>
 			</form>
 		</section>
 	</main>
