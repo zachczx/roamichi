@@ -3,11 +3,7 @@ import { flight, pack, stay, trip } from '$lib/drizzle/schema';
 import { and, eq, getTableColumns } from 'drizzle-orm';
 import { redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
-import { error, fail, type Actions } from '@sveltejs/kit';
-import { superValidate } from 'sveltekit-superforms';
-import { zod4 } from 'sveltekit-superforms/adapters';
-import { z } from 'zod/v4';
-import { message } from 'sveltekit-superforms';
+import { fail, type Actions } from '@sveltejs/kit';
 import dayjs from 'dayjs';
 import minMax from 'dayjs/plugin/minMax';
 
@@ -16,16 +12,10 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 dayjs.extend(relativeTime);
 dayjs.extend(minMax);
 
-const tripFormSchema = z.object({
-	tripName: z.string()
-});
-
 export const load: PageServerLoad = async ({ locals }) => {
 	if (!locals.user) {
 		redirect(307, '/login');
 	}
-
-	const form = await superValidate(zod4(tripFormSchema));
 
 	const tripRows: TripDBWithCounts[] = await db
 		.select({
@@ -101,7 +91,7 @@ export const load: PageServerLoad = async ({ locals }) => {
 			return startA.diff(startB);
 		});
 
-	return { form, trips: tripRecords, nextTrip, futureTrips, pastTrips };
+	return { trips: tripRecords, nextTrip, futureTrips, pastTrips };
 };
 
 function getTripStartAndEndDates(flights: FlightDB[]) {
@@ -117,31 +107,20 @@ function getTripStartAndEndDates(flights: FlightDB[]) {
 }
 
 export const actions = {
-	add: async ({ request, locals }) => {
-		const form = await superValidate(request, zod4(tripFormSchema));
+	delete: async ({ request, locals }) => {
+		console.log('here');
 		if (!locals.user) {
-			return fail(403, { form });
-		}
-		if (!form.valid) {
-			return fail(400, { form });
+			return fail(403);
 		}
 
-		const inserted = await db
-			.insert(trip)
-			.values({
-				userId: locals.user?.id,
-				tripName: form.data.tripName
-			})
-			.returning();
-		console.log(inserted);
-		if (inserted.length === 0) {
-			return error(500, 'Server error!');
-		}
+		const formData = await request.formData();
+		const deleteId = String(formData.get('deleteId'));
 
-		return message(form, {
-			status: 'success',
-			text: 'Form posted successfully!',
-			insertedId: inserted[0].id
-		});
+		const deleted = await db
+			.delete(trip)
+			.where(and(eq(trip.id, deleteId), eq(trip.userId, locals.user.id)));
+		console.log(deleted);
+
+		return { success: true };
 	}
 } satisfies Actions;

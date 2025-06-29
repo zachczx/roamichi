@@ -55,7 +55,7 @@
 		<li>Add</li>
 	{/snippet}
 
-	<main class="content-height grid w-full max-w-xl content-start gap-8 justify-self-start">
+	<main class="content-height max-w-form grid w-full content-start gap-8 justify-self-start">
 		<ul class="stepped-progress">
 			<li>+ Trip</li>
 			<li>+ Outbound</li>

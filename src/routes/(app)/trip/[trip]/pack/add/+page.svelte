@@ -47,7 +47,7 @@
 			<h1 class="font-header text-7xl font-bold">Add Stay</h1>
 		</header>
 
-		<form method="post" class="grid w-full max-w-2xl gap-8" use:enhance>
+		<form method="post" class="max-w-form grid w-full gap-8" use:enhance>
 			<div class="bg-base-300/20 grid gap-4 rounded-xl p-4 lg:p-6">
 				<h3 class="font-header text-2xl">Property</h3>
 				<fieldset class="fieldset">

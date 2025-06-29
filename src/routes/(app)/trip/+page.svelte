@@ -14,27 +14,10 @@
 	import { countries } from '$lib/countries';
 	import RadialProgress from '$lib/ui/RadialProgress.svelte';
 	import TripView from '$lib/view/TripView.svelte';
-	import dayjs from 'dayjs';
-	import { superForm } from 'sveltekit-superforms';
-	import { goto } from '$app/navigation';
-	import MaterialSymbolsClose from '$lib/assets/svg/MaterialSymbolsClose.svelte';
-	let timer = $state(5);
-	let { data } = $props();
-	const { form, errors, enhance, constraints, message } = superForm(data.form, {
-		onUpdated({ form }) {
-			if (form.message && form.message.status === 'success') {
-				setInterval(() => {
-					timer -= 1;
-					if (timer === 0) {
-						goto(`/trip/${form.message?.insertedId}`);
-					}
-				}, 950);
-			}
-		}
-	});
 
-	let addTripModal = $state() as HTMLDialogElement;
-	let addTripForm = $state() as HTMLFormElement;
+	import MaterialSymbolsClose from '$lib/assets/svg/MaterialSymbolsClose.svelte';
+	import Toaster from '$lib/ui/Toaster.svelte';
+	let { data, form } = $props();
 	let inat = $state();
 
 	async function handleCity() {
@@ -55,17 +38,11 @@
 			return 'pack';
 		}
 	});
-
-	let suggestions = $derived.by(() => {
-		let suggestions = [];
-		if ($form.tripName.length === 0) return [];
-		suggestions = countries.filter((country) => {
-			if (country.toLowerCase().includes($form.tripName.toLowerCase())) return country;
-		});
-
-		return suggestions;
-	});
 </script>
+
+{#if form?.success}
+	<Toaster status="success" description="Successfully deleted!" />
+{/if}
 
 <TripView mode="trips" tripId="" tripName="" showSidebar={false}>
 	{#snippet breadcrumbs()}
@@ -202,113 +179,49 @@
 		<section>
 			<h2 class="col-span-3 mb-4 text-4xl">Future Trips</h2>
 			<div class="grid grid-cols-3 gap-8">
-				<!-- Need to do the if in the loop, so that if it's the highlighted/next trip, skip -->
-
-				{#if data.futureTrips.length > 0}
-					{#each data.futureTrips as trip}
-						<DashboardTripCard {trip} type="future" />
-					{/each}
-				{:else}
-					<div class="col-span-3 grid w-fit justify-items-center justify-self-center py-8">
-						<ReshotIconSunnyBeach class="text-primary/70 h-64 w-64" />
-						<div class="mb-8 text-center">
-							<h4 class="text-2xl font-bold">Nothing here yet</h4>
-							<span class="">Start planning your next adventure now!</span>
+				{#key data.futureTrips}
+					{#if data.futureTrips.length > 0}
+						{#each data.futureTrips as trip}
+							<DashboardTripCard {trip} type="future" />
+						{/each}
+					{:else}
+						<div class="col-span-3 grid w-fit justify-items-center justify-self-center py-8">
+							<ReshotIconSunnyBeach class="text-primary/70 h-64 w-64" />
+							<div class="mb-8 text-center">
+								<h4 class="text-2xl font-bold">Nothing here yet</h4>
+								<span class="">Start planning your next adventure now!</span>
+							</div>
+							<a href="/trip/add?step=trip" class="btn btn-primary btn-lg flex items-center gap-2"
+								>Add Trip</a
+							>
 						</div>
-						<a href="/trip/add?step=trip" class="btn btn-primary btn-lg flex items-center gap-2"
-							>Add Trip</a
-						>
-					</div>
-				{/if}
+					{/if}
+				{/key}
 			</div>
 		</section>
 
 		<section>
 			<h2 class="col-span-3 mb-4 text-4xl">Past Trips</h2>
 			<div class="grid grid-cols-3 gap-8">
-				{#if data.pastTrips.length === 0}
-					<div class="col-span-3 grid w-fit justify-items-center justify-self-center py-8">
-						<ReshotIconSummerHolidays class="text-primary/70 mb-8 h-56 w-56" />
-						<div class="mb-8 text-center">
-							<h4 class="text-2xl font-bold">Nothing here yet</h4>
-							<span class="">Get started with new adventures now!</span>
+				{#key data.pastTrips}
+					{#if data.pastTrips.length === 0}
+						<div class="col-span-3 grid w-fit justify-items-center justify-self-center py-8">
+							<ReshotIconSummerHolidays class="text-primary/70 mb-8 h-56 w-56" />
+							<div class="mb-8 text-center">
+								<h4 class="text-2xl font-bold">Nothing here yet</h4>
+								<span class="">Get started with new adventures now!</span>
+							</div>
+							<a href="/trip/add?step=trip" class="btn btn-primary btn-lg flex items-center gap-2"
+								>Add Trip</a
+							>
 						</div>
-						<a href="/trip/add?step=trip" class="btn btn-primary btn-lg flex items-center gap-2"
-							>Add Trip</a
-						>
-					</div>
-				{:else}
-					{#each data.pastTrips as trip, i}
-						<DashboardTripCard {trip} type="past" />
-					{/each}
-				{/if}
+					{:else}
+						{#each data.pastTrips as trip, i}
+							<DashboardTripCard {trip} type="past" />
+						{/each}
+					{/if}
+				{/key}
 			</div>
 		</section>
 	</div>
-
-	<dialog bind:this={addTripModal} id="my_modal_1" class="modal">
-		<div class="modal-box">
-			<form method="dialog">
-				<button class="float-right cursor-pointer"
-					><MaterialSymbolsClose class="-me-2 -mt-2 h-4 w-4" /></button
-				>
-			</form>
-
-			<h2 class="font-header mt-2 text-4xl font-bold">Add Trip</h2>
-
-			<!-- <form
-				bind:this={addTripForm}
-				method="post"
-				action="?/add"
-				class="mt-4 grid w-full max-w-xl gap-4"
-				use:enhance
-			>
-				<fieldset class="fieldset">
-					<input
-						type="text"
-						name="tripName"
-						class="input w-full"
-						placeholder="Name of trip"
-						aria-invalid={$errors.tripName ? 'true' : undefined}
-						bind:value={$form.tripName}
-						{...$constraints.tripName}
-					/>
-					<p class="label">Required</p>
-					{#if $errors.tripName}<span class="invalid text-error">{$errors.tripName}</span>{/if}
-				</fieldset>
-
-				<div class="max-h-48 overflow-y-auto">
-					<h3 class="font-semibold">Suggestions</h3>
-					{#each suggestions as suggestion}
-						<li>
-							<button
-								type="button"
-								onclick={() => {
-									console.log(suggestion);
-								}}>{suggestion}</button
-							>
-						</li>
-					{/each}
-				</div>
-
-				<button class="btn btn-primary flex items-center gap-2 justify-self-end">
-					{#if $message?.status === 'success'}
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							width="1.3em"
-							height="1.3em"
-							class="material-symbols:check"
-							viewBox="0 0 24 24"
-							><path
-								fill="currentColor"
-								d="m9.55 18l-5.7-5.7l1.425-1.425L9.55 15.15l9.175-9.175L20.15 7.4z"
-							/></svg
-						>Added
-					{:else}
-						Add Trip
-					{/if}
-				</button>
-			</form> -->
-		</div>
-	</dialog>
 </TripView>

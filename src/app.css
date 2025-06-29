@@ -45,6 +45,8 @@
 	--color-alert-content: #4d0000;
 
 	--color-pending: #0569ff; /* #bce1ee; */
+
+	--container-form: 900px;
 }
 
 @layer base {

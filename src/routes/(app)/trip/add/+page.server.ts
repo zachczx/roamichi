@@ -1,13 +1,13 @@
 import { db } from '$lib/drizzle/db';
 import { trip } from '$lib/drizzle/schema';
 import { error, fail, redirect, type Actions } from '@sveltejs/kit';
-import { superValidate } from 'sveltekit-superforms';
+import { message, superValidate } from 'sveltekit-superforms';
 import { zod4 } from 'sveltekit-superforms/adapters';
 import { z } from 'zod/v4';
-// import { message } from 'sveltekit-superforms';
 
 const tripFormSchema = z.object({
-	tripName: z.string()
+	tripName: z.string(),
+	guided: z.boolean().default(true)
 });
 
 export const load = async ({ url }) => {
@@ -38,12 +38,14 @@ export const actions = {
 			return error(500, 'Server error!');
 		}
 
-		redirect(307, `/trip/${inserted[0].id}/flight/add?step=outbound`);
+		if (!form.data.guided) {
+			return message(form, {
+				status: 'success',
+				text: 'Form posted successfully!',
+				insertedId: inserted[0].id
+			});
+		}
 
-		// return message(form, {
-		// 	status: 'success',
-		// 	text: 'Form posted successfully!',
-		// 	insertedId: inserted[0].id
-		// });
+		redirect(307, `/trip/${inserted[0].id}/flight/add?step=outbound`);
 	}
 } satisfies Actions;

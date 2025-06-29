@@ -9,12 +9,23 @@
 		breadcrumbs: Snippet;
 		children: Snippet;
 		rightSidebar?: Snippet;
+		showSidebar?: boolean;
 	}
-	let { mode, breadcrumbs, children, tripId = '', tripName, rightSidebar }: AddViewProps = $props();
+	let {
+		mode,
+		breadcrumbs,
+		children,
+		tripId = '',
+		tripName,
+		rightSidebar,
+		showSidebar = true
+	}: AddViewProps = $props();
 </script>
 
 <div class="flex w-full">
-	<div class="shrink-0"><TripNavSection {mode} {tripId} {tripName} /></div>
+	{#if showSidebar}
+		<div class="shrink-0"><TripNavSection {mode} {tripId} {tripName} /></div>
+	{/if}
 
 	<div class="grid grow content-start justify-self-center">
 		<div class="breadcrumbs mb-8 grid h-16 w-full content-center p-2 px-6 text-lg xl:px-16">
