@@ -1,7 +1,7 @@
 {
 	"name": "roamichi",
 	"private": true,
-	"version": "0.3.0",
+	"version": "0.4.0",
 	"type": "module",
 	"scripts": {
 		"dev": "vite dev",
@@ -69,6 +69,7 @@
 		"dotenv": "^17.0.0",
 		"drizzle-orm": "^0.44.2",
 		"drizzle-zod": "^0.8.2",
+		"flag-icons": "^7.5.0",
 		"melt": "^0.36.0",
 		"nanoid": "^5.1.5",
 		"pocketbase": "^0.26.1",
