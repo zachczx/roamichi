@@ -112,6 +112,27 @@ export const gift = pgTable('gift', {
 	)
 });
 
+export const activity = pgTable('activity', {
+	id: varchar('id', { length: 30 })
+		.primaryKey()
+		.$defaultFn(() => nanoid(10)),
+	userId: text('user_id')
+		.notNull()
+		.references(() => user.id, { onDelete: 'cascade' }),
+	tripId: varchar('trip_id')
+		.notNull()
+		.references(() => trip.id, { onDelete: 'cascade' }),
+	name: text('name').notNull(),
+	location: text('location'),
+	cost: real('cost'),
+	done: boolean('done').notNull().default(false),
+	remark: text('remark'),
+	createdAt: timestamp('created_at', { withTimezone: true, mode: 'string' }).defaultNow().notNull(),
+	updatedAt: timestamp('updated_at', { withTimezone: true, mode: 'string' }).$onUpdate(
+		() => sql`now()`
+	)
+});
+
 // Better Auth
 
 export const user = pgTable('user', {

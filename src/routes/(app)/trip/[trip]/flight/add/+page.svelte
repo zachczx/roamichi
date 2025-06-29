@@ -29,12 +29,14 @@
 	{/snippet}
 
 	<main class="content-height max-w-form grid w-full content-start gap-8 justify-self-start">
-		<ul class="stepped-progress">
-			<li>+ Trip</li>
-			<li class={[data.step === 'outbound' && 'current']}>+ Outbound</li>
-			<li class={[data.step === 'return' && 'current']}>+ Return</li>
-			<li>+ Stay</li>
-		</ul>
+		{#if data.step === 'outbound' || data.step === 'return'}
+			<ul class="stepped-progress">
+				<li>+ Trip</li>
+				<li class={[data.step === 'outbound' && 'current']}>+ Outbound</li>
+				<li class={[data.step === 'return' && 'current']}>+ Return</li>
+				<li>+ Stay</li>
+			</ul>
+		{/if}
 
 		<h2 class="font-header text-7xl font-bold">Add Flight</h2>
 

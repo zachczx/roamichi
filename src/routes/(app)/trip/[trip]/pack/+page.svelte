@@ -6,6 +6,7 @@
 	import type { PageProps } from '../$types';
 	import PackCard from '$lib/ui/PackCard.svelte';
 	import PackAddCommonItems from '$lib/ui/PackAddCommonItems.svelte';
+	import { pack } from '$lib/drizzle/schema';
 
 	let { data, form }: PageProps = $props();
 
@@ -48,7 +49,11 @@
 		return packOthers.filter((pack) => pack.done).length;
 	});
 
-	let progress = $derived(Math.floor((packed?.length / data.pack?.length) * 100));
+	let progress = $derived.by(() => {
+		if (packed.length === 0 || data.pack.length === 0) return 0;
+
+		return Math.floor((packed?.length / data.pack?.length) * 100);
+	});
 </script>
 
 {#key form}

@@ -17,6 +17,9 @@
 
 	import MaterialSymbolsClose from '$lib/assets/svg/MaterialSymbolsClose.svelte';
 	import Toaster from '$lib/ui/Toaster.svelte';
+	import MaterialSymbolsMoreVert from '$lib/assets/svg/MaterialSymbolsMoreVert.svelte';
+	import { enhance } from '$app/forms';
+	import MaterialSymbolsDelete from '$lib/assets/svg/MaterialSymbolsDelete.svelte';
 	let { data, form } = $props();
 	let inat = $state();
 
@@ -26,18 +29,6 @@
 		const item = await resp.json();
 		console.log(item);
 	}
-
-	let nextTripPriority = $derived.by(() => {
-		if (!data.nextTrip?.flightCount || data.nextTrip?.flightCount < 2) {
-			return 'flight';
-		}
-		if (!data.nextTrip?.stayCount || data.nextTrip?.stayCount === 0) {
-			return 'stay';
-		}
-		if (!data.nextTrip?.packCount || data.nextTrip?.packCount === 0) {
-			return 'pack';
-		}
-	});
 </script>
 
 {#if form?.success}
@@ -45,9 +36,6 @@
 {/if}
 
 <TripView mode="trips" tripId="" tripName="" showSidebar={false}>
-	{#snippet breadcrumbs()}
-		<li>Trips</li>
-	{/snippet}
 	<div class="grid grid-cols-1 gap-12">
 		<header class="col-span-1 grid grid-cols-[1fr_auto]">
 			<div>
@@ -69,115 +57,176 @@
 		</header>
 
 		<!-- Next trip highlight -->
-		{#if data.nextTrip}
-			<div
-				class="border-base-300/30 from-base-500 text-primary-content to-base-600/90 grid content-start gap-x-8 rounded-xl border bg-linear-to-tr to-70% p-4 shadow-md hover:opacity-100"
-			>
-				<div class="grid content-start gap-4 p-4">
-					<a
-						href="/trip/{data.nextTrip.id}"
-						class="btn border-primary-content text-primary-content w-fit max-w-72 rounded-full border-0 bg-white/20 shadow-none"
-						>NEXT TRIP&nbsp;<span>•</span>&nbsp;{data.nextTrip.tripStartInDays?.toUpperCase()}</a
-					>
-					<div>
-						<h2 class="text-6xl font-bold">
-							<a href="/trip/{data.nextTrip.id}">{data.nextTrip.tripName}</a>
-						</h2>
-						<a href="/trip/{data.nextTrip.id}" class="flex flex-wrap gap-4">
-							<span>{data.nextTrip.tripStartAndEndFormatted}</span>
-							<span>•</span><span>{data.nextTrip.tripDuration} days</span>
-						</a>
+		{#key data.nextTrip}
+			{#if data.nextTrip}
+				<section
+					class="border-base-300/30 from-base-500 text-primary-content to-base-600/90 grid content-start gap-x-8 rounded-xl border bg-linear-to-tr to-70% p-4 shadow-md hover:opacity-100"
+				>
+					<div class="grid content-start gap-4 p-4">
+						<div class="flex items-start">
+							<div class="grow">
+								<a
+									href="/trip/{data.nextTrip.id}"
+									class="btn border-primary-content text-primary-content w-fit max-w-72 rounded-full border-0 bg-white/20 shadow-none"
+									>NEXT TRIP&nbsp;<span>•</span
+									>&nbsp;{data.nextTrip.tripStartInDays?.toUpperCase()}</a
+								>
+							</div>
+							<div class="dropdown dropdown-end cursor-pointer">
+								<div tabindex="0" role="button">
+									<MaterialSymbolsMoreVert class="h-6 w-6" />
+								</div>
+								<ul
+									tabindex="-1"
+									class="dropdown-content menu bg-base-100 text-base-content rounded-box z-1 w-52 p-2 shadow-sm"
+								>
+									<form method="post" action="?/delete" class="w-full" use:enhance>
+										<li>
+											<button class="hover:bg-base-200 flex w-full items-center gap-2"
+												><MaterialSymbolsDelete class="h-[1.3em] w-[1.3em]" />Delete</button
+											>
+										</li>
+										<input type="hidden" value={data.nextTrip.id} name="deleteId" />
+									</form>
+								</ul>
+							</div>
+						</div>
+						<div>
+							<h2 class="text-6xl font-bold">
+								<a href="/trip/{data.nextTrip.id}">{data.nextTrip.tripName}</a>
+							</h2>
+							<a href="/trip/{data.nextTrip.id}" class="flex flex-wrap gap-4">
+								<span>{data.nextTrip.tripStartAndEndFormatted}</span>
+								<span>•</span><span>{data.nextTrip.tripDuration} days</span>
+							</a>
+						</div>
+
+						<div class="border-l-base-300/20 grid grid-cols-2 gap-4 xl:grid-cols-4">
+							<a
+								href="/trip/{data.nextTrip.id}/flight"
+								class={[
+									'grid h-full grid-cols-[auto_1fr_auto] items-center gap-4 rounded-lg p-4',
+									data.nextTrip.flightCount > 0 && 'bg-white/20',
+									data.nextTrip.flightCount === 0 &&
+										'shadow-primary-content/20 outline-primary-content/40 shadow-lg outline-2 hover:bg-white/5'
+								]}
+							>
+								{#if data.nextTrip.flightCount < 2}
+									<div
+										class="btn border-error-content text-error-content btn-sm bg-alert/60 col-span-3 w-fit max-w-72 rounded-full border-0 shadow-none"
+									>
+										To Book
+									</div>
+								{/if}
+								<MaterialSymbolsFlightTakeoff class="h-12 w-12" />
+								<div>
+									<h4 class="flex items-center gap-2 text-2xl font-bold">Flights</h4>
+
+									<p class="flex items-center gap-2">
+										<!-- <MaterialSymbolsCheck class="text-primary-content h-[1.3em] w-[1.3em]" /> -->
+										{data.nextTrip.flightCount} flights saved
+									</p>
+								</div>
+								<RadialProgress value={data.nextTrip.flightCount} target={2} />
+							</a>
+
+							<a
+								href="/trip/{data.nextTrip.id}/stay"
+								class={[
+									'grid h-full grid-cols-[auto_1fr_auto] items-center gap-4 rounded-lg p-4',
+									data.nextTrip.stayCount > 0 && 'bg-white/20',
+									data.nextTrip.stayCount === 0 &&
+										'shadow-primary-content/20 outline-primary-content/40 shadow-lg outline-2 hover:bg-white/5'
+								]}
+							>
+								{#if data.nextTrip.stayCount === 0}
+									<div
+										class="btn border-error-content text-error-content btn-sm bg-alert/60 col-span-3 w-fit max-w-72 rounded-full border-0 shadow-none"
+									>
+										To Book
+									</div>
+								{/if}
+								<!-- class={[
+									'grid h-full grid-cols-[auto_1fr_auto] items-center gap-4 rounded-lg p-4',
+									data.nextTrip.stayCount > 0 && 'bg-white/20',
+									data.nextTrip.stayCount === 0 && 'hover:bg-alert/70 bg-alert/60',
+									nextTripPriority === 'stay' &&
+										'shadow-primary-content/20 outline-primary-content/60 shadow-lg outline-2'
+								]} -->
+								<MaterialSymbolsHotel class="h-12 w-12" />
+								<div>
+									<h4 class="flex items-center gap-2 text-2xl font-bold">Stays</h4>
+
+									<p class="flex items-center gap-2">
+										{data.nextTrip.stayCount} stays saved
+									</p>
+								</div>
+								<!-- <RadialProgress value={data.nextTrip.stayCount} target={1} /> -->
+								<RadialProgress value={data.nextTrip.stayCount} target={1} />
+							</a>
+
+							<!-- Logic for this is to make it shine if stays are settled. Need to consider whether to make this dynamically calculated in some var. -->
+							<a
+								href="/trip/{data.nextTrip.id}/pack"
+								class={[
+									'grid h-full grid-cols-[auto_1fr_auto] items-center gap-4 rounded-lg p-4',
+									data.nextTrip.packCount > 0 && 'bg-white/20',
+									data.nextTrip.packCount === 0 &&
+										'shadow-primary-content/20 outline-primary-content/40 shadow-lg outline-2 hover:bg-white/5'
+								]}
+							>
+								{#if data.nextTrip.packCount === 0}
+									<div
+										class="btn border-error-content text-error-content btn-sm bg-alert/60 col-span-3 w-fit max-w-72 rounded-full border-0 shadow-none"
+									>
+										To Plan
+									</div>
+								{/if}
+								<MaterialSymbolsLuggage class="h-12 w-12" />
+								<div>
+									<h4 class="flex items-center gap-2 text-2xl font-bold">Packing</h4>
+									<p class="flex items-center gap-2">
+										{data.nextTrip.packedCount} / {data.nextTrip.packCount} items packed
+									</p>
+								</div>
+								<RadialProgress
+									value={data.nextTrip.packedCount}
+									target={data.nextTrip.packCount}
+								/>
+							</a>
+
+							<a
+								href="/trip/{data.nextTrip.id}/gift"
+								class={[
+									'grid h-full grid-cols-[auto_1fr_auto] items-center gap-4 rounded-lg p-4',
+									data.nextTrip.stayCount > 0 && 'bg-white/20',
+									data.nextTrip.stayCount === 0 &&
+										'shadow-primary-content/20 outline-primary-content/40 shadow-lg outline-2 hover:bg-white/5'
+								]}
+							>
+								{#if data.nextTrip.stayCount === 0}
+									<div
+										class="btn border-error-content text-error-content btn-sm bg-alert/60 col-span-3 w-fit max-w-72 rounded-full border-0 shadow-none"
+									>
+										To Add
+									</div>
+								{/if}
+								<MaterialSymbolsFeaturedSeasonalAndGifts class="h-12 w-12" />
+								<div>
+									<h4 class="flex items-center gap-2 text-2xl font-bold">Gifts</h4>
+
+									<p class="flex items-center gap-2">0 gifts added</p>
+								</div>
+								<RadialProgress value={0} target={0} />
+							</a>
+						</div>
 					</div>
-
-					<div class="border-l-base-300/20 grid grid-cols-2 gap-4 xl:grid-cols-4">
-						<a
-							href="/trip/{data.nextTrip.id}/flight"
-							class={[
-								'grid h-full grid-cols-[auto_1fr_auto] items-center gap-4 rounded-lg p-4',
-								data.nextTrip.flightCount > 0 && 'bg-white/20',
-								data.nextTrip.flightCount === 0 && 'hover:bg-alert bg-alert/70',
-								nextTripPriority === 'flight' &&
-									'shadow-primary-content/20 outline-primary-content/40 shadow-lg outline-2'
-							]}
-						>
-							<MaterialSymbolsFlightTakeoff class="h-12 w-12" />
-							<div>
-								<h4 class="flex items-center gap-2 text-2xl font-bold">Flights</h4>
-
-								<p class="flex items-center gap-2">
-									<!-- <MaterialSymbolsCheck class="text-primary-content h-[1.3em] w-[1.3em]" /> -->
-									{data.nextTrip.flightCount} flights saved
-								</p>
-							</div>
-							<RadialProgress value={data.nextTrip.flightCount} target={2} />
-						</a>
-
-						<a
-							href="/trip/{data.nextTrip.id}/stay"
-							class={[
-								'grid h-full grid-cols-[auto_1fr_auto] items-center gap-4 rounded-lg p-4',
-								data.nextTrip.stayCount > 0 && 'bg-white/20',
-								data.nextTrip.stayCount === 0 && 'hover:bg-alert/70 bg-alert/60',
-								nextTripPriority === 'stay' &&
-									'shadow-primary-content/20 outline-primary-content/60 shadow-lg outline-2'
-							]}
-						>
-							<MaterialSymbolsHotel class="h-12 w-12" />
-							<div>
-								<h4 class="flex items-center gap-2 text-2xl font-bold">Stays</h4>
-
-								<p class="flex items-center gap-2">
-									{data.nextTrip.stayCount} stays saved
-								</p>
-							</div>
-							<!-- <RadialProgress value={data.nextTrip.stayCount} target={1} /> -->
-							<RadialProgress value={data.nextTrip.stayCount} target={1} />
-						</a>
-
-						<!-- Logic for this is to make it shine if stays are settled. Need to consider whether to make this dynamically calculated in some var. -->
-						<a
-							href="/trip/{data.nextTrip.id}/pack"
-							class={[
-								'grid h-full grid-cols-[auto_1fr_auto] items-center gap-4 rounded-lg p-4',
-								data.nextTrip.packCount > 0 && 'bg-white/20',
-								data.nextTrip.packCount === 0 && 'hover:bg-alert/70 bg-alert/45',
-								nextTripPriority === 'pack' &&
-									'shadow-primary-content/20 outline-primary-content/40 shadow-lg outline-2'
-							]}
-						>
-							<MaterialSymbolsLuggage class="h-12 w-12" />
-							<div>
-								<h4 class="flex items-center gap-2 text-2xl font-bold">Packing</h4>
-								<p class="flex items-center gap-2">
-									{data.nextTrip.packedCount} / {data.nextTrip.packCount} items packed
-								</p>
-							</div>
-							<RadialProgress value={data.nextTrip.packedCount} target={data.nextTrip.packCount} />
-						</a>
-
-						<a
-							href="/trip/{data.nextTrip.id}/gift"
-							class={[
-								'grid h-full grid-cols-[auto_1fr_auto] items-center gap-4 rounded-lg p-4',
-								data.nextTrip.stayCount > 0 && 'bg-white/20',
-								data.nextTrip.stayCount === 0 && 'hover:bg-alert/70 bg-alert/45'
-							]}
-						>
-							<MaterialSymbolsFeaturedSeasonalAndGifts class="h-12 w-12" />
-							<div>
-								<h4 class="flex items-center gap-2 text-2xl font-bold">Gifts</h4>
-
-								<p class="flex items-center gap-2">0 gifts added</p>
-							</div>
-							<RadialProgress value={0} target={0} />
-						</a>
-					</div>
-				</div>
-			</div>
-		{/if}
+				</section>
+			{/if}
+		{/key}
 
 		<section>
-			<h2 class="col-span-3 mb-4 text-4xl">Future Trips</h2>
+			<h2 class="col-span-3 mb-4 text-2xl font-semibold">Future Trips</h2>
 			<div class="grid grid-cols-3 gap-8">
 				{#key data.futureTrips}
 					{#if data.futureTrips.length > 0}
@@ -201,7 +250,7 @@
 		</section>
 
 		<section>
-			<h2 class="col-span-3 mb-4 text-4xl">Past Trips</h2>
+			<h2 class="col-span-3 mb-4 text-2xl font-semibold">Past Trips</h2>
 			<div class="grid grid-cols-3 gap-8">
 				{#key data.pastTrips}
 					{#if data.pastTrips.length === 0}

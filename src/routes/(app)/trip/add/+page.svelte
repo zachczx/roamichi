@@ -75,10 +75,11 @@
 		>
 			{#if data.step === 'trip'}<h3 class="text-2xl">Let's give your trip a name...</h3>{/if}
 			<fieldset class="fieldset">
-				<!-- <legend class="fieldset-legend">Name of Trip</legend> -->
+				<legend class="fieldset-legend">Name of Trip</legend>
 				<input
 					type="text"
 					name="tripName"
+					autocomplete="off"
 					class="input w-full"
 					aria-invalid={$errors.tripName ? 'true' : undefined}
 					bind:value={$form.tripName}
@@ -88,19 +89,21 @@
 				{#if $errors.tripName}<span class="invalid text-error">{$errors.tripName}</span>{/if}
 			</fieldset>
 
-			<ul class="bg-base-200 h-32 max-h-36 list-disc overflow-y-auto rounded-lg p-4">
-				<h3 class="font-semibold">Suggestions</h3>
+			<ul class="bg-base-200 h-32 max-h-36 overflow-y-auto rounded-lg p-4">
+				<h3 class="mb-2 font-semibold">Suggestions</h3>
 				{#if suggestions.length > 0}
 					{#each suggestions as suggestion}
-						<li class="ms-6">
+						<li class="">
+							+&nbsp;
 							<button
 								type="button"
-								class="cursor-pointer"
+								class="hover:text-primary cursor-pointer hover:underline"
 								onclick={() => {
 									console.log(suggestion);
 									$form.tripName = suggestion;
-								}}>{suggestion}</button
-							>
+								}}
+								>{suggestion}
+							</button>
 						</li>
 					{/each}
 				{:else}
@@ -108,18 +111,21 @@
 				{/if}
 			</ul>
 
-			<label class="label">
-				<input
-					type="checkbox"
-					bind:checked={$form.guided}
-					aria-invalid={$errors.tripName ? 'true' : undefined}
-					class="checkbox"
-					name="guided"
-					{...$constraints.tripName}
-				/>
-				Continue guided trip creation
-			</label>
-			{#if $errors.guided}<span class="invalid text-error">{$errors.guided}</span>{/if}
+			<fieldset class="fieldset bg-base-100 border-base-content/20 rounded-box w-64 border p-4">
+				<legend class="fieldset-legend">Form Creation Type</legend>
+				<label class="label">
+					<input
+						type="checkbox"
+						bind:checked={$form.guided}
+						aria-invalid={$errors.tripName ? 'true' : undefined}
+						class="checkbox"
+						name="guided"
+						{...$constraints.tripName}
+					/>
+					Use form wizard to create entire trip
+				</label>
+				{#if $errors.guided}<span class="invalid text-error">{$errors.guided}</span>{/if}
+			</fieldset>
 
 			<div class="flex items-center justify-end">
 				{#if $form.guided}

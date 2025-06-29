@@ -1,5 +1,5 @@
 import { db } from '$lib/drizzle/db';
-import { trip, gift } from '$lib/drizzle/schema';
+import { trip, activity } from '$lib/drizzle/schema';
 import { eq, and } from 'drizzle-orm';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
@@ -28,12 +28,12 @@ export const load: PageServerLoad = async ({ params, locals }) => {
 	};
 
 	/**
-	 * Gifts
+	 * Activity
 	 */
-	const giftRows = await db
+	const activityRows = await db
 		.select()
-		.from(gift)
-		.where(and(eq(gift.tripId, tripId), eq(gift.userId, locals.user.id)));
+		.from(activity)
+		.where(and(eq(activity.tripId, tripId), eq(activity.userId, locals.user.id)));
 
-	return { trip: tripRecord, gift: giftRows };
+	return { trip: tripRecord, activity: activityRows };
 };

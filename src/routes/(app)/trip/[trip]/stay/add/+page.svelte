@@ -56,12 +56,14 @@
 	{/snippet}
 
 	<main class="content-height max-w-form grid w-full content-start gap-8 justify-self-start">
-		<ul class="stepped-progress">
-			<li>+ Trip</li>
-			<li>+ Outbound</li>
-			<li>+ Return</li>
-			<li class={[data.step === 'stay' && 'current']}>+ Stay</li>
-		</ul>
+		{#if data.step === 'stay'}
+			<ul class="stepped-progress">
+				<li>+ Trip</li>
+				<li>+ Outbound</li>
+				<li>+ Return</li>
+				<li class={[data.step === 'stay' && 'current']}>+ Stay</li>
+			</ul>
+		{/if}
 
 		<h2 class="font-header text-7xl font-bold">Add Stay</h2>
 

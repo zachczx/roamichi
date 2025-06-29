@@ -1,4 +1,5 @@
 <script lang="ts">
+	import MaterialSymbolsLogout from '$lib/assets/svg/MaterialSymbolsLogout.svelte';
 	import MaterialSymbolsSettings from '$lib/assets/svg/MaterialSymbolsSettings.svelte';
 	import MaterialSymbolsTravelLuggageAndBags from '$lib/assets/svg/MaterialSymbolsTravelLuggageAndBags.svelte';
 	import Toaster from '$lib/ui/Toaster.svelte';
@@ -13,7 +14,7 @@
 			<a href="/" class="flex items-center justify-center gap-4">Roamichi</a>
 		</div> -->
 	<nav
-		class="to-base-900 from-base-900/100 text-primary-content sticky top-0 z-[1] grid h-full max-h-dvh w-full max-w-[200px] content-start border-r border-r-black/10 bg-linear-to-br"
+		class="to-base-900 from-base-900/100 text-primary-content sticky top-0 z-[1] grid h-full max-h-dvh w-full max-w-[200px] grid-rows-[auto_1fr_auto] content-start border-r border-r-black/10 bg-linear-to-br"
 	>
 		<a
 			class="border-b-base-300/30 font-logo text-primary-content flex h-16 items-center justify-center border-b-0 text-6xl font-bold"
@@ -73,6 +74,19 @@
 							d="M4 20q-.825 0-1.412-.587T2 18V6q0-.825.588-1.412T4 4h16q.825 0 1.413.588T22 6v12q0 .825-.587 1.413T20 20zm8-7l8-5V6l-8 5l-8-5v2z"
 						/></svg
 					>Contact</a
+				>
+			</li>
+		</ul>
+		<ul>
+			<li>
+				<a
+					aria-label="logout"
+					href="/logout"
+					data-sveltekit-preload-data="false"
+					class="hover:bg-primary hover:text-primary-content grid aspect-square w-full min-w-32 cursor-pointer content-center justify-items-center gap-1 p-8 text-lg font-semibold"
+				>
+					<MaterialSymbolsLogout class="h-10 w-10" />
+					Logout</a
 				>
 			</li>
 		</ul>

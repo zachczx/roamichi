@@ -3,9 +3,10 @@
 	import MaterialSymbolsFlightTakeoff from '$lib/assets/svg/MaterialSymbolsFlightTakeoff.svelte';
 	import MaterialSymbolsHotel from '$lib/assets/svg/MaterialSymbolsHotel.svelte';
 	import MaterialSymbolsLuggage from '$lib/assets/svg/MaterialSymbolsLuggage.svelte';
+	import MaterialSymbolsSurfing from '$lib/assets/svg/MaterialSymbolsSurfing.svelte';
 
 	interface TripNavSectionProps {
-		mode: 'trips' | 'trip' | 'flight' | 'stay' | 'pack' | 'gift';
+		mode: 'trips' | 'trip' | 'flight' | 'stay' | 'pack' | 'activity' | 'gift';
 		tripId: string;
 		tripName: string;
 	}
@@ -93,6 +94,15 @@
 						? 'to-primary from-primary/50 text-primary-content bg-linear-to-br'
 						: 'hover:bg-primary hover:text-primary-content'} flex w-full cursor-pointer items-center gap-8 py-4 ps-8 pe-4 text-lg"
 					><MaterialSymbolsLuggage class="h-7 w-7" />Pack</a
+				>
+			</li>
+			<li>
+				<a
+					href="/trip/{tripId}/activity"
+					class="{mode === 'activity'
+						? 'to-primary from-primary/50 text-primary-content bg-linear-to-br'
+						: 'hover:bg-primary hover:text-primary-content'} flex w-full cursor-pointer items-center gap-8 py-4 ps-8 pe-4 text-lg"
+					><MaterialSymbolsSurfing class="h-7 w-7" />Activity</a
 				>
 			</li>
 			<li>

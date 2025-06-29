@@ -3,7 +3,7 @@
 	import type { Snippet } from 'svelte';
 
 	interface AddViewProps {
-		mode: 'trips' | 'trip' | 'flight' | 'stay' | 'pack' | 'gift';
+		mode: 'trips' | 'trip' | 'flight' | 'stay' | 'pack' | 'activity' | 'gift';
 		tripId: string;
 		tripName: string;
 		breadcrumbs: Snippet;
