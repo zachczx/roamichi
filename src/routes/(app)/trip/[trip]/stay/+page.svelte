@@ -1,5 +1,6 @@
 <script>
 	import EmptyState from '$lib/assets/svg/EmptyState.svelte';
+	import ReshotIconHotel from '$lib/assets/svg/ReshotIconHotel.svelte';
 	import { stay } from '$lib/drizzle/schema.js';
 	import { checkIfHistory } from '$lib/helpers.js';
 	import TripView from '$lib/view/TripView.svelte';
@@ -226,8 +227,16 @@
 			{/each}
 		{:else}
 			<div class="grid content-center justify-items-center gap-8 py-12">
-				<span class="text-base-300"><EmptyState /></span>
-				<h3 class="-mt-2 text-center text-lg font-medium">There's nothing here!</h3>
+				<span class="text-primary/70"><ReshotIconHotel class="h-96 w-96 scale-[0.7]" /></span>
+
+				<div class="-mt-8 text-center">
+					<h4 class="text-2xl font-bold">Nothing here yet</h4>
+					<span class="">Start planning your next adventure now!</span>
+				</div>
+				<a
+					href="/trip/{data.trip.id}/stay/add"
+					class="btn btn-primary btn-lg flex items-center gap-2">Add Stay</a
+				>
 			</div>
 		{/if}
 	</main>

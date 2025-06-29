@@ -1,5 +1,5 @@
 <script lang="ts">
-	import ReshotIconGift from '$lib/assets/svg/ReshotIconGift.svelte';
+	import ReshotIconGiftCircle from '$lib/assets/svg/ReshotIconGiftCircle.svelte';
 	import TripView from '$lib/view/TripView.svelte';
 	import type { PageProps } from '../$types';
 
@@ -14,7 +14,7 @@
 	{/snippet}
 
 	<main class="grid w-full content-start gap-8 justify-self-center">
-		<h2 class="font-header col-span-2 grid text-7xl font-bold">Gift</h2>
+		<h2 class="font-header grid text-7xl font-bold">Gift</h2>
 
 		<!-- <div
 				class="bg-base-200/70 border-base-300/30 col-span-2 grid h-fit content-start items-start rounded-xl border p-4 shadow-md"
@@ -27,7 +27,9 @@
 					{packed.length > 0 ? data.pack.length - packed.length : '0'} of {data.pack.length} items remaining
 				</p>
 			</div> -->
-		<span class="text-primary/70"><ReshotIconGift class="h-96 w-96" /></span>
-		Coming soon
+		<div class="grid justify-items-center">
+			<span class="text-primary/70"><ReshotIconGiftCircle class="h-96 w-96" /></span>
+			<p class="text-lg">Coming soon</p>
+		</div>
 	</main>
 </TripView>

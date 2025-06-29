@@ -11,6 +11,9 @@
 	import { countries } from '$lib/countries';
 	import MaterialSymbolsDelete from '$lib/assets/svg/MaterialSymbolsDelete.svelte';
 	import MaterialSymbolsMoreVert from '$lib/assets/svg/MaterialSymbolsMoreVert.svelte';
+	import ReshotIconGiftCircle from '$lib/assets/svg/ReshotIconGiftCircle.svelte';
+	import ReshotIconGift from '$lib/assets/svg/ReshotIconGift.svelte';
+	import ReshotIconSurfing from '$lib/assets/svg/ReshotIconSurfing.svelte';
 
 	let { data } = $props();
 
@@ -177,8 +180,8 @@
 							<span class="">Start planning your next adventure now!</span>
 						</div>
 						<a
-							href="/trip/{data.trip.id}/flight/add"
-							class="btn btn-primary btn-lg flex items-center gap-2">Add Flight</a
+							href="/trip/{data.trip.id}/stay/add"
+							class="btn btn-primary btn-lg flex items-center gap-2">Add Stay</a
 						>
 					</div>
 				{/if}
@@ -311,6 +314,60 @@
 						<a
 							href="/trip/{data.trip.id}/pack"
 							class="btn btn-primary btn-lg flex items-center gap-2">Add to Pack</a
+						>
+					</div>
+				{/if}
+			</section>
+
+			<!-- Activities -->
+			<section class="grid w-full content-start gap-8">
+				<h2 class="text-4xl font-bold">
+					<a href="/trip/{data.trip.id}/activity">Activity</a>
+				</h2>
+
+				{#if data.activity.length > 0}
+					<ul>
+						{#each data.activity as activity}
+							<li>{activity.name}</li>
+						{/each}
+					</ul>
+				{:else}
+					<div class="col-span-2 grid content-center justify-items-center gap-8 py-12">
+						<span class="text-primary/70"><ReshotIconSurfing class="h-48 w-48 scale-[0.8]" /></span>
+
+						<div class="-mt-8 text-center">
+							<h4 class="text-2xl font-bold">Nothing here yet</h4>
+							<span class="">Sort out your activities!</span>
+						</div>
+						<a
+							href="/trip/{data.trip.id}/activity"
+							class="btn btn-primary btn-lg flex items-center gap-2">Add Activity</a
+						>
+					</div>
+				{/if}
+			</section>
+
+			<!-- Gifts -->
+			<section class="grid w-full content-start gap-8">
+				<h2 class="text-4xl font-bold">
+					<a href="/trip/{data.trip.id}/gift">Gift</a>
+				</h2>
+
+				{#if data.gift.length > 0}
+					{#each data.gift as gift}
+						{gift.item} {gift.done}
+					{/each}
+				{:else}
+					<div class="col-span-2 grid content-center justify-items-center gap-8 py-12">
+						<span class="text-primary/70"><ReshotIconGift class="h-48 w-48 scale-[0.85]" /></span>
+
+						<div class="-mt-8 text-center">
+							<h4 class="text-2xl font-bold">Nothing here yet</h4>
+							<span class="">You'll need to get gifts.</span>
+						</div>
+						<a
+							href="/trip/{data.trip.id}/gift"
+							class="btn btn-primary btn-lg flex items-center gap-2">Add Gift</a
 						>
 					</div>
 				{/if}
