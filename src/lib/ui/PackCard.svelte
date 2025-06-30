@@ -30,18 +30,22 @@
 </script>
 
 <div
-	class="{type === 'warning'
-		? 'bg-warning/10 border-warning/50'
-		: type === 'aside'
-			? 'bg-neutral/3 border-neutral/20'
-			: 'bg-base-200/70 border-base-300/30'} grid h-fit content-start rounded-xl border shadow-md"
+	class={[
+		'grid h-fit content-start rounded-xl border shadow-md',
+		type === 'warning' && 'bg-warning/10 border-warning/50',
+		type === 'aside' && 'bg-neutral/3 border-neutral/20',
+		type !== 'warning' &&
+			type !== 'aside' &&
+			'from-base-200/20 to-base-200/5 border-base-300/30 bg-linear-to-tr'
+	]}
 >
 	<div
-		class="{type === 'warning'
-			? 'bg-warning text-warning-content'
-			: type === 'aside'
-				? 'bg-neutral/20 border-neutral'
-				: 'bg-base-400 text-primary-content'} flex items-center gap-2 rounded-t-xl px-4 py-2 font-semibold"
+		class={[
+			'flex items-center gap-2 rounded-t-xl px-4 py-2 font-semibold',
+			type === 'warning' && 'bg-warning/20 text-warning-content',
+			type === 'aside' && 'bg-neutral/20 border-neutral',
+			'bg-base-400/40 text-base-content/70'
+		]}
 	>
 		<div class="flex grow items-center gap-2">
 			{#if type === 'warning'}

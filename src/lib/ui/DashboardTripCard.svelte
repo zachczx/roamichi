@@ -11,8 +11,8 @@
 	let { trip, type }: { trip: TripPropsExtra; type: 'past' | 'future' } = $props();
 
 	let classColorProps = $derived.by(() => {
-		if (type === 'future') return 'bg-base-200';
-		if (type === 'past') return 'bg-neutral/10 text-base-content/70';
+		if (type === 'future') return 'from-base-200/20 to-base-200/5 bg-linear-to-tr';
+		if (type === 'past') return 'bg-neutral/3 text-base-content/70';
 	});
 </script>
 

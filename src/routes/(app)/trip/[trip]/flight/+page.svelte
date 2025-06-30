@@ -73,13 +73,13 @@
 						class="border-base-300/30 grid content-start gap-x-8 rounded-xl border shadow-md hover:opacity-100 xl:grid-cols-[2fr_3fr] {checkIfHistory(
 							flight.departureTimestamp
 						)
-							? 'bg-gray-400/10 opacity-[0.6]'
-							: 'bg-base-200/70'}"
+							? 'bg-neutral/5'
+							: 'from-base-200/20 to-base-200/5 bg-linear-to-tr'}"
 					>
 						<div
 							class="{checkIfHistory(flight.departureTimestamp)
-								? 'bg-primary/50'
-								: 'bg-base-400'} text-primary-content flex content-center items-center justify-center rounded-t-xl px-4 py-2 xl:col-span-2"
+								? 'bg-neutral/10'
+								: 'bg-base-400/40'} text-base-content/70 flex content-center items-center justify-center rounded-t-xl px-4 py-2 xl:col-span-2"
 						>
 							<span class="grow font-semibold">{flight.flightNumber} ({flight.airline})</span>
 							{#if checkIfHistory(flight.departureTimestamp)}
