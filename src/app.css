@@ -115,14 +115,12 @@
 		}
 
 		li + *::before {
-			/* border-color: green !important; */
 			border-top-width: 3px !important;
 			border-right-width: 3px !important;
 			margin-inline: 1.25rem !important;
-			height: 0.65rem !important;
-			width: 0.65rem !important;
-			opacity: 75% !important;
-			background-color: green;
+			height: 0.5rem !important;
+			width: 0.5rem !important;
+			opacity: 30% !important;
 		}
 	}
 
